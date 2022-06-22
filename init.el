@@ -1,5 +1,7 @@
 (setq inhibit-startup-message t)
 
+(setq-default truncate-lines 1)
+
 (set-fringe-mode 10)        ; Give some breathing room
 
 ;; Set up the visible bell
