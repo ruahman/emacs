@@ -1,0 +1,13 @@
+;; -*- emacs-lisp -*- <22/06/26 15:12:29 /home/ruahman/.emacs.d/tramp>
+;; Tramp connection history.  Don't change this file.
+;; Run `M-x tramp-cleanup-all-connections' instead.
+
+(((tramp-file-name "gdrive" "ruahman" nil "gmail.com" nil nil nil)
+  ("activation-uri" "google-drive://ruahman@gmail.com/")
+  ("gio-tool" t)
+  ("default-location" "")
+  ("uid-string" "ruahman")
+  ("gid-string" "UNKNOWN")
+  ("uid-integer" -1)
+  ("gid-integer" -1)
+  ("gvfs-set-attribute-unix::mode" nil)))

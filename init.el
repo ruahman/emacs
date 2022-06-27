@@ -23,13 +23,17 @@
 ;; Disable line numbers for some modes
 (dolist (mode '(org-mode-hook
                 term-mode-hook
+		text-mode-hook
                 shell-mode-hook
                 eshell-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
 ;; enable flyspell for text mode
 (dolist (hook '(text-mode-hook))
-  (add-hook hook (lambda () (flyspell-mode 1))))
+  (add-hook hook (lambda ()
+		   (visual-line-mode 1)
+		   (writeroom-mode 1)
+		   (flyspell-mode 1))))
 
 ;; Initialize package sources
 (require 'package)
@@ -53,6 +57,8 @@
 
 ;; get latest org mode
 (use-package org :ensure t)
+
+(use-package writeroom-mode :ensure t)
 
 ;; enable match indenting for org mode
 (setq org-startup-indented t)
@@ -153,7 +159,8 @@
  '(custom-safe-themes
    '("5f19cb23200e0ac301d42b880641128833067d341d22344806cdad48e6ec62f6" "353ffc8e6b53a91ac87b7e86bebc6796877a0b76ddfc15793e4d7880976132ae" "47db50ff66e35d3a440485357fb6acb767c100e135ccdf459060407f8baea7b2" "1704976a1797342a1b4ea7a75bdbb3be1569f4619134341bd5a4c1cfb16abad4" "745d03d647c4b118f671c49214420639cb3af7152e81f132478ed1c649d4597d" "c4063322b5011829f7fdd7509979b5823e8eea2abf1fe5572ec4b7af1dd78519" "3d47380bf5aa650e7b8e049e7ae54cdada54d0637e7bac39e4cc6afb44e8463b" "234dbb732ef054b109a9e5ee5b499632c63cc24f7c2383a849815dacc1727cb6" "7a7b1d475b42c1a0b61f3b1d1225dd249ffa1abb1b7f726aec59ac7ca3bf4dae" default))
  '(nil nil t)
- '(package-selected-packages '(dap-mode org-superstar swiper use-package ivy)))
+ '(package-selected-packages '(dap-mode org-superstar swiper use-package ivy))
+ '(warning-suppress-types '((comp))))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
