@@ -1,4 +1,4 @@
-;; -*- emacs-lisp -*- <22/06/26 15:12:29 /home/ruahman/.emacs.d/tramp>
+;; -*- emacs-lisp -*- <22/06/28 10:53:08 /home/ruahman/.emacs.d/tramp>
 ;; Tramp connection history.  Don't change this file.
 ;; Run `M-x tramp-cleanup-all-connections' instead.
 
@@ -10,4 +10,27 @@
   ("gid-string" "UNKNOWN")
   ("uid-integer" -1)
   ("gid-integer" -1)
-  ("gvfs-set-attribute-unix::mode" nil)))
+  ("gvfs-set-attribute-unix::mode" nil))
+ ((tramp-file-name "ssh" "ubuntu" nil "ec2-3-220-75-138.compute-1.amazonaws.com" nil nil nil)
+  ("null-device" "/dev/null")
+  ("uname" "Linux 5.13.0-1031-aws")
+  ("locale" "LC_ALL=en_US.utf8")
+  ("test" "test")
+  ("remote-path"
+   ("/bin" "/usr/bin" "/sbin" "/usr/sbin" "/usr/local/bin" "/usr/local/sbin"))
+  ("pipe-buf" 4096)
+  ("remote-shell" "/bin/sh")
+  ("id" "/bin/id")
+  ("gid-string" "ubuntu")
+  ("uid-string" "ubuntu")
+  ("file-exists" "test -e")
+  ("case-insensitive" nil)
+  ("~" "/home/ubuntu")
+  ("stat" "env QUOTING_STYLE=locale \\stat")
+  ("gid-integer" 1000)
+  ("readlink" "\\readlink")
+  ("ls" "/bin/ls --color=never")
+  ("ls--quoting-style=literal --show-control-chars" "--quoting-style=literal --show-control-chars")
+  ("ls--dired" "--dired")
+  ("df-blocksize" 1)
+  ("df" "\\df --block-size=1 --output=size,used,avail")))
