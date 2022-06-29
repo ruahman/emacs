@@ -1,7 +1,9 @@
 (setq user-full-name "Diego Vila")
 
+;; take out startup screen
 (setq inhibit-startup-message t)
 
+;; cause scroll bar, tool bar, and menu to disapear
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 (menu-bar-mode -1)
@@ -9,7 +11,7 @@
 ;; get ride of word wrapping
 (setq-default truncate-lines 1)
 
-;; get ride of the fringes
+;; get ride of the fringes from side of window
 (set-fringe-mode 0)      
 
 ;; Set up the visible bell
@@ -40,7 +42,6 @@
 (unless package-archive-contents
   (package-refresh-contents))
 
-;;;; seupt use-package
 (unless (package-installed-p 'use-package)
    (package-install 'use-package))
 
@@ -51,7 +52,7 @@
 ;; more convienient way of setting up keybindings
 (use-package general)
 
-;; for serching text in butter
+;; for serching text in buffer
 (use-package swiper
   :bind (("C-s" . swiper)))
 
@@ -63,8 +64,8 @@
 ;; helps with auto complete
 (use-package counsel :ensure t
   :bind (("M-x" . counsel-M-x)
-	 ("C-x b" . counsel-ibuffer)
-	 ("C-x f" . counsel-find-file))
+         ("C-x b" . counsel-ibuffer)
+         ("C-x f" . counsel-find-file))
   )
 
 ;; add extra information to search buffers
@@ -86,16 +87,21 @@
   (setq org-startup-indented t)
   (setq org-agenda-start-with-log-mode t)
   (setq org-agenda-files
-	'("~/Documents/org/tasks.org"
-	  "~/Documents/org/goals.org"
-	  "~/Documents/org/habits.org"))
+        '("~/Documents/org/tasks.org"
+          "~/Documents/org/goals.org"
+          "~/Documents/org/habits.org"))
   (setq org-ellipsis " "))
 
 ;; nicer bullits for org mode
 (use-package org-superstar)
 
+;; setup task with pomodoros
+(use-package org-pomodoro)
+
 ;; git program
-(use-package magit)
+(use-package magit
+  :custom
+  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
 ;; dashboard that shows up in beggining
 (use-package dashboard
@@ -113,11 +119,6 @@
 
 ;; show icons
 (use-package all-the-icons)
-
-;; setup task with pomodoros
-(use-package org-pomodoro)
-
-;; ;(use-package org-notifications :ensure t)
 
 ;; ranbow brakets
 (use-package rainbow-delimiters
@@ -139,7 +140,6 @@
                     (visual-line-mode 1)
                     (writeroom-mode 1)
                     (flyspell-mode 1))))
-
 
 ;; hook it to org-mode
 (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))

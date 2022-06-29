@@ -2,8 +2,10 @@
 #+BEGIN_SRC emacs-lisp
   (setq user-full-name "Diego Vila")
 
+  ;; take out startup screen
   (setq inhibit-startup-message t)
 
+  ;; cause scroll bar, tool bar, and menu to disapear
   (scroll-bar-mode -1)
   (tool-bar-mode -1)
   (menu-bar-mode -1)
@@ -11,7 +13,7 @@
   ;; get ride of word wrapping
   (setq-default truncate-lines 1)
 
-  ;; get ride of the fringes
+  ;; get ride of the fringes from side of window
   (set-fringe-mode 0)      
 
   ;; Set up the visible bell
@@ -28,10 +30,11 @@
 
   ;; so that magit does not freeze
   (setq max-specpdl-size 13000)
- 
+
 #+END_SRC
 * Packages
-#+BEGIN_SRC emacs-lisp
+** setup
+#+begin_src emacs-lisp
   ;;;; Initialize package sources
   (require 'package)
 
@@ -45,21 +48,29 @@
   (unless package-archive-contents
     (package-refresh-contents))
 
-  ;;;; seupt use-package
+#+end_src
+** use-package
+#+begin_src emacs-lisp
   (unless (package-installed-p 'use-package)
      (package-install 'use-package))
 
   (require 'use-package)
   ;; insure that package is downloaded 
   (setq use-package-always-ensure t)
-
+#+end_src
+** general
+#+begin_src emacs-lisp
   ;; more convienient way of setting up keybindings
   (use-package general)
-
-  ;; for serching text in butter
+#+end_src
+** swiper
+#+begin_src emacs-lisp
+  ;; for serching text in buffer
   (use-package swiper
     :bind (("C-s" . swiper)))
-
+#+end_src
+** ivy
+#+begin_src emacs-lisp
   ;; autocomplete for search buffers
   (use-package ivy
     :diminish
@@ -68,22 +79,26 @@
   ;; helps with auto complete
   (use-package counsel :ensure t
     :bind (("M-x" . counsel-M-x)
-	   ("C-x b" . counsel-ibuffer)
-	   ("C-x f" . counsel-find-file))
+           ("C-x b" . counsel-ibuffer)
+           ("C-x f" . counsel-find-file))
     )
 
   ;; add extra information to search buffers
   (use-package ivy-rich
     :init
     (ivy-rich-mode 1))
-
+#+end_src
+** which-key
+#+begin_src emacs-lisp
   ;; list menu for showing which key to use for keybinding
   (use-package which-key
     :init (which-key-mode)
     :diminish which-key-mode
     :config (which-key-mode)
     )
-
+#+end_src
+** org
+#+begin_src emacs-lisp
   ;; get latest org mode
   (use-package org
     :bind (("C-c a" . org-agenda))
@@ -91,22 +106,33 @@
     (setq org-startup-indented t)
     (setq org-agenda-start-with-log-mode t)
     (setq org-agenda-files
-	  '("~/Documents/org/tasks.org"
-	    "~/Documents/org/goals.org"
-	    "~/Documents/org/habits.org"))
+          '("~/Documents/org/tasks.org"
+            "~/Documents/org/goals.org"
+            "~/Documents/org/habits.org"))
     (setq org-ellipsis " "))
 
   ;; nicer bullits for org mode
   (use-package org-superstar)
 
+  ;; setup task with pomodoros
+  (use-package org-pomodoro)
+#+end_src
+** magit
+#+begin_src emacs-lisp
   ;; git program
-  (use-package magit)
-
+  (use-package magit
+    :custom
+    (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+#+end_src
+** dashboard
+#+begin_src emacs-lisp
   ;; dashboard that shows up in beggining
   (use-package dashboard
     :config
     (dashboard-setup-startup-hook))
-
+#+end_src
+** doom
+#+begin_src emacs-lisp
   ;; cool color thems
   (use-package doom-themes
     :init
@@ -118,21 +144,20 @@
 
   ;; show icons
   (use-package all-the-icons)
-
-  ;; setup task with pomodoros
-  (use-package org-pomodoro)
-
-  ;; ;(use-package org-notifications :ensure t)
-
+#+end_src
+** rainbow-delimiters
+#+begin_src emacs-lisp
   ;; ranbow brakets
   (use-package rainbow-delimiters
     :hook (prog-mode . rainbow-delimiters-mode))
-
+#+end_src
+** writeroom-mode
+#+BEGIN_SRC emacs-lisp
   (use-package writeroom-mode)
-
 #+END_SRC
 * Hooks
-#+BEGIN_SRC emacs-lisp
+** display-line-numbers-mode
+#+begin_src emacs-lisp
   ;; Disable line numbers for some modes
   (dolist (mode '(org-mode-hook
                   term-mode-hook
@@ -140,18 +165,21 @@
                   shell-mode-hook
                   eshell-mode-hook))
     (add-hook mode (lambda () (display-line-numbers-mode 0))))
-
+#+end_src
+** text-mode-hook
+#+begin_src emacs-lisp
   ;; enable flyspell for text mode
   (dolist (hook '(text-mode-hook))
     (add-hook hook (lambda ()
                       (visual-line-mode 1)
                       (writeroom-mode 1)
                       (flyspell-mode 1))))
-
-
+#+end_src
+** org-mode-hook
+#+begin_src emacs-lisp
   ;; hook it to org-mode
   (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
-#+END_SRC
+#+end_src
 * Keybindings
 #+BEGIN_SRC emacs-lisp
   ;;(general-define-key
