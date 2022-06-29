@@ -98,6 +98,14 @@
 ;; setup task with pomodoros
 (use-package org-pomodoro)
 
+(use-package hydra)
+;; org-fc is not yet MELPA / ELPA
+(use-package org-fc
+  :load-path "~/.emacs.d/org-fc"
+  :custom (org-fc-directories '("~/Documents/org/"))
+  :config
+  (require 'org-fc-hydra))
+
 ;; git program
 (use-package magit
   :custom
