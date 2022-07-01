@@ -6,4 +6,8 @@ recentf
 transient
 bookmarks
 org-fc
+.org-id-locations
+persist/
+session
+session.*
 *~

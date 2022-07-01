@@ -1,18 +1,18 @@
-(setq user-full-name "Diego Vila")
+;;(setq user-full-name "Diego Vila")
 
 ;; take out startup screen
-(setq inhibit-startup-message t)
+;;(setq inhibit-startup-message t)
 
 ;; cause scroll bar, tool bar, and menu to disapear
-(scroll-bar-mode -1)
-(tool-bar-mode -1)
-(menu-bar-mode -1)
+;(scroll-bar-mode -1)
+;(tool-bar-mode -1)
+;(menu-bar-mode -1)
 
 ;; get ride of word wrapping
 (setq-default truncate-lines 1)
 
 ;; get ride of the fringes from side of window
-(set-fringe-mode 0)      
+;;(set-fringe-mode 0)      
 
 ;; Set up the visible bell
 (setq visible-bell t)
@@ -86,11 +86,12 @@
   :config
   (setq org-startup-indented t)
   (setq org-agenda-start-with-log-mode t)
-  (setq org-agenda-files
-        '("~/Documents/org/tasks.org"
-          "~/Documents/org/goals.org"
-          "~/Documents/org/habits.org"))
-  (setq org-ellipsis " "))
+  ;; (setq org-agenda-files
+  ;;       '("~/Documents/org/tasks.org"
+  ;;         "~/Documents/org/goals.org"
+  ;;         "~/Documents/org/habits.org"))
+  (setq
+   org-ellipsis " "))
 
 ;; nicer bullits for org mode
 (use-package org-superstar)
@@ -98,13 +99,15 @@
 ;; setup task with pomodoros
 (use-package org-pomodoro)
 
-(use-package hydra)
-;; org-fc is not yet MELPA / ELPA
-(use-package org-fc
-  :load-path "~/.emacs.d/org-fc"
-  :custom (org-fc-directories '("~/Documents/org/"))
-  :config
-  (require 'org-fc-hydra))
+;; (use-package hydra)
+;; ;; org-fc is not yet MELPA / ELPA
+;; (use-package org-fc
+;;   :load-path "~/.emacs.d/org-fc"
+;;   :custom (org-fc-directories '("~/Documents/org/flashcards/"))
+;;   :config
+;;   (require 'org-fc-hydra))
+
+(use-package org-drill)
 
 ;; git program
 (use-package magit
@@ -112,9 +115,9 @@
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
 ;; dashboard that shows up in beggining
-(use-package dashboard
-  :config
-  (dashboard-setup-startup-hook))
+;; (use-package dashboard
+;;    :config
+;;    (dashboard-setup-startup-hook))
 
 ;; cool color thems
 (use-package doom-themes
@@ -122,11 +125,11 @@
   (load-theme 'doom-palenight t))
 
 ;; better mode line
-(use-package doom-modeline
-  :init (doom-modeline-mode 1))
+;; (use-package doom-modeline
+;;   :init (doom-modeline-mode 1))
 
-;; show icons
-(use-package all-the-icons)
+;; ;; show icons
+;; (use-package all-the-icons)
 
 ;; ranbow brakets
 (use-package rainbow-delimiters
