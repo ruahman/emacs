@@ -52,6 +52,9 @@
 ;; more convienient way of setting up keybindings
 (use-package general)
 
+;; allow repeating keys
+(use-package hydra)
+
 ;; for serching text in buffer
 (use-package swiper
   :bind (("C-s" . swiper)))
@@ -84,17 +87,27 @@
 (use-package org
   :bind (("C-c a" . org-agenda))
   :config
+  (setq org-todo-keywords
+  '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!)")))
   (setq org-startup-indented t)
   (setq org-agenda-start-with-log-mode t)
-  ;; (setq org-agenda-files
-  ;;       '("~/Documents/org/tasks.org"
-  ;;         "~/Documents/org/goals.org"
-  ;;         "~/Documents/org/habits.org"))
-  (setq
-   org-ellipsis " "))
+  (setq org-log-done 'time)
+  (setq org-log-into-drawer t)
+  (setq org-agenda-files
+        '("~/Documents/org/tasks.org"
+          "~/Documents/org/agenda.org"
+          "~/Documents/org/goals.org"
+          "~/Documents/org/habits.org"
+          "~/Documents/org/archive.org"))
+  (setq org-ellipsis " ")
+  (setq org-refile-targets '(("archive.org" :maxlevel . 1)))
+  (advice-add 'org-refile :after 'org-save-all-org-buffers))
 
 ;; nicer bullits for org mode
 (use-package org-superstar)
+
+(setq org-superstar-headline-bullets-list
+    '("◉" "◈" "○" "▷" "✸" "✦" "∗" "✧"))
 
 ;; setup task with pomodoros
 (use-package org-pomodoro)
@@ -157,3 +170,13 @@
 
 ;;(general-define-key
 ;;  "C-c a" 'org-agenda)
+
+(defhydra hydra-zoom (global-map "<f2>")
+    "zoom"
+    ("<up>" text-scale-increase "in")
+    ("<down>" text-scale-decrease "out"))
+
+(defhydra hydra-buffer (global-map "<f1>")
+  "buffer"
+  ("<left>" previous-buffer "prev")
+  ("<right>" next-buffer "next"))
