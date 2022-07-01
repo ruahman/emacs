@@ -142,9 +142,9 @@
 ** dashboard
 #+begin_src emacs-lisp
   ;; dashboard that shows up in beggining
-  ;; (use-package dashboard
-  ;;    :config
-  ;;    (dashboard-setup-startup-hook))
+  (use-package dashboard
+     :config
+     (dashboard-setup-startup-hook))
   #+end_src
 ** doom
 #+begin_src emacs-lisp
@@ -187,7 +187,7 @@
   (dolist (hook '(text-mode-hook))
     (add-hook hook (lambda ()
                       (visual-line-mode 1)
-                      (writeroom-mode 1)
+                      ;(writeroom-mode 1)
                       (flyspell-mode 1))))
 #+end_src
 ** org-mode-hook

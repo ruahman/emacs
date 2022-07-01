@@ -115,9 +115,9 @@
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
 ;; dashboard that shows up in beggining
-;; (use-package dashboard
-;;    :config
-;;    (dashboard-setup-startup-hook))
+(use-package dashboard
+   :config
+   (dashboard-setup-startup-hook))
 
 ;; cool color thems
 (use-package doom-themes
@@ -149,7 +149,7 @@
 (dolist (hook '(text-mode-hook))
   (add-hook hook (lambda ()
                     (visual-line-mode 1)
-                    (writeroom-mode 1)
+                    ;(writeroom-mode 1)
                     (flyspell-mode 1))))
 
 ;; hook it to org-mode
