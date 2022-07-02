@@ -3,7 +3,7 @@
   ;;(setq user-full-name "Diego Vila")
 
   ;; take out startup screen
-  ;;(setq inhibit-startup-message t)
+  (setq inhibit-startup-message t)
 
   ;; cause scroll bar, tool bar, and menu to disapear
   ;(scroll-bar-mode -1)
@@ -14,7 +14,7 @@
   (setq-default truncate-lines 1)
 
   ;; get ride of the fringes from side of window
-  ;;(set-fringe-mode 0)      
+  (set-fringe-mode 0)      
 
   ;; Set up the visible bell
   (setq visible-bell t)
@@ -116,7 +116,6 @@
     (setq org-log-into-drawer t)
     (setq org-agenda-files
           '("~/Documents/org/tasks.org"
-            "~/Documents/org/agenda.org"
             "~/Documents/org/goals.org"
             "~/Documents/org/habits.org"
             "~/Documents/org/archive.org"))
@@ -128,7 +127,7 @@
   (use-package org-superstar)
 
   (setq org-superstar-headline-bullets-list
-      '("◉" "◈" "○" "▷" "✸" "✦" "∗" "✧"))
+      '("◉" "◈" "○" "▷" "✸" "∗" "✦" "✧"))
 
   ;; setup task with pomodoros
   (use-package org-pomodoro)
