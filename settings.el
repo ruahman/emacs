@@ -1,18 +1,18 @@
 ;;(setq user-full-name "Diego Vila")
 
 ;; take out startup screen
-;;(setq inhibit-startup-message t)
+(setq inhibit-startup-message t)
 
 ;; cause scroll bar, tool bar, and menu to disapear
-;(scroll-bar-mode -1)
-;(tool-bar-mode -1)
-;(menu-bar-mode -1)
+(scroll-bar-mode -1)
+(tool-bar-mode -1)
+(menu-bar-mode -1)
 
 ;; get ride of word wrapping
 (setq-default truncate-lines 1)
 
 ;; get ride of the fringes from side of window
-;;(set-fringe-mode 0)      
+(set-fringe-mode 10)      
 
 ;; Set up the visible bell
 (setq visible-bell t)
@@ -67,8 +67,7 @@
 ;; helps with auto complete
 (use-package counsel :ensure t
   :bind (("M-x" . counsel-M-x)
-         ("C-x b" . counsel-ibuffer)
-         ("C-x f" . counsel-find-file))
+         ("C-x b" . counsel-ibuffer))
   )
 
 ;; add extra information to search buffers
@@ -95,7 +94,6 @@
   (setq org-log-into-drawer t)
   (setq org-agenda-files
         '("~/Documents/org/tasks.org"
-          "~/Documents/org/agenda.org"
           "~/Documents/org/goals.org"
           "~/Documents/org/habits.org"
           "~/Documents/org/archive.org"))
@@ -107,20 +105,45 @@
 (use-package org-superstar)
 
 (setq org-superstar-headline-bullets-list
-    '("◉" "◈" "○" "▷" "✸" "✦" "∗" "✧"))
+    '("◉" "◈" "○" "▷" "⇒" "➡" "✸" "∗" "✦" "✧"))
 
 ;; setup task with pomodoros
-(use-package org-pomodoro)
+;; (use-package org-pomodoro)
+;; (
+(use-package org-pomodoro
+  :commands (org-pomodoro)
+  :config
+  (setq alert-user-configuration (quote ((((:category . "org-pomodoro")) libnotify nil)))))
 
-;; (use-package hydra)
-;; ;; org-fc is not yet MELPA / ELPA
-;; (use-package org-fc
-;;   :load-path "~/.emacs.d/org-fc"
-;;   :custom (org-fc-directories '("~/Documents/org/flashcards/"))
-;;   :config
-;;   (require 'org-fc-hydra))
+(use-package org-drill
+  :config
+  (setq org-drill-cram-hours 0))
 
-(use-package org-drill)
+(use-package ob-go)
+;; (setenv "PATH" (concat (getenv "PATH") ":/usr/local/go/bin"))
+;; (
+ ;; setq exec-path (append exec-path '("/usr/local/go/bin")))
+
+(defun efs/configure-eshell ()
+  ;; Save command history when commands are entered
+  (add-hook 'eshell-pre-command-hook 'eshell-save-some-history)
+
+  ;; Truncate buffer for performance
+  (add-to-list 'eshell-output-filter-functions 'eshell-truncate-buffer)
+
+  (setq eshell-history-size         10000
+        eshell-buffer-maximum-lines 10000
+        eshell-hist-ignoredups t
+        eshell-scroll-to-bottom-on-input t))
+
+(use-package eshell-git-prompt)
+
+(use-package eshell
+  :hook (eshell-first-time-mode . efs/configure-eshell)
+  :config
+  (setenv "PATH" (concat (getenv "PATH") ":/home/ruahman/go/bin"))
+  (setq exec-path (append exec-path '("/home/ruahman/go/bin")))
+  (eshell-git-prompt-use-theme 'powerline))
 
 ;; git program
 (use-package magit
@@ -138,11 +161,11 @@
   (load-theme 'doom-palenight t))
 
 ;; better mode line
-;; (use-package doom-modeline
-;;   :init (doom-modeline-mode 1))
+(use-package doom-modeline
+  :init (doom-modeline-mode 1))
 
-;; ;; show icons
-;; (use-package all-the-icons)
+;; show icons
+(use-package all-the-icons)
 
 ;; ranbow brakets
 (use-package rainbow-delimiters
@@ -168,8 +191,17 @@
 ;; hook it to org-mode
 (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
 
-;;(general-define-key
-;;  "C-c a" 'org-agenda)
+(general-define-key
+   "C-x C-d" 'org-drill)
+
+(general-define-key
+   "C-x C-k" 'org-drill-cram)
+
+(general-define-key
+   "C-f" 'flyspell-mode)
+
+(general-define-key
+   "C-x C-p" 'org-pomodoro)
 
 (defhydra hydra-zoom (global-map "<f2>")
     "zoom"
