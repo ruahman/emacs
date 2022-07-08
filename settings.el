@@ -198,9 +198,6 @@
    "C-x C-k" 'org-drill-cram)
 
 (general-define-key
-   "C-f" 'flyspell-mode)
-
-(general-define-key
    "C-x C-p" 'org-pomodoro)
 
 (defhydra hydra-zoom (global-map "<f2>")
