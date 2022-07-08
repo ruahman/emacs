@@ -34,8 +34,9 @@
 
 ;; set archives to retrieve packages
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
-			 ("org" . "https://orgmode.org/elpa/")
-			 ("elpa" . "https://elpa.gnu.org/packages/")))
+                         ("org" . "https://orgmode.org/elpa/")
+                         ("elpa" . "https://elpa.gnu.org/packages/")
+                         ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
 
 (package-initialize)
 
@@ -92,11 +93,11 @@
   (setq org-agenda-start-with-log-mode t)
   (setq org-log-done 'time)
   (setq org-log-into-drawer t)
-  (setq org-agenda-files
-        '("~/Documents/org/tasks.org"
-          "~/Documents/org/goals.org"
-          "~/Documents/org/habits.org"
-          "~/Documents/org/archive.org"))
+  ;; (setq org-agenda-files
+  ;;       '("~/Documents/org/tasks.org"
+  ;;         "~/Documents/org/goals.org"
+  ;;         "~/Documents/org/habits.org"
+  ;;         "~/Documents/org/archive.org"))
   (setq org-ellipsis " ")
   (setq org-refile-targets '(("archive.org" :maxlevel . 1)))
   (advice-add 'org-refile :after 'org-save-all-org-buffers))
@@ -114,6 +115,8 @@
   :commands (org-pomodoro)
   :config
   (setq alert-user-configuration (quote ((((:category . "org-pomodoro")) libnotify nil)))))
+
+(use-package org-contrib)
 
 (use-package org-drill
   :config
@@ -186,7 +189,8 @@
   (add-hook hook (lambda ()
                     (visual-line-mode 1)
                     ;(writeroom-mode 1)
-                    (flyspell-mode 1))))
+                    ;(flyspell-mode 1)
+                    )))
 
 ;; hook it to org-mode
 (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))

@@ -5,16 +5,13 @@
 (add-to-list 'org-structure-template-alist '("bash" . "src bash"))
 (add-to-list 'org-structure-template-alist '("conf" . "src conf"))
 
-
 ;load settings from org file
 (require 'org)
 (org-babel-load-file
  (expand-file-name "settings.org"
                    user-emacs-directory))
 
-
-
-
+(org-babel-do-load-languages 'org-babel-load-languages '((csharp . t)))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
