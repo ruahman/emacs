@@ -30,6 +30,8 @@
 ;; so that magit does not freeze
 (setq max-specpdl-size 13000)
 
+(setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
+
 ;;;; Initialize package sources
 (require 'package)
 
