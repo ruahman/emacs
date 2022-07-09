@@ -12,3 +12,4 @@ session
 session.*
 *~
 tramp
+/server/
