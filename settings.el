@@ -25,6 +25,7 @@
 
 ;; set font
 (set-face-attribute 'default nil :font "Hack Nerd Font" :height 150)
+(setq default-frame-alist '((font . "Hack Nerd Font")))
 
 ;; so that magit does not freeze
 (setq max-specpdl-size 13000)
@@ -200,9 +201,6 @@
 
 (general-define-key
    "C-x C-k" 'org-drill-cram)
-
-(general-define-key
-   "C-f" 'flyspell-mode)
 
 (general-define-key
    "C-x C-p" 'org-pomodoro)
