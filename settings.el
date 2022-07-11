@@ -24,12 +24,30 @@
 (column-number-mode)
 
 ;; set font
-(set-face-attribute 'default nil :font "Hack Nerd Font" :height 150)
-(setq default-frame-alist '((font . "Hack Nerd Font")))
+;; (set-face-attribute 'default nil :font "Hack Nerd Font" :height 150)
+
+(defun set-font-faces()
+  (message "setting font")
+  (set-face-attribute 'variable-pitch nil :font "Hack Nerd Font" :height 150)
+  (set-face-attribute 'fixed-pitch nil :font "Hack Nerd Font" :height 150)
+  (set-face-attribute 'default nil :font "Hack Nerd Font" :height 150))
+
+(if (daemonp)
+    (add-hook 'after-make-frame-functions
+              (lambda (frame)
+                (with-selected-frame frame
+                  (set-font-faces))))
+    (set-font-faces))
+
+(set-font-faces)
+
+;; set font for emacsclient
+;;(setq default-frame-alist '((font . "Hack Nerd Font")))
 
 ;; so that magit does not freeze
 (setq max-specpdl-size 13000)
 
+;; initial buffer to show when in emacsclient
 (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
 
 ;;;; Initialize package sources
@@ -90,8 +108,8 @@
 (use-package org
   :bind (("C-c a" . org-agenda))
   :config
-  (setq org-todo-keywords
-  '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!)")))
+  ;; (setq org-todo-keywords
+  ;; '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!)")))
   (setq org-startup-indented t)
   (setq org-agenda-start-with-log-mode t)
   (setq org-log-done 'time)
@@ -198,14 +216,14 @@
 ;; hook it to org-mode
 (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
 
-(general-define-key
-   "C-x C-d" 'org-drill)
+;; (general-define-key
+;;    "C-x C-d" 'org-drill)
 
-(general-define-key
-   "C-x C-k" 'org-drill-cram)
+;; (general-define-key
+;;    "C-x C-k" 'org-drill-cram)
 
-(general-define-key
-   "C-x C-p" 'org-pomodoro)
+;; (general-define-key
+;;    "C-x C-p" 'org-pomodoro)
 
 (defhydra hydra-zoom (global-map "<f2>")
     "zoom"
