@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: bible
+# key: bible
+# --
+* Bible Verse
+  $1
+** answer
+$2
