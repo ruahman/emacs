@@ -120,22 +120,26 @@
   ;;         "~/Documents/org/habits.org"
   ;;         "~/Documents/org/archive.org"))
   (setq org-ellipsis " ")
-  (setq org-refile-targets '(("archive.org" :maxlevel . 1)))
-  (advice-add 'org-refile :after 'org-save-all-org-buffers))
+  ;;(setq org-refile-targets '(("archive.org" :maxlevel . 1)))
+  ;;(advice-add 'org-refile :after 'org-save-all-org-buffers)
+  (setq org-clock-sound "~/.emacs.d/sounds/bell3.mp3")
+  )
 
 ;; nicer bullits for org mode
 (use-package org-superstar)
 
 (setq org-superstar-headline-bullets-list
-    '("◉" "◈" "○" "▷" "⇒" "➡" "✸" "∗" "✦" "✧"))
+    '("◉" "◈" "○" "▷" "♯" "♭" "♦" "♣" "♠" "♥" ))
+
+
 
 ;; setup task with pomodoros
 ;; (use-package org-pomodoro)
 ;; (
-(use-package org-pomodoro
-  :commands (org-pomodoro)
-  :config
-  (setq alert-user-configuration (quote ((((:category . "org-pomodoro")) libnotify nil)))))
+;; (use-package org-pomodoro
+  ;; :commands (org-pomodoro)
+  ;; :config
+  ;; (setq alert-user-configuration (quote ((((:category . "org-pomodoro")) libnotify nil)))))
 
 (use-package org-contrib)
 
@@ -173,6 +177,11 @@
 (use-package magit
   :custom
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+
+(use-package yasnippet
+  :config
+  (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
+  (yas-global-mode 1))
 
 ;; dashboard that shows up in beggining
 (use-package dashboard

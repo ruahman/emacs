@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: vocabulario
+# key: vocab
+# --
+* vocabulario
+$1
+** la respuesta
+$2
