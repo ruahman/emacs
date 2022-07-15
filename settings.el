@@ -50,7 +50,7 @@
 (setq ispell-program-name "hunspell")
 (setq ispell-dictionary "en_US")
 (setq ispell-hunspell-dict-paths-alist
-    '(("en_US" "~/.emacs.d/dictionaries/en_US.aff")))
+     '(("en_US" "C:\\Hunspell\\en_US.aff")))
 
 ;;;; Initialize package sources
 (require 'package)
@@ -114,9 +114,9 @@
   (setq org-agenda-start-with-log-mode t)
   (setq org-log-done 'time)
   (setq org-log-into-drawer t)
-  ;; (setq org-agenda-files
-        ;; '("G:\\My Drive\\Documents\\org\\tasks.org"
-          ;; "G:\\My Drive\\Documents\\org\\habits.org"))
+  (setq org-agenda-files
+        '("G:\\My Drive\\Documents\\org\\tasks.org"
+          "G:\\My Drive\\Documents\\org\\habits.org"))
   (setq org-ellipsis " ")
   (setq org-clock-sound "~/.emacs.d/sounds/bell3.mp3"))
 
