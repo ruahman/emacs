@@ -23,9 +23,7 @@
 ;; show column number in mode line
 (column-number-mode)
 
-;; set font
-;; (set-face-attribute 'default nil :font "Hack Nerd Font" :height 150)
-
+;; set font for client
 (defun set-font-faces()
   (message "setting font")
   (set-face-attribute 'variable-pitch nil :font "Hack Nerd Font" :height 150)
@@ -40,9 +38,6 @@
     (set-font-faces))
 
 (set-font-faces)
-
-;; set font for emacsclient
-;;(setq default-frame-alist '((font . "Hack Nerd Font")))
 
 ;; so that magit does not freeze
 (setq max-specpdl-size 13000)
@@ -115,38 +110,25 @@
 (use-package org
   :bind (("C-c a" . org-agenda))
   :config
-  ;; (setq org-todo-keywords
-  ;; '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!)")))
   (setq org-startup-indented t)
   (setq org-agenda-start-with-log-mode t)
   (setq org-log-done 'time)
   (setq org-log-into-drawer t)
   ;; (setq org-agenda-files
-  ;;       '("~/Documents/org/tasks.org"
-  ;;         "~/Documents/org/goals.org"
-  ;;         "~/Documents/org/habits.org"
-  ;;         "~/Documents/org/archive.org"))
+        ;; '("G:\\My Drive\\Documents\\org\\tasks.org"
+          ;; "G:\\My Drive\\Documents\\org\\habits.org"))
   (setq org-ellipsis " ")
-  ;;(setq org-refile-targets '(("archive.org" :maxlevel . 1)))
-  ;;(advice-add 'org-refile :after 'org-save-all-org-buffers)
-  (setq org-clock-sound "~/.emacs.d/sounds/bell3.mp3")
-  )
+  (setq org-clock-sound "~/.emacs.d/sounds/bell3.mp3"))
 
 ;; nicer bullits for org mode
 (use-package org-superstar)
 
 (setq org-superstar-headline-bullets-list
-    '("◉" "◈" "○" "▷" "♯" "♭" "♦" "♣" "♠" "♥" ))
+    '("◉" "◈" "○" "▷" "♯" "♭" "π" "λ" "♦" "♣" "♠" "♥"))
 
-
-
-;; setup task with pomodoros
-;; (use-package org-pomodoro)
-;; (
-;; (use-package org-pomodoro
-  ;; :commands (org-pomodoro)
-  ;; :config
-  ;; (setq alert-user-configuration (quote ((((:category . "org-pomodoro")) libnotify nil)))))
+(require 'org-habit)
+(add-to-list 'org-modules 'org-habit)
+;;(setq org-habit-graph-column 60)
 
 (use-package org-contrib)
 
@@ -155,9 +137,6 @@
   (setq org-drill-cram-hours 0))
 
 (use-package ob-go)
-;; (setenv "PATH" (concat (getenv "PATH") ":/usr/local/go/bin"))
-;; (
- ;; setq exec-path (append exec-path '("/usr/local/go/bin")))
 
 (defun efs/configure-eshell ()
   ;; Save command history when commands are entered
