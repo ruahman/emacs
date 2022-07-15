@@ -201,6 +201,11 @@
     (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
     (yas-global-mode 1))
 #+end_src
+** restclient
+#+begin_src emacs-lisp
+  (use-package restclient)
+  ;; (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+#+end_src
 ** dashboard
 #+begin_src emacs-lisp
   ;; dashboard that shows up in beggining

@@ -169,6 +169,9 @@
   (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
   (yas-global-mode 1))
 
+(use-package restclient)
+;; (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+
 ;; dashboard that shows up in beggining
 (use-package dashboard
    :config
