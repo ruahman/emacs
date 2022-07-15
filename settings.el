@@ -50,6 +50,13 @@
 ;; initial buffer to show when in emacsclient
 (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
 
+;; set spelling
+(setenv "LANG" "en_US.UTF-8")
+(setq ispell-program-name "hunspell")
+(setq ispell-dictionary "en_US")
+(setq ispell-hunspell-dict-paths-alist
+    '(("en_US" "~/.emacs.d/dictionaries/en_US.aff")))
+
 ;;;; Initialize package sources
 (require 'package)
 

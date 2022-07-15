@@ -1,57 +1,63 @@
 * General Settings
 #+BEGIN_SRC emacs-lisp
-    ;;(setq user-full-name "Diego Vila")
+  ;;(setq user-full-name "Diego Vila")
 
-    ;; take out startup screen
-    (setq inhibit-startup-message t)
+  ;; take out startup screen
+  (setq inhibit-startup-message t)
 
-    ;; cause scroll bar, tool bar, and menu to disapear
-    (scroll-bar-mode -1)
-    (tool-bar-mode -1)
-    (menu-bar-mode -1)
+  ;; cause scroll bar, tool bar, and menu to disapear
+  (scroll-bar-mode -1)
+  (tool-bar-mode -1)
+  (menu-bar-mode -1)
 
-    ;; get ride of word wrapping
-    (setq-default truncate-lines 1)
+  ;; get ride of word wrapping
+  (setq-default truncate-lines 1)
 
-    ;; get ride of the fringes from side of window
-    (set-fringe-mode 10)      
+  ;; get ride of the fringes from side of window
+  (set-fringe-mode 10)      
 
-    ;; Set up the visible bell
-    (setq visible-bell t)
+  ;; Set up the visible bell
+  (setq visible-bell t)
 
-    ;; show line numbers
-    (global-display-line-numbers-mode t)
+  ;; show line numbers
+  (global-display-line-numbers-mode t)
 
-    ;; show column number in mode line
-    (column-number-mode)
+  ;; show column number in mode line
+  (column-number-mode)
 
-    ;; set font
-    ;; (set-face-attribute 'default nil :font "Hack Nerd Font" :height 150)
+  ;; set font
+  ;; (set-face-attribute 'default nil :font "Hack Nerd Font" :height 150)
 
-    (defun set-font-faces()
-      (message "setting font")
-      (set-face-attribute 'variable-pitch nil :font "Hack Nerd Font" :height 150)
-      (set-face-attribute 'fixed-pitch nil :font "Hack Nerd Font" :height 150)
-      (set-face-attribute 'default nil :font "Hack Nerd Font" :height 150))
+  (defun set-font-faces()
+    (message "setting font")
+    (set-face-attribute 'variable-pitch nil :font "Hack Nerd Font" :height 150)
+    (set-face-attribute 'fixed-pitch nil :font "Hack Nerd Font" :height 150)
+    (set-face-attribute 'default nil :font "Hack Nerd Font" :height 150))
 
-    (if (daemonp)
-        (add-hook 'after-make-frame-functions
-                  (lambda (frame)
-                    (with-selected-frame frame
-                      (set-font-faces))))
-        (set-font-faces))
+  (if (daemonp)
+      (add-hook 'after-make-frame-functions
+                (lambda (frame)
+                  (with-selected-frame frame
+                    (set-font-faces))))
+      (set-font-faces))
 
-    (set-font-faces)
+  (set-font-faces)
 
-    ;; set font for emacsclient
-    ;;(setq default-frame-alist '((font . "Hack Nerd Font")))
+  ;; set font for emacsclient
+  ;;(setq default-frame-alist '((font . "Hack Nerd Font")))
 
-    ;; so that magit does not freeze
-    (setq max-specpdl-size 13000)
+  ;; so that magit does not freeze
+  (setq max-specpdl-size 13000)
 
-    ;; initial buffer to show when in emacsclient
-    (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
+  ;; initial buffer to show when in emacsclient
+  (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
 
+  ;; set spelling
+  (setenv "LANG" "en_US.UTF-8")
+  (setq ispell-program-name "hunspell")
+  (setq ispell-dictionary "en_US")
+  (setq ispell-hunspell-dict-paths-alist
+      '(("en_US" "~/.emacs.d/dictionaries/en_US.aff")))
 #+END_SRC
 * Packages
 ** setup

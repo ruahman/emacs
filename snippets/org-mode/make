@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: make
+# key: make
+# --
+#+begin_src makefile
+  $0
+#+end_src
