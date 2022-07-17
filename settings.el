@@ -103,8 +103,8 @@
 (use-package which-key
   :init (which-key-mode)
   :diminish which-key-mode
-  :config (which-key-mode)
-  )
+  :config
+  (setq which-key-idle-delay 3))
 
 ;; get latest org mode
 (use-package org
@@ -114,9 +114,9 @@
   (setq org-agenda-start-with-log-mode t)
   (setq org-log-done 'time)
   (setq org-log-into-drawer t)
-  ;;(setq org-agenda-files
-        ;;'("/gdrive:ruahman@gmail.com:/Documents/org/tasks.org"
-          ;;"/gdrive:ruahman@gmail.com:/Documents/org/habits.org"))
+  (setq org-agenda-files
+        '("/gdrive:ruahman@gmail.com:/Documents/org/tasks.org"
+          "/gdrive:ruahman@gmail.com:/Documents/org/habits.org"))
   (setq org-ellipsis " ")
   (setq org-clock-sound "~/.emacs.d/sounds/bell3.mp3"))
 
