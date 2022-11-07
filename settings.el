@@ -46,11 +46,11 @@
 (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
 
 ;; set spelling
-(setenv "LANG" "en_US.UTF-8")
-(setq ispell-program-name "hunspell")
-(setq ispell-dictionary "en_US")
-(setq ispell-hunspell-dict-paths-alist
-     '(("en_US" "C:\\Hunspell\\en_US.aff")))
+;;(setenv "LANG" "en_US.UTF-8")
+;;(setq ispell-program-name "hunspell")
+;;(setq ispell-dictionary "en_US")
+;;(setq ispell-hunspell-dict-paths-alist
+;;     '(("en_US" "C:\\Hunspell\\en_US.aff")))
 
 ;;;; Initialize package sources
 (require 'package)
@@ -114,9 +114,9 @@
   (setq org-agenda-start-with-log-mode t)
   (setq org-log-done 'time)
   (setq org-log-into-drawer t)
-  (setq org-agenda-files
-        '("/gdrive:ruahman@gmail.com:/Documents/org/tasks.org"
-          "/gdrive:ruahman@gmail.com:/Documents/org/habits.org"))
+  ;;(setq org-agenda-files
+        ;;'("/gdrive:ruahman@gmail.com:/Documents/org/tasks.org"
+          ;;"/gdrive:ruahman@gmail.com:/Documents/org/habits.org"))
   (setq org-ellipsis " ")
   (setq org-clock-sound "~/.emacs.d/sounds/bell3.mp3"))
 

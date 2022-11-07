@@ -48,11 +48,11 @@
   (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
 
   ;; set spelling
-  (setenv "LANG" "en_US.UTF-8")
-  (setq ispell-program-name "hunspell")
-  (setq ispell-dictionary "en_US")
-  (setq ispell-hunspell-dict-paths-alist
-       '(("en_US" "C:\\Hunspell\\en_US.aff")))
+  ;;(setenv "LANG" "en_US.UTF-8")
+  ;;(setq ispell-program-name "hunspell")
+  ;;(setq ispell-dictionary "en_US")
+  ;;(setq ispell-hunspell-dict-paths-alist
+  ;;     '(("en_US" "C:\\Hunspell\\en_US.aff")))
 #+END_SRC
 * Packages
 ** setup
