@@ -30,6 +30,7 @@
   (set-face-attribute 'fixed-pitch nil :font "Hack Nerd Font" :height 150)
   (set-face-attribute 'default nil :font "Hack Nerd Font" :height 150))
 
+;; if emacs is running as a server
 (if (daemonp)
     (add-hook 'after-make-frame-functions
               (lambda (frame)
@@ -37,7 +38,7 @@
                   (set-font-faces))))
     (set-font-faces))
 
-(set-font-faces)
+;;(set-font-faces)
 
 ;; so that magit does not freeze
 (setq max-specpdl-size 13000)
@@ -124,7 +125,7 @@
 (use-package org-superstar)
 
 (setq org-superstar-headline-bullets-list
-    '("◉" "◈" "○" "▷" "♯" "♭" "π" "λ" "♦" "♣" "♠" "♥"))
+    '("◉" "◈" "▶" "○" "◇" "▷"))
 
 (require 'org-habit)
 (add-to-list 'org-modules 'org-habit)
@@ -138,27 +139,6 @@
 
 (use-package ob-go)
 
-(defun efs/configure-eshell ()
-  ;; Save command history when commands are entered
-  (add-hook 'eshell-pre-command-hook 'eshell-save-some-history)
-
-  ;; Truncate buffer for performance
-  (add-to-list 'eshell-output-filter-functions 'eshell-truncate-buffer)
-
-  (setq eshell-history-size         10000
-        eshell-buffer-maximum-lines 10000
-        eshell-hist-ignoredups t
-        eshell-scroll-to-bottom-on-input t))
-
-(use-package eshell-git-prompt)
-
-(use-package eshell
-  :hook (eshell-first-time-mode . efs/configure-eshell)
-  :config
-  (setenv "PATH" (concat (getenv "PATH") ":/home/ruahman/go/bin"))
-  (setq exec-path (append exec-path '("/home/ruahman/go/bin")))
-  (eshell-git-prompt-use-theme 'powerline))
-
 ;; git program
 (use-package magit
   :custom
@@ -168,9 +148,6 @@
   :config
   (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
   (yas-global-mode 1))
-
-(use-package restclient)
-;; (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
 ;; dashboard that shows up in beggining
 (use-package dashboard
@@ -213,22 +190,3 @@
 
 ;; hook it to org-mode
 (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
-
-;; (general-define-key
-;;    "C-x C-d" 'org-drill)
-
-;; (general-define-key
-;;    "C-x C-k" 'org-drill-cram)
-
-;; (general-define-key
-;;    "C-x C-p" 'org-pomodoro)
-
-(defhydra hydra-zoom (global-map "<f2>")
-    "zoom"
-    ("<up>" text-scale-increase "in")
-    ("<down>" text-scale-decrease "out"))
-
-(defhydra hydra-buffer (global-map "<f1>")
-  "buffer"
-  ("<left>" previous-buffer "prev")
-  ("<right>" next-buffer "next"))
