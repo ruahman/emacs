@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: swift
+# key: swift
+# --
+#+begin_src swift
+  $1
+#+end_src

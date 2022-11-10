@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: javascript
+# key: javascript
+# --
+#+begin_src javascript
+  $1
+#+end_src
