@@ -33,18 +33,16 @@
 ;; if emacs is running as a server
 (if (daemonp)
     (add-hook 'after-make-frame-functions
-              (lambda (frame)
-                (with-selected-frame frame
-                  (set-font-faces))))
+	      (lambda (frame)
+		(with-selected-frame frame
+		  (set-font-faces))))
     (set-font-faces))
-
-;;(set-font-faces)
 
 ;; so that magit does not freeze
 (setq max-specpdl-size 13000)
 
 ;; initial buffer to show when in emacsclient
-(setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
+;; (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
 
 (if (eq system-type 'windows-nt)
     (progn
@@ -52,28 +50,44 @@
       (setq ispell-program-name "hunspell")
       (setq ispell-dictionary "en_US")
       (setq ispell-hunspell-dict-paths-alist
-        '(("en_US" "C:\\Hunspell\\en_US.aff")))))
+	'(("en_US" "C:\\Hunspell\\en_US.aff")))))
 
 ;;;; Initialize package sources
-(require 'package)
+  ;;(require 'package)
 
-;; set archives to retrieve packages
-(setq package-archives '(("melpa" . "https://melpa.org/packages/")
-                         ("org" . "https://orgmode.org/elpa/")
-                         ("elpa" . "https://elpa.gnu.org/packages/")
-                         ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
+  ;; set archives to retrieve packages
+  ;;(setq package-archives '(("melpa" . "https://melpa.org/packages/")
+                           ;;("org" . "https://orgmode.org/elpa/")
+                           ;;("elpa" . "https://elpa.gnu.org/packages/")
+                           ;;("nongnu" . "https://elpa.nongnu.org/nongnu/")))
 
-(package-initialize)
+  ;;(package-initialize)
 
-(unless package-archive-contents
-  (package-refresh-contents))
+  ;;(unless package-archive-contents
+    ;;(package-refresh-contents))
 
-(unless (package-installed-p 'use-package)
-   (package-install 'use-package))
 
-(require 'use-package)
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 6))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+
+;; (unless (package-installed-p 'use-package)
+;;         (package-install 'use-package))
+
+;; (require 'use-package)
 ;; insure that package is downloaded 
-(setq use-package-always-ensure t)
+;; (setq use-package-always-ensure t)
+(straight-use-package 'use-package)
+(setq straight-use-package-by-default t)
 
 ;; more convienient way of setting up keybindings
 (use-package general)
@@ -116,11 +130,10 @@
   (setq org-agenda-start-with-log-mode t)
   (setq org-log-done 'time)
   (setq org-log-into-drawer t)
-  ;;(setq org-agenda-files
-        ;;'("/gdrive:ruahman@gmail.com:/Documents/org/tasks.org"
-          ;;"/gdrive:ruahman@gmail.com:/Documents/org/habits.org"))
   (setq org-ellipsis " ")
   (setq org-clock-sound "~/.emacs.d/sounds/bell3.mp3"))
+
+;;(use-package org-contrib)
 
 ;; nicer bullits for org mode
 (use-package org-superstar)
@@ -128,17 +141,11 @@
 (setq org-superstar-headline-bullets-list
     '("◉" "◈" "▶" "○" "◇" "▷"))
 
-(require 'org-habit)
-(add-to-list 'org-modules 'org-habit)
-;;(setq org-habit-graph-column 60)
-
-(use-package org-contrib)
+(use-package org-roam)
 
 (use-package org-drill
   :config
   (setq org-drill-cram-hours 0))
-
-(use-package ob-go)
 
 ;; git program
 (use-package magit
@@ -191,3 +198,21 @@
 
 ;; hook it to org-mode
 (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
+
+;; (general-define-key
+;;    "C-x C-d" 'org-drill)
+;;
+;; (general-define-key
+;;    "C-x C-k" 'org-drill-cram)
+;;
+;; (general-define-key
+;;    "C-x C-p" 'org-pomodoro)
+;;  (defhydra hydra-zoom (global-map "<f2>")
+;;      "zoom"
+;;      ("<up>" text-scale-increase "in")
+;;      ("<down>" text-scale-decrease "out"))
+;;
+;;  (defhydra hydra-buffer (global-map "<f1>")
+;;    "buffer"
+;;    ("<left>" previous-buffer "prev")
+;;    ("<right>" next-buffer "next"))
