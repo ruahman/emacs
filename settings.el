@@ -52,40 +52,6 @@
       (setq ispell-hunspell-dict-paths-alist
 	'(("en_US" "C:\\Hunspell\\en_US.aff")))))
 
-;;;; Initialize package sources
-  ;;(require 'package)
-
-  ;; set archives to retrieve packages
-  ;;(setq package-archives '(("melpa" . "https://melpa.org/packages/")
-                           ;;("org" . "https://orgmode.org/elpa/")
-                           ;;("elpa" . "https://elpa.gnu.org/packages/")
-                           ;;("nongnu" . "https://elpa.nongnu.org/nongnu/")))
-
-  ;;(package-initialize)
-
-  ;;(unless package-archive-contents
-    ;;(package-refresh-contents))
-
-
-(defvar bootstrap-version)
-(let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      (bootstrap-version 6))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
-
-;; (unless (package-installed-p 'use-package)
-;;         (package-install 'use-package))
-
-;; (require 'use-package)
-;; insure that package is downloaded 
-;; (setq use-package-always-ensure t)
 (straight-use-package 'use-package)
 (setq straight-use-package-by-default t)
 
@@ -131,17 +97,26 @@
   (setq org-log-done 'time)
   (setq org-log-into-drawer t)
   (setq org-ellipsis " ")
-  (setq org-clock-sound "~/.emacs.d/sounds/bell3.mp3"))
+  (setq org-clock-sound "~/.emacs.d/sounds/bell3.mp3")
+  (setq org-agenda-files (list "~/.emacs.d/OrgGTD/tasks.org")))
 
-;;(use-package org-contrib)
+(use-package org-contrib)
 
-;; nicer bullits for org mode
-(use-package org-superstar)
+(use-package org-bullets
+  :hook
+  (org-mode . org-bullets-mode))
 
-(setq org-superstar-headline-bullets-list
-    '("◉" "◈" "▶" "○" "◇" "▷"))
-
-(use-package org-roam)
+(use-package org-roam
+  :ensure t
+  :init
+  (setq org-roam-v2-ack t)
+  :custom
+  (org-roam-directory "~/.emacs/OrgRoam")
+  :bind (("C-c n l" . org-roam-buffer-toggle)
+         ("C-c n f" . org-roam-node-find)
+         ("C-c n i" . org-roam-node-insert))
+  :config
+  (org-roam-setup))
 
 (use-package org-drill
   :config
@@ -195,9 +170,6 @@
                     ;(writeroom-mode 1)
                     ;(flyspell-mode 1)
                     )))
-
-;; hook it to org-mode
-(add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
 
 ;; (general-define-key
 ;;    "C-x C-d" 'org-drill)
