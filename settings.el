@@ -1,4 +1,4 @@
-;;(setq user-full-name "Diego Vila")
+(setq user-full-name "Diego Vila")
 
 ;; take out startup screen
 (setq inhibit-startup-message t)
@@ -46,20 +46,20 @@
 
 (if (eq system-type 'windows-nt)
     (progn
-      (setenv "LANG" "en_US.UTF-8")
-      (setq ispell-program-name "hunspell")
-      (setq ispell-dictionary "en_US")
-      (setq ispell-hunspell-dict-paths-alist
-	'(("en_US" "C:\\Hunspell\\en_US.aff")))))
+	(setenv "LANG" "en_US.UTF-8")
+	(setq ispell-program-name "hunspell")
+	(setq ispell-dictionary "en_US")
+	(setq ispell-hunspell-dict-paths-alist
+	  '(("en_US" "C:\\Hunspell\\en_US.aff")))))
 
 (straight-use-package 'use-package)
 (setq straight-use-package-by-default t)
 
 ;; more convienient way of setting up keybindings
-(use-package general)
+;; (use-package general)
 
 ;; allow repeating keys
-(use-package hydra)
+;; (use-package hydra)
 
 ;; for serching text in buffer
 (use-package swiper
@@ -100,7 +100,7 @@
   (setq org-clock-sound "~/.emacs.d/sounds/bell3.mp3")
   (setq org-agenda-files (list "~/GTD/tasks.org")))
 
-(use-package org-contrib)
+;; (use-package org-contrib)
 
 (use-package org-bullets
   :hook
