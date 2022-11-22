@@ -96,9 +96,9 @@
   (setq org-agenda-start-with-log-mode t)
   (setq org-log-done 'time)
   (setq org-log-into-drawer t)
-  (setq org-ellipsis " ")
+  (setq org-ellipsis "...")
   (setq org-clock-sound "~/.emacs.d/sounds/bell3.mp3")
-  (setq org-agenda-files (list "~/.emacs.d/OrgGTD/tasks.org")))
+  (setq org-agenda-files (list "~/GTD/tasks.org")))
 
 (use-package org-contrib)
 
@@ -106,26 +106,21 @@
   :hook
   (org-mode . org-bullets-mode))
 
-(use-package org-roam
-  :ensure t
-  :init
-  (setq org-roam-v2-ack t)
-  :custom
-  (org-roam-directory "~/.emacs/OrgRoam")
-  :bind (("C-c n l" . org-roam-buffer-toggle)
-         ("C-c n f" . org-roam-node-find)
-         ("C-c n i" . org-roam-node-insert))
-  :config
-  (org-roam-setup))
+;; (use-package org-roam
+;;   :ensure t
+;;   :init
+;;   (setq org-roam-v2-ack t)
+;;   :custom
+;;   (org-roam-directory "~/OrgRoam")
+;;   :bind (("C-c n l" . org-roam-buffer-toggle)
+;;          ("C-c n f" . org-roam-node-find)
+;;          ("C-c n i" . org-roam-node-insert))
+;;   :config
+;;   (org-roam-setup))
 
 (use-package org-drill
   :config
   (setq org-drill-cram-hours 0))
-
-;; git program
-(use-package magit
-  :custom
-  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
 (use-package yasnippet
   :config
@@ -154,6 +149,11 @@
   :hook (prog-mode . rainbow-delimiters-mode))
 
 (use-package writeroom-mode)
+
+;; git program
+(use-package magit
+  :custom
+  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
 ;; Disable line numbers for some modes
 (dolist (mode '(org-mode-hook
