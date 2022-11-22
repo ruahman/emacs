@@ -122,6 +122,10 @@
   :config
   (setq org-drill-cram-hours 0))
 
+(use-package ob-swift)
+
+(use-package ob-rust)
+
 (use-package yasnippet
   :config
   (setq yas-snippet-dirs '("~/.emacs.d/snippets"))

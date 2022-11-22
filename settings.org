@@ -147,6 +147,14 @@
     :config
     (setq org-drill-cram-hours 0))
 #+end_src
+** ob-swift
+#+begin_src emacs-lisp
+  (use-package ob-swift)
+#+end_src
+** ob-rust
+#+begin_src emacs-lisp
+  (use-package ob-rust) 
+#+end_src
 ** yasnippet
 #+begin_src emacs-lisp
   (use-package yasnippet
