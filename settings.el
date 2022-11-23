@@ -56,7 +56,7 @@
 (setq straight-use-package-by-default t)
 
 ;; more convienient way of setting up keybindings
-;; (use-package general)
+(use-package general)
 
 ;; allow repeating keys
 ;; (use-package hydra)
@@ -175,6 +175,10 @@
                     ;(flyspell-mode 1)
                     )))
 
+(general-define-key
+   "C-x w" 'writeroom-mode)
+(general-define-key
+   "C-x f" 'flyspell-mode)
 ;; (general-define-key
 ;;    "C-x C-d" 'org-drill)
 ;;

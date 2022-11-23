@@ -63,7 +63,7 @@
 ** general
 #+begin_src emacs-lisp
   ;; more convienient way of setting up keybindings
-  ;; (use-package general)
+  (use-package general)
 #+end_src
 ** hydra
 #+begin_src emacs-lisp
@@ -223,22 +223,19 @@
 #+end_src
 * Keybindings
 #+BEGIN_SRC emacs-lisp
+  (general-define-key
+       "C-x w" 'writeroom-mode)
 
-;; (general-define-key
-;;    "C-x C-d" 'org-drill)
-;;
-;; (general-define-key
-;;    "C-x C-k" 'org-drill-cram)
-;;
-;; (general-define-key
-;;    "C-x C-p" 'org-pomodoro)
-;;  (defhydra hydra-zoom (global-map "<f2>")
-;;      "zoom"
-;;      ("<up>" text-scale-increase "in")
-;;      ("<down>" text-scale-decrease "out"))
-;;
-;;  (defhydra hydra-buffer (global-map "<f1>")
-;;    "buffer"
-;;    ("<left>" previous-buffer "prev")
-;;    ("<right>" next-buffer "next"))
+  (general-define-key
+       "C-x f" 'flyspell-mode)
+
+  ;;  (defhydra hydra-zoom (global-map "<f2>")
+    ;;      "zoom"
+    ;;      ("<up>" text-scale-increase "in")
+    ;;      ("<down>" text-scale-decrease "out"))
+    ;;
+    ;;  (defhydra hydra-buffer (global-map "<f1>")
+    ;;    "buffer"
+    ;;    ("<left>" previous-buffer "prev")
+    ;;    ("<right>" next-buffer "next"))
 #+END_SRC
