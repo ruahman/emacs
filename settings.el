@@ -176,23 +176,17 @@
                     )))
 
 (general-define-key
-   "C-x w" 'writeroom-mode)
+     "C-x w" 'writeroom-mode)
+
 (general-define-key
-   "C-x f" 'flyspell-mode)
-;; (general-define-key
-;;    "C-x C-d" 'org-drill)
-;;
-;; (general-define-key
-;;    "C-x C-k" 'org-drill-cram)
-;;
-;; (general-define-key
-;;    "C-x C-p" 'org-pomodoro)
+     "C-x f" 'flyspell-mode)
+
 ;;  (defhydra hydra-zoom (global-map "<f2>")
-;;      "zoom"
-;;      ("<up>" text-scale-increase "in")
-;;      ("<down>" text-scale-decrease "out"))
-;;
-;;  (defhydra hydra-buffer (global-map "<f1>")
-;;    "buffer"
-;;    ("<left>" previous-buffer "prev")
-;;    ("<right>" next-buffer "next"))
+  ;;      "zoom"
+  ;;      ("<up>" text-scale-increase "in")
+  ;;      ("<down>" text-scale-decrease "out"))
+  ;;
+  ;;  (defhydra hydra-buffer (global-map "<f1>")
+  ;;    "buffer"
+  ;;    ("<left>" previous-buffer "prev")
+  ;;    ("<right>" next-buffer "next"))
