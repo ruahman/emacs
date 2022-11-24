@@ -119,7 +119,7 @@
 #+end_src
 ** org-contrib
 #+begin_src emacs-lisp
-  ;; (use-package org-contrib)
+  (use-package org-contrib)
 #+end_src
 ** org-bullets
 #+begin_src emacs-lisp
@@ -149,11 +149,18 @@
 #+end_src
 ** ob-swift
 #+begin_src emacs-lisp
-  (use-package ob-swift)
+  ;; (use-package ob-swift)
 #+end_src
 ** ob-rust
 #+begin_src emacs-lisp
-  (use-package ob-rust) 
+  ;; (use-package ob-rust)
+
+  ; active Babel languages
+  ;; (org-babel-do-load-languages
+  ;;   'org-babel-load-languages
+  ;;   '((rust . t)
+  ;;     (java . t)
+  ;;     (emacs-lisp . t)))
 #+end_src
 ** yasnippet
 #+begin_src emacs-lisp

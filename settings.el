@@ -100,7 +100,7 @@
   (setq org-clock-sound "~/.emacs.d/sounds/bell3.mp3")
   (setq org-agenda-files (list "~/GTD/tasks.org")))
 
-;; (use-package org-contrib)
+(use-package org-contrib)
 
 (use-package org-bullets
   :hook
@@ -125,6 +125,12 @@
 (use-package ob-swift)
 
 (use-package ob-rust)
+;; active Babel languages
+(org-babel-do-load-languages
+  'org-babel-load-languages
+  '((rust . t)
+    (java . t)
+    (emacs-lisp . t)))
 
 (use-package yasnippet
   :config
