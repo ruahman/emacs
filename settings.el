@@ -122,15 +122,16 @@
   :config
   (setq org-drill-cram-hours 0))
 
-(use-package ob-swift)
+;; (use-package ob-swift)
 
-(use-package ob-rust)
-;; active Babel languages
-(org-babel-do-load-languages
-  'org-babel-load-languages
-  '((rust . t)
-    (java . t)
-    (emacs-lisp . t)))
+;; (use-package ob-rust)
+
+; active Babel languages
+;; (org-babel-do-load-languages
+;;   'org-babel-load-languages
+;;   '((rust . t)
+;;     (java . t)
+;;     (emacs-lisp . t)))
 
 (use-package yasnippet
   :config
