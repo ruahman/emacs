@@ -122,17 +122,6 @@
   :config
   (setq org-drill-cram-hours 0))
 
-;; (use-package ob-swift)
-
-;; (use-package ob-rust)
-
-; active Babel languages
-;; (org-babel-do-load-languages
-;;   'org-babel-load-languages
-;;   '((rust . t)
-;;     (java . t)
-;;     (emacs-lisp . t)))
-
 (use-package yasnippet
   :config
   (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
@@ -163,21 +152,21 @@
 
 ;; git program
 (use-package magit
-  :custom
-  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+   :custom
+   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
-(use-package evil
-  :init
-  (setq evil-want-integration t)
-  (setq evil-want-keybinding nil)
-  :config
-  (evil-mode 1)
-  (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state))
+;; (use-package evil
+;;   :init
+;;   (setq evil-want-integration t)
+;;   (setq evil-want-keybinding nil)
+;;   :config
+;;   (evil-mode 1)
+;;   (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state))
 
-(use-package evil-collection
-  :after evil
-  :config
-  (evil-collection-init))
+;; (use-package evil-collection
+;;   :after evil
+;;   :config
+;;   (evil-collection-init))
 
 ;; Disable line numbers for some modes
 (dolist (mode '(org-mode-hook

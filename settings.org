@@ -147,21 +147,6 @@
     :config
     (setq org-drill-cram-hours 0))
 #+end_src
-** ob-swift
-#+begin_src emacs-lisp
-  ;; (use-package ob-swift)
-#+end_src
-** ob-rust
-#+begin_src emacs-lisp
-  ;; (use-package ob-rust)
-
-  ; active Babel languages
-  ;; (org-babel-do-load-languages
-  ;;   'org-babel-load-languages
-  ;;   '((rust . t)
-  ;;     (java . t)
-  ;;     (emacs-lisp . t)))
-#+end_src
 ** yasnippet
 #+begin_src emacs-lisp
   (use-package yasnippet
@@ -204,25 +189,25 @@
 #+begin_src emacs-lisp
   ;; git program
   (use-package magit
-    :custom
-    (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+     :custom
+     (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 #+end_src
 ** evil
 #+begin_src emacs-lisp
-  (use-package evil
-    :init
-    (setq evil-want-integration t)
-    (setq evil-want-keybinding nil)
-    :config
-    (evil-mode 1)
-    (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state))
+  ;; (use-package evil
+  ;;   :init
+  ;;   (setq evil-want-integration t)
+  ;;   (setq evil-want-keybinding nil)
+  ;;   :config
+  ;;   (evil-mode 1)
+  ;;   (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state))
 #+end_src
 ** evil-collection
 #+begin_src emacs-lisp
-  (use-package evil-collection
-    :after evil
-    :config
-    (evil-collection-init))
+  ;; (use-package evil-collection
+  ;;   :after evil
+  ;;   :config
+  ;;   (evil-collection-init))
 #+end_src
 * Hooks
 ** display-line-numbers-mode
