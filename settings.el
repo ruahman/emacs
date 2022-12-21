@@ -106,18 +106,6 @@
   :hook
   (org-mode . org-bullets-mode))
 
-;; (use-package org-roam
-;;   :ensure t
-;;   :init
-;;   (setq org-roam-v2-ack t)
-;;   :custom
-;;   (org-roam-directory "~/OrgRoam")
-;;   :bind (("C-c n l" . org-roam-buffer-toggle)
-;;          ("C-c n f" . org-roam-node-find)
-;;          ("C-c n i" . org-roam-node-insert))
-;;   :config
-;;   (org-roam-setup))
-
 (use-package org-drill
   :config
   (setq org-drill-cram-hours 0))
@@ -168,7 +156,11 @@
 ;;   :config
 ;;   (evil-collection-init))
 
-(use-package denote)
+(use-package denote
+  :config
+  (setq denote-directory (expand-file-name "~/denote"))
+  (setq denote-known-keywords '("emacs" "math" "music" "gtd" "zettelkasten" "latex"))
+  (setq denote-infer-keywords t))
 
 ;; Disable line numbers for some modes
 (dolist (mode '(org-mode-hook
