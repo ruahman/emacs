@@ -168,6 +168,8 @@
 ;;   :config
 ;;   (evil-collection-init))
 
+(use-package denote)
+
 ;; Disable line numbers for some modes
 (dolist (mode '(org-mode-hook
                 term-mode-hook

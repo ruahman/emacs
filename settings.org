@@ -209,6 +209,10 @@
   ;;   :config
   ;;   (evil-collection-init))
 #+end_src
+** denote
+#+begin_src emacs-lisp
+  (use-package denote)
+#+end_src
 * Hooks
 ** display-line-numbers-mode
 #+begin_src emacs-lisp
