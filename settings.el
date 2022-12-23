@@ -67,19 +67,18 @@
 
 ;; autocomplete for search buffers
 (use-package ivy
-  :diminish
-  :config (ivy-mode 1))
+   :diminish
+   :config (ivy-mode 1))
 
 ;; helps with auto complete
 (use-package counsel :ensure t
-  :bind (("M-x" . counsel-M-x)
-         ("C-x b" . counsel-ibuffer))
-  )
+   :bind (("M-x" . counsel-M-x)
+          ("C-x b" . counsel-ibuffer)))
 
 ;; add extra information to search buffers
 (use-package ivy-rich
-  :init
-  (ivy-rich-mode 1))
+   :init
+   (ivy-rich-mode 1))
 
 ;; list menu for showing which key to use for keybinding
 (use-package which-key
@@ -98,7 +97,10 @@
   (setq org-log-into-drawer t)
   (setq org-ellipsis "...")
   (setq org-clock-sound "~/.emacs.d/sounds/bell3.mp3")
-  (setq org-agenda-files (list "~/GTD/tasks.org")))
+  (setq org-agenda-files (list "~/GTD/tasks.org"))
+  (org-babel-do-load-languages
+    'org-babel-load-languages
+    '((python . t))))
 
 (use-package org-contrib)
 
@@ -126,10 +128,10 @@
   (load-theme 'doom-palenight t))
 
 ;; better mode line
-(use-package doom-modeline
-  :init (doom-modeline-mode 1))
+;; (use-package doom-modeline
+;;   :init (doom-modeline-mode 1))
 
-;; show icons
+;;show icons
 (use-package all-the-icons)
 
 ;; ranbow brakets
