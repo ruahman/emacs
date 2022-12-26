@@ -104,6 +104,9 @@
   (add-to-list 'org-modules 'org-habit)
   (setq org-habit-graph-column 60)
 
+  (setq org-refile-targets
+    '(("tasks.org" :maxlevel . 1)))
+
   (org-babel-do-load-languages
     'org-babel-load-languages
     '((python . t))))
