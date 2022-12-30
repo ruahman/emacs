@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: spanish
+# key: spanish
+# --
+* spanish
+  $1
+** la respuesta
+   $2

@@ -98,14 +98,17 @@
   (setq org-hide-emphasis-markers t)
   (setq org-ellipsis "...")
   (setq org-clock-sound "~/.emacs.d/sounds/bell3.mp3")
-  (setq org-agenda-files (list "~/gtd/tasks.org"))
+  (setq org-agenda-files '("~/gtd/tasks.org"
+                           "~/gtd/projects.org"
+                           "~/gtd/habits.org"))
 
   (require 'org-habit)
   (add-to-list 'org-modules 'org-habit)
   (setq org-habit-graph-column 60)
 
-  (setq org-refile-targets
-    '(("tasks.org" :maxlevel . 1)))
+  ;;(setq org-refile-targets
+  ;;  '(("projects.org" :maxlevel . 1)
+  ;;    ("habits.org" :maxlevel . 1)))
 
   (org-babel-do-load-languages
     'org-babel-load-languages
