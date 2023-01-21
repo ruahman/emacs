@@ -81,11 +81,11 @@
    (ivy-rich-mode 1))
 
 ;; list menu for showing which key to use for keybinding
-(use-package which-key
-  :init (which-key-mode)
-  :diminish which-key-mode
-  :config
-  (setq which-key-idle-delay 3))
+;;(use-package which-key
+  ;;:init (which-key-mode)
+  ;;:diminish which-key-mode
+  ;;:config
+  ;;(setq which-key-idle-delay 3))
 
 ;; get latest org mode
 (use-package org
@@ -106,9 +106,11 @@
   (add-to-list 'org-modules 'org-habit)
   (setq org-habit-graph-column 60)
 
-  ;;(setq org-refile-targets
-  ;;  '(("projects.org" :maxlevel . 1)
-  ;;    ("habits.org" :maxlevel . 1)))
+  (setq org-refile-targets
+    '(("tasks.org" :maxlevel . 1)
+      ("projects.org" :maxlevel . 1)
+      ("habits.org" :maxlevel . 1)
+      ("someday-maybe.org" :maxlevel . 1)))
 
   (org-babel-do-load-languages
     'org-babel-load-languages
@@ -122,6 +124,7 @@
 
 (use-package org-drill
   :config
+  (setq org-drill-learn-fraction 0.3) 
   (setq org-drill-cram-hours 0))
 
 (use-package yasnippet
@@ -173,8 +176,9 @@
 (use-package denote
   :config
   (setq denote-directory (expand-file-name "~/denote"))
-  (setq denote-known-keywords '("emacs" "math" "music" "gtd" "zettelkasten" "latex"))
   (setq denote-infer-keywords t))
+
+(use-package restclient)
 
 ;; Disable line numbers for some modes
 (dolist (mode '(org-mode-hook

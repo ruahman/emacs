@@ -1,8 +1,0 @@
-# -*- mode: snippet -*-
-# name: vocabulary
-# key: vocabulary
-# --
-* vocabulary
-$1
-** answer
-$2
