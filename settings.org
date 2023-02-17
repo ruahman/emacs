@@ -191,9 +191,9 @@
 ** magit
 #+begin_src emacs-lisp
   ;; git program
-  (use-package magit
-     :custom
-     (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+  ;;(use-package magit
+     ;;:custom
+     ;;(magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 #+end_src
 ** evil
 #+begin_src emacs-lisp
@@ -246,8 +246,8 @@
 #+end_src
 * Keybindings
 #+BEGIN_SRC emacs-lisp
-  (general-define-key
-       "C-x w" 'writeroom-mode)
+  ;;(general-define-key
+       ;;"C-x w" 'writeroom-mode)
 
   (general-define-key
        "C-x f" 'flyspell-mode)

@@ -156,9 +156,9 @@
 (use-package writeroom-mode)
 
 ;; git program
-(use-package magit
-   :custom
-   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+;;(use-package magit
+   ;;:custom
+   ;;(magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
 ;; (use-package evil
 ;;   :init
@@ -196,8 +196,8 @@
                     ;(flyspell-mode 1)
                     )))
 
-(general-define-key
-     "C-x w" 'writeroom-mode)
+;;(general-define-key
+     ;;"C-x w" 'writeroom-mode)
 
 (general-define-key
      "C-x f" 'flyspell-mode)
