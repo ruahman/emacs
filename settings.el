@@ -175,8 +175,13 @@
 
 (use-package denote
   :config
+  ;;(setq denote-directory "g:/My Drive/Documents/denote")
   (setq denote-directory (expand-file-name "~/denote"))
-  (setq denote-infer-keywords t))
+  (setq denote-infer-keywords t)
+  (setq denote-sort-keywords t)
+  (setq denote-file-type nil)
+  (setq denote-prompts '(title keywords))
+  (setq denote-allow-multi-word-keywords t))
 
 (use-package restclient)
 
