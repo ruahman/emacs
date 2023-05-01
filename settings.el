@@ -81,26 +81,24 @@
    (ivy-rich-mode 1))
 
 ;; list menu for showing which key to use for keybinding
-;;(use-package which-key
-  ;;:init (which-key-mode)
-  ;;:diminish which-key-mode
-  ;;:config
-  ;;(setq which-key-idle-delay 3))
+(use-package which-key
+  :init (which-key-mode)
+  :diminish which-key-mode
+  :config
+  (setq which-key-idle-delay 3))
 
 ;; get latest org mode
 (use-package org
   :bind (("C-c a" . org-agenda))
   :config
-  (setq org-startup-indented t)
+  (setq org-startup-indened t)
   (setq org-agenda-start-with-log-mode t)
   (setq org-log-done 'time)
   (setq org-log-into-drawer t)
   (setq org-hide-emphasis-markers t)
   (setq org-ellipsis "...")
   (setq org-clock-sound "~/.emacs.d/sounds/bell3.mp3")
-  (setq org-agenda-files '("~/gtd/tasks.org"
-                           "~/gtd/projects.org"
-                           "~/gtd/habits.org"))
+  (setq org-agenda-files '("~/gtd/tasks.org"))
 
   (require 'org-habit)
   (add-to-list 'org-modules 'org-habit)
@@ -175,7 +173,6 @@
 
 (use-package denote
   :config
-  ;;(setq denote-directory "g:/My Drive/Documents/denote")
   (setq denote-directory (expand-file-name "~/denote"))
   (setq denote-infer-keywords t)
   (setq denote-sort-keywords t)
