@@ -91,7 +91,7 @@
 (use-package org
   :bind (("C-c a" . org-agenda))
   :config
-  (setq org-startup-indented t)
+  (setq org-startup-indened t)
   (setq org-agenda-start-with-log-mode t)
   (setq org-log-done 'time)
   (setq org-log-into-drawer t)
@@ -175,7 +175,6 @@
 
 (use-package denote
   :config
-  ;;(setq denote-directory "g:/My Drive/Documents/denote")
   (setq denote-directory (expand-file-name "~/denote"))
   (setq denote-infer-keywords t)
   (setq denote-sort-keywords t)
@@ -200,6 +199,8 @@
                     ;(writeroom-mode 1)
                     ;(flyspell-mode 1)
                     )))
+
+(add-hook 'dired-mode-hook #'denote-dired-mode)
 
 ;;(general-define-key
      ;;"C-x w" 'writeroom-mode)

@@ -248,6 +248,10 @@
                         ;(flyspell-mode 1)
                         )))
 #+end_src
+** denote-dired
+#+begin_src emacs-lisp
+  (add-hook 'dired-mode-hook #'denote-dired-mode) 
+#+end_src
 * Keybindings
 #+BEGIN_SRC emacs-lisp
   ;;(general-define-key
