@@ -81,11 +81,11 @@
    (ivy-rich-mode 1))
 
 ;; list menu for showing which key to use for keybinding
-;;(use-package which-key
-  ;;:init (which-key-mode)
-  ;;:diminish which-key-mode
-  ;;:config
-  ;;(setq which-key-idle-delay 3))
+(use-package which-key
+  :init (which-key-mode)
+  :diminish which-key-mode
+  :config
+  (setq which-key-idle-delay 3))
 
 ;; get latest org mode
 (use-package org
@@ -98,9 +98,7 @@
   (setq org-hide-emphasis-markers t)
   (setq org-ellipsis "...")
   (setq org-clock-sound "~/.emacs.d/sounds/bell3.mp3")
-  (setq org-agenda-files '("~/gtd/tasks.org"
-                           "~/gtd/projects.org"
-                           "~/gtd/habits.org"))
+  (setq org-agenda-files '("~/gtd/tasks.org"))
 
   (require 'org-habit)
   (add-to-list 'org-modules 'org-habit)
