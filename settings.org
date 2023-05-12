@@ -237,6 +237,10 @@
 #+begin_src emacs-lisp
   (use-package typescript-mode)
 #+end_src
+** csharp-mode
+#+begin_src emacs-lisp
+  (use-package csharp-mode)
+#+end_src
 ** ob-rust
 #+begin_src emacs-lisp
   (use-package ob-rust)
@@ -261,7 +265,13 @@
   ;; optional (required the typescript.el)
   (add-to-list 'org-src-lang-modes '("deno" . typescript))
 #+end_src
+** ob-csharp
+#+begin_src emacs-lisp
+  (straight-use-package
+      '(el-patch :type git :host github :repo "samwdp/ob-csharp"))
 
+  (org-babel-do-load-languages 'org-babel-load-languages '((csharp . t)))
+#+end_src
 * Hooks
 ** display-line-numbers-mode
 #+begin_src emacs-lisp

@@ -188,6 +188,8 @@
 
 (use-package typescript-mode)
 
+(use-package csharp-mode)
+
 (use-package ob-rust)
 
 (use-package ob-go)
@@ -203,6 +205,11 @@
 
 ;; optional (required the typescript.el)
 (add-to-list 'org-src-lang-modes '("deno" . typescript))
+
+(straight-use-package
+    '(el-patch :type git :host github :repo "samwdp/ob-csharp"))
+
+(org-babel-do-load-languages 'org-babel-load-languages '((csharp . t)))
 
 ;; Disable line numbers for some modes
 (dolist (mode '(org-mode-hook
