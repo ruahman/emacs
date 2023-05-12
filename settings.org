@@ -225,6 +225,22 @@
 #+begin_src emacs-lisp
   (use-package restclient)
 #+end_src
+** ob-rust
+#+begin_src emacs-lisp
+  (use-package ob-rust)
+#+end_src
+** rust-mode
+#+begin_src emacs-lisp
+  (use-package rust-mode)
+#+end_src
+** go-mode
+#+begin_src emacs-lisp
+  (use-package go-mode)
+#+end_src
+** ob-go
+#+begin_src emacs-lisp
+  (use-package ob-go)
+#+end_src
 * Hooks
 ** display-line-numbers-mode
 #+begin_src emacs-lisp

@@ -182,6 +182,14 @@
 
 (use-package restclient)
 
+(use-package ob-rust)
+
+(use-package rust-mode)
+
+(use-package go-mode)
+
+(use-package ob-go)
+
 ;; Disable line numbers for some modes
 (dolist (mode '(org-mode-hook
                 term-mode-hook
