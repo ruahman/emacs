@@ -225,10 +225,6 @@
 #+begin_src emacs-lisp
   (use-package restclient)
 #+end_src
-** ob-rust
-#+begin_src emacs-lisp
-  (use-package ob-rust)
-#+end_src
 ** rust-mode
 #+begin_src emacs-lisp
   (use-package rust-mode)
@@ -237,10 +233,35 @@
 #+begin_src emacs-lisp
   (use-package go-mode)
 #+end_src
+** typescript-mode
+#+begin_src emacs-lisp
+  (use-package typescript-mode)
+#+end_src
+** ob-rust
+#+begin_src emacs-lisp
+  (use-package ob-rust)
+#+end_src
 ** ob-go
 #+begin_src emacs-lisp
   (use-package ob-go)
 #+end_src
+** ob-typescript
+#+begin_src emacs-lisp
+  ;;(use-package ob-typescript)
+  ;;(org-babel-do-load-languages
+    ;;'org-babel-load-languages
+    ;;'((typescript . t)))
+#+end_src
+** ob-deno
+#+begin_src emacs-lisp
+  (use-package ob-deno)
+  (add-to-list 'org-babel-load-languages '(deno . t))
+  (org-babel-do-load-languages 'org-babel-load-languages org-babel-load-languages)
+
+  ;; optional (required the typescript.el)
+  (add-to-list 'org-src-lang-modes '("deno" . typescript))
+#+end_src
+
 * Hooks
 ** display-line-numbers-mode
 #+begin_src emacs-lisp

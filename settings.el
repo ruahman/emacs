@@ -182,13 +182,27 @@
 
 (use-package restclient)
 
-(use-package ob-rust)
-
 (use-package rust-mode)
 
 (use-package go-mode)
 
+(use-package typescript-mode)
+
+(use-package ob-rust)
+
 (use-package ob-go)
+
+;;(use-package ob-typescript)
+;;(org-babel-do-load-languages
+  ;;'org-babel-load-languages
+  ;;'((typescript . t)))
+
+(use-package ob-deno)
+(add-to-list 'org-babel-load-languages '(deno . t))
+(org-babel-do-load-languages 'org-babel-load-languages org-babel-load-languages)
+
+;; optional (required the typescript.el)
+(add-to-list 'org-src-lang-modes '("deno" . typescript))
 
 ;; Disable line numbers for some modes
 (dolist (mode '(org-mode-hook

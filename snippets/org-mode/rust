@@ -2,6 +2,6 @@
 # name: rust
 # key: rust 
 # --
-#+begin_src rust :results output
+#+begin_src rust :results value
   $1
 #+end_src

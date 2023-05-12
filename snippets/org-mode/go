@@ -2,6 +2,6 @@
 # name: go
 # key: go 
 # --
-#+begin_src go :results output
+#+begin_src go :results value
   $1
 #+end_src
