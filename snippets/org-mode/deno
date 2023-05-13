@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: deno
+# key: deno 
+# --
+#+begin_src deno :results value
+  $1
+#+end_src

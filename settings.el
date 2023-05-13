@@ -91,11 +91,11 @@
 (use-package org
   :bind (("C-c a" . org-agenda))
   :config
-  (setq org-startup-indened t)
-  (setq org-agenda-start-with-log-mode t)
+  ;;(setq org-startup-indened t)
+  ;;(setq org-agenda-start-with-log-mode t)
   (setq org-log-done 'time)
   (setq org-log-into-drawer t)
-  (setq org-hide-emphasis-markers t)
+  ;;(setq org-hide-emphasis-markers t)
   (setq org-ellipsis "...")
   (setq org-clock-sound "~/.emacs.d/sounds/bell3.mp3")
   (setq org-agenda-files '("~/gtd/tasks.org"))
@@ -106,8 +106,8 @@
 
   (setq org-refile-targets
     '(("tasks.org" :maxlevel . 1)
-      ("projects.org" :maxlevel . 1)
-      ("habits.org" :maxlevel . 1)
+      ;;("projects.org" :maxlevel . 1)
+      ;;("habits.org" :maxlevel . 1)
       ("someday-maybe.org" :maxlevel . 1)))
 
   (org-babel-do-load-languages
@@ -118,7 +118,9 @@
 
 (use-package org-bullets
   :hook
-  (org-mode . org-bullets-mode))
+  (org-mode . org-bullets-mode)
+  :custom
+  (org-bullets-bullet-list '("○" "◎" "◉" "●" "◆" "◈" "◇")))
 
 (use-package org-drill
   :config
@@ -156,6 +158,8 @@
 ;; git program
 ;;(use-package magit
    ;;:custom
+
+
    ;;(magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
 ;; (use-package evil
@@ -175,12 +179,39 @@
   :config
   (setq denote-directory (expand-file-name "~/denote"))
   (setq denote-infer-keywords t)
+  (setq denote-known-keywords '("science" "tech" "math" "gtd" "thoughts" "music" "art" "history" "bible"))
   (setq denote-sort-keywords t)
-  (setq denote-file-type nil)
+  (setq denote-file-type 'org)
   (setq denote-prompts '(title keywords))
   (setq denote-allow-multi-word-keywords t))
 
 (use-package restclient)
+
+(use-package rust-mode)
+
+(use-package go-mode)
+
+(use-package typescript-mode)
+
+(use-package csharp-mode)
+
+(use-package dockerfile-mode)
+
+(use-package ob-rust)
+
+(use-package ob-go)
+
+(use-package ob-deno)
+(add-to-list 'org-babel-load-languages '(deno . t))
+(org-babel-do-load-languages 'org-babel-load-languages org-babel-load-languages)
+
+;; optional (required the typescript.el)
+(add-to-list 'org-src-lang-modes '("deno" . typescript))
+
+(straight-use-package
+    '(el-patch :type git :host github :repo "samwdp/ob-csharp"))
+
+(org-babel-do-load-languages 'org-babel-load-languages '((csharp . t)))
 
 ;; Disable line numbers for some modes
 (dolist (mode '(org-mode-hook
@@ -195,7 +226,7 @@
   (add-hook hook (lambda ()
                     (visual-line-mode 1)
                     ;(writeroom-mode 1)
-                    ;(flyspell-mode 1)
+                    (flyspell-mode 1)
                     )))
 
 (add-hook 'dired-mode-hook #'denote-dired-mode)
@@ -203,8 +234,8 @@
 ;;(general-define-key
      ;;"C-x w" 'writeroom-mode)
 
-(general-define-key
-     "C-x f" 'flyspell-mode)
+;;(general-define-key
+;;     "C-x f" 'flyspell-mode)
 
 ;;  (defhydra hydra-zoom (global-map "<f2>")
   ;;      "zoom"

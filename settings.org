@@ -108,11 +108,11 @@
             (use-package org
               :bind (("C-c a" . org-agenda))
               :config
-              (setq org-startup-indened t)
-              (setq org-agenda-start-with-log-mode t)
+              ;;(setq org-startup-indened t)
+              ;;(setq org-agenda-start-with-log-mode t)
               (setq org-log-done 'time)
               (setq org-log-into-drawer t)
-              (setq org-hide-emphasis-markers t)
+              ;;(setq org-hide-emphasis-markers t)
               (setq org-ellipsis "...")
               (setq org-clock-sound "~/.emacs.d/sounds/bell3.mp3")
               (setq org-agenda-files '("~/gtd/tasks.org"))
@@ -123,8 +123,8 @@
 
               (setq org-refile-targets
                 '(("tasks.org" :maxlevel . 1)
-                  ("projects.org" :maxlevel . 1)
-                  ("habits.org" :maxlevel . 1)
+                  ;;("projects.org" :maxlevel . 1)
+                  ;;("habits.org" :maxlevel . 1)
                   ("someday-maybe.org" :maxlevel . 1)))
 
               (org-babel-do-load-languages
@@ -137,9 +137,11 @@
 #+end_src
 ** org-bullets
 #+begin_src emacs-lisp
-  (use-package org-bullets
-    :hook
-    (org-mode . org-bullets-mode))
+      (use-package org-bullets
+	:hook
+	(org-mode . org-bullets-mode)
+	:custom
+	(org-bullets-bullet-list '("○" "◎" "◉" "●" "◆" "◈" "◇")))
 #+end_src
 ** org-drill
 #+begin_src emacs-lisp
@@ -191,6 +193,8 @@
   ;; git program
   ;;(use-package magit
      ;;:custom
+
+
      ;;(magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 #+end_src
 ** evil
@@ -216,14 +220,59 @@
     :config
     (setq denote-directory (expand-file-name "~/denote"))
     (setq denote-infer-keywords t)
+    (setq denote-known-keywords '("science" "tech" "math" "gtd" "thoughts" "music" "art" "history" "bible"))
     (setq denote-sort-keywords t)
-    (setq denote-file-type nil)
+    (setq denote-file-type 'org)
     (setq denote-prompts '(title keywords))
     (setq denote-allow-multi-word-keywords t))
 #+end_src
 ** restclient
 #+begin_src emacs-lisp
   (use-package restclient)
+#+end_src
+** rust-mode
+#+begin_src emacs-lisp
+  (use-package rust-mode)
+#+end_src
+** go-mode
+#+begin_src emacs-lisp
+  (use-package go-mode)
+#+end_src
+** typescript-mode
+#+begin_src emacs-lisp
+  (use-package typescript-mode)
+#+end_src
+** csharp-mode
+#+begin_src emacs-lisp
+  (use-package csharp-mode)
+#+end_src
+** dockerfile-mode
+#+begin_src emacs-lisp
+  (use-package dockerfile-mode)
+#+end_src
+** ob-rust
+#+begin_src emacs-lisp
+  (use-package ob-rust)
+#+end_src
+** ob-go
+#+begin_src emacs-lisp
+  (use-package ob-go)
+#+end_src
+** ob-deno
+#+begin_src emacs-lisp
+  (use-package ob-deno)
+  (add-to-list 'org-babel-load-languages '(deno . t))
+  (org-babel-do-load-languages 'org-babel-load-languages org-babel-load-languages)
+
+  ;; optional (required the typescript.el)
+  (add-to-list 'org-src-lang-modes '("deno" . typescript))
+#+end_src
+** ob-csharp
+#+begin_src emacs-lisp
+  (straight-use-package
+      '(el-patch :type git :host github :repo "samwdp/ob-csharp"))
+
+  (org-babel-do-load-languages 'org-babel-load-languages '((csharp . t)))
 #+end_src
 * Hooks
 ** display-line-numbers-mode
@@ -243,7 +292,7 @@
       (add-hook hook (lambda ()
                         (visual-line-mode 1)
                         ;(writeroom-mode 1)
-                        ;(flyspell-mode 1)
+                        (flyspell-mode 1)
                         )))
 #+end_src
 ** denote-dired
@@ -255,8 +304,8 @@
   ;;(general-define-key
        ;;"C-x w" 'writeroom-mode)
 
-  (general-define-key
-       "C-x f" 'flyspell-mode)
+  ;;(general-define-key
+  ;;     "C-x f" 'flyspell-mode)
 
   ;;  (defhydra hydra-zoom (global-map "<f2>")
     ;;      "zoom"
