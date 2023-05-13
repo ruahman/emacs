@@ -2,7 +2,7 @@
 # name: bible
 # key: bible
 # --
-* Bible Verse
+* Bible Verse                                                         :drill:
   $1
 ** answer
    $2
