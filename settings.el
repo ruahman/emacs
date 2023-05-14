@@ -89,7 +89,9 @@
 
 ;; get latest org mode
 (use-package org
-  :bind (("C-c a" . org-agenda))
+  :bind (("C-c a" . org-agenda)
+	 ("C-c c" . org-capture)
+	 ("C-c l" . org-agenda-list))
   :config
   ;;(setq org-startup-indened t)
   ;;(setq org-agenda-start-with-log-mode t)
@@ -112,7 +114,10 @@
 
   (org-babel-do-load-languages
     'org-babel-load-languages
-    '((python . t))))
+    '((python . t)))
+
+  (setq org-capture-templates
+	'(("t" "Todo" entry (file+olp "~/gtd/tasks.org" "Tasks") "* TODO %?\n  %i\n  %a"))))
 
 (use-package org-contrib)
 
@@ -197,6 +202,8 @@
 
 (use-package dockerfile-mode)
 
+(use-package yaml-mode)
+
 (use-package ob-rust)
 
 (use-package ob-go)
@@ -231,6 +238,10 @@
 
 (add-hook 'dired-mode-hook #'denote-dired-mode)
 
+;;(general-define-key
+  ;; "C-c l" 'org-agenda-list)
+;;(general-define-key
+  ;; "C-c c" 'org-capture)
 ;;(general-define-key
      ;;"C-x w" 'writeroom-mode)
 

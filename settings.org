@@ -104,32 +104,39 @@
 #+end_src
 ** org
 #+begin_src emacs-lisp
-            ;; get latest org mode
-            (use-package org
-              :bind (("C-c a" . org-agenda))
-              :config
-              ;;(setq org-startup-indened t)
-              ;;(setq org-agenda-start-with-log-mode t)
-              (setq org-log-done 'time)
-              (setq org-log-into-drawer t)
-              ;;(setq org-hide-emphasis-markers t)
-              (setq org-ellipsis "...")
-              (setq org-clock-sound "~/.emacs.d/sounds/bell3.mp3")
-              (setq org-agenda-files '("~/gtd/tasks.org"))
+      ;; get latest org mode
+      (use-package org
+	:bind (("C-c a" . org-agenda)
+	       ("C-c c" . org-capture)
+	       ("C-c l" . org-agenda-list))
+	:config
+	;;(setq org-startup-indened t)
+	;;(setq org-agenda-start-with-log-mode t)
+	(setq org-log-done 'time)
+	(setq org-log-into-drawer t)
+	;;(setq org-hide-emphasis-markers t)
+	(setq org-ellipsis "...")
+	(setq org-clock-sound "~/.emacs.d/sounds/bell3.mp3")
+	(setq org-agenda-files '("~/gtd/tasks.org"))
 
-              (require 'org-habit)
-              (add-to-list 'org-modules 'org-habit)
-              (setq org-habit-graph-column 60)
+	(require 'org-habit)
+	(add-to-list 'org-modules 'org-habit)
+	(setq org-habit-graph-column 60)
 
-              (setq org-refile-targets
-                '(("tasks.org" :maxlevel . 1)
-                  ;;("projects.org" :maxlevel . 1)
-                  ;;("habits.org" :maxlevel . 1)
-                  ("someday-maybe.org" :maxlevel . 1)))
+	(setq org-refile-targets
+	  '(("tasks.org" :maxlevel . 1)
+	    ;;("projects.org" :maxlevel . 1)
+	    ;;("habits.org" :maxlevel . 1)
+	    ("someday-maybe.org" :maxlevel . 1)))
 
-              (org-babel-do-load-languages
-                'org-babel-load-languages
-                '((python . t))))
+	(org-babel-do-load-languages
+	  'org-babel-load-languages
+	  '((python . t)))
+
+	(setq org-capture-templates
+	      '(("t" "Todo" entry (file+olp "~/gtd/tasks.org" "Tasks") "* TODO %?\n  %i\n  %a"))))
+
+
 #+end_src
 ** org-contrib
 #+begin_src emacs-lisp
@@ -250,6 +257,10 @@
 #+begin_src emacs-lisp
   (use-package dockerfile-mode)
 #+end_src
+** yaml-mode
+#+begin_src emacs-lisp
+  (use-package yaml-mode)
+#+end_src
 ** ob-rust
 #+begin_src emacs-lisp
   (use-package ob-rust)
@@ -301,6 +312,10 @@
 #+end_src
 * Keybindings
 #+BEGIN_SRC emacs-lisp
+  ;;(general-define-key
+    ;; "C-c l" 'org-agenda-list)
+  ;;(general-define-key
+    ;; "C-c c" 'org-capture)
   ;;(general-define-key
        ;;"C-x w" 'writeroom-mode)
 
