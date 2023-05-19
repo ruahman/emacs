@@ -117,7 +117,9 @@
     '((python . t)))
 
   (setq org-capture-templates
-	'(("t" "Todo" entry (file+olp "~/gtd/tasks.org" "Tasks") "* TODO %?\n  %i\n  %a"))))
+	'(("t" "Todo" entry
+	   (file+headline "~/gtd/tasks.org" "Tasks")
+	   "* TODO %^{Please enter task}\n SCHEDULED: %^t\n %?"))))
 
 (use-package org-contrib)
 
