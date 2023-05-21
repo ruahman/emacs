@@ -263,6 +263,10 @@
 #+begin_src emacs-lisp
   (use-package yaml-mode)
 #+end_src
+** zig-mode
+#+begin_src emacs-lisp
+  (use-package zig-mode)
+#+end_src
 ** ob-rust
 #+begin_src emacs-lisp
   (use-package ob-rust)

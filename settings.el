@@ -206,6 +206,8 @@
 
 (use-package yaml-mode)
 
+(use-package zig-mode)
+
 (use-package ob-rust)
 
 (use-package ob-go)
