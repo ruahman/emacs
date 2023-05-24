@@ -164,6 +164,9 @@
   (use-package yasnippet
     :config
     (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
+    ;(define-key yas-minor-mode-map (kbd "M-z") 'yas-expand)
+    ;(define-key yas-keymap (kbd "M-j") 'yas-next-field-or-maybe-expand)
+    ;(define-key yas-keymap (kbd "M-k") 'yas-prev-field)
     (yas-global-mode 1))
 #+end_src
 ** dashboard
