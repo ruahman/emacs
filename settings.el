@@ -222,6 +222,13 @@
 ;; optional (required the typescript.el)
 (add-to-list 'org-src-lang-modes '("deno" . typescript))
 
+;(use-package ob-typescript
+;  :config
+;  (org-babel-do-load-languages
+;    'org-babel-load-languages
+;    '((typescript . t)
+;  )))
+
 (straight-use-package
     '(el-patch :type git :host github :repo "samwdp/ob-csharp"))
 

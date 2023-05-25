@@ -287,6 +287,15 @@
   ;; optional (required the typescript.el)
   (add-to-list 'org-src-lang-modes '("deno" . typescript))
 #+end_src
+** ob-typescript
+#+begin_src emacs-lisp
+  ;(use-package ob-typescript
+  ;  :config
+  ;  (org-babel-do-load-languages
+  ;    'org-babel-load-languages
+  ;    '((typescript . t)
+  ;  )))
+#+end_src
 ** ob-csharp
 #+begin_src emacs-lisp
   (straight-use-package
