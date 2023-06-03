@@ -270,6 +270,10 @@
 #+begin_src emacs-lisp
   (use-package zig-mode)
 #+end_src
+** json-mode
+#+begin_src emacs-lisp
+  (use-package json-mode)
+#+end_src
 ** ob-rust
 #+begin_src emacs-lisp
   (use-package ob-rust)
@@ -280,28 +284,37 @@
 #+end_src
 ** ob-deno
 #+begin_src emacs-lisp
-  (use-package ob-deno)
-  (add-to-list 'org-babel-load-languages '(deno . t))
-  (org-babel-do-load-languages 'org-babel-load-languages org-babel-load-languages)
+  ;(use-package ob-deno)
+  ;(add-to-list 'org-babel-load-languages '(deno . t))
+  ;(org-babel-do-load-languages 'org-babel-load-languages org-babel-load-languages)
 
   ;; optional (required the typescript.el)
-  (add-to-list 'org-src-lang-modes '("deno" . typescript))
-#+end_src
-** ob-typescript
-#+begin_src emacs-lisp
-  ;(use-package ob-typescript
-  ;  :config
-  ;  (org-babel-do-load-languages
-  ;    'org-babel-load-languages
-  ;    '((typescript . t)
-  ;  )))
+  ;(add-to-list 'org-src-lang-modes '("deno" . typescript))
 #+end_src
 ** ob-csharp
 #+begin_src emacs-lisp
-  (straight-use-package
-      '(el-patch :type git :host github :repo "samwdp/ob-csharp"))
+  ;(straight-use-package
+     ; '(el-patch :type git :host github :repo "samwdp/ob-csharp"))
 
-  (org-babel-do-load-languages 'org-babel-load-languages '((csharp . t)))
+  ;(org-babel-do-load-languages 'org-babel-load-languages '((csharp . t)))
+#+end_src
+** ob-javascript
+#+begin_src emacs-lisp
+  ;(use-package ob-javascript)  
+#+end_src
+** ob-typescript
+#+begin_src emacs-lisp
+  (use-package ob-typescript)
+#+end_src
+** setup org-babel
+#+begin_src emacs-lisp
+  (org-babel-do-load-languages
+    'org-babel-load-languages
+    '((js . t)
+      (rust . t)
+      (go . t)
+      (python . t)
+      (typescript . t)))
 #+end_src
 * Hooks
 ** display-line-numbers-mode

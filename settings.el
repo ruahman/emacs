@@ -211,28 +211,35 @@
 
 (use-package zig-mode)
 
+(use-package json-mode)
+
 (use-package ob-rust)
 
 (use-package ob-go)
 
-(use-package ob-deno)
-(add-to-list 'org-babel-load-languages '(deno . t))
-(org-babel-do-load-languages 'org-babel-load-languages org-babel-load-languages)
+;(use-package ob-deno)
+;(add-to-list 'org-babel-load-languages '(deno . t))
+;(org-babel-do-load-languages 'org-babel-load-languages org-babel-load-languages)
 
 ;; optional (required the typescript.el)
-(add-to-list 'org-src-lang-modes '("deno" . typescript))
+;(add-to-list 'org-src-lang-modes '("deno" . typescript))
 
-;(use-package ob-typescript
-;  :config
-;  (org-babel-do-load-languages
-;    'org-babel-load-languages
-;    '((typescript . t)
-;  )))
+;(straight-use-package
+   ; '(el-patch :type git :host github :repo "samwdp/ob-csharp"))
 
-(straight-use-package
-    '(el-patch :type git :host github :repo "samwdp/ob-csharp"))
+;(org-babel-do-load-languages 'org-babel-load-languages '((csharp . t)))
 
-(org-babel-do-load-languages 'org-babel-load-languages '((csharp . t)))
+;(use-package ob-javascript)
+
+(use-package ob-typescript)
+
+(org-babel-do-load-languages
+  'org-babel-load-languages
+  '((js . t)
+    (rust . t)
+    (go . t)
+    (python . t)
+    (typescript . t)))
 
 ;; Disable line numbers for some modes
 (dolist (mode '(org-mode-hook
