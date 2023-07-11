@@ -172,13 +172,16 @@
 
    ;;(magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
-;; (use-package evil
-;;   :init
-;;   (setq evil-want-integration t)
-;;   (setq evil-want-keybinding nil)
+(use-package evil
+   :init
+   (setq evil-want-integration t)
+   (setq evil-want-keybinding nil)
+   :bind
+   (("C-c e" . evil-local-mode))
 ;;   :config
 ;;   (evil-mode 1)
-;;   (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state))
+;;   (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
+)
 
 ;; (use-package evil-collection
 ;;   :after evil
