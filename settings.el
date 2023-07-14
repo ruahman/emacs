@@ -58,6 +58,11 @@
 ;; more convienient way of setting up keybindings
 (use-package general)
 
+(use-package markdown-mode
+  :ensure t
+  :mode ("README\\.md\\'" . gfm-mode)
+  :init (setq markdown-command "multimarkdown"))
+
 ;; allow repeating keys
 ;; (use-package hydra)
 
@@ -81,11 +86,11 @@
    (ivy-rich-mode 1))
 
 ;; list menu for showing which key to use for keybinding
-(use-package which-key
-  :init (which-key-mode)
-  :diminish which-key-mode
-  :config
-  (setq which-key-idle-delay 3))
+;;(use-package which-key
+  ;;:init (which-key-mode)
+  ;;:diminish which-key-mode
+  ;;:config
+  ;;(setq which-key-idle-delay 3))
 
 ;; get latest org mode
 (use-package org
@@ -93,7 +98,6 @@
 	 ("C-c c" . org-capture)
 	 ("C-c l" . org-agenda-list))
   :config
-  ;;(setq org-startup-indened t)
   ;;(setq org-agenda-start-with-log-mode t)
   (setq org-log-done 'time)
   (setq org-log-into-drawer t)
@@ -108,7 +112,6 @@
 
   (setq org-refile-targets
     '(("tasks.org" :maxlevel . 1)
-      ;;("projects.org" :maxlevel . 1)
       ;;("habits.org" :maxlevel . 1)
       ("someday-maybe.org" :maxlevel . 1)))
 
@@ -119,7 +122,7 @@
   (setq org-capture-templates
 	'(("t" "Todo" entry
 	   (file+headline "~/gtd/tasks.org" "Tasks")
-	   "* TODO %^{Please enter task}\n SCHEDULED: %^t\n %?"))))
+	   "* TODO %^{Please enter task}"))))
 
 (use-package org-contrib)
 
@@ -192,10 +195,10 @@
   :config
   (setq denote-directory (expand-file-name "~/denote"))
   (setq denote-infer-keywords t)
-  (setq denote-known-keywords '("science" "tech" "math" "gtd" "thoughts" "music" "art" "history" "bible"))
+  (setq denote-known-keywords '("tech" "math" "gtd" "literature" "permanent" "fleeting" "index"))
   (setq denote-sort-keywords t)
-  (setq denote-file-type 'org)
-  (setq denote-prompts '(title keywords))
+  ;;(setq denote-file-type 'markdown-yaml)
+  (setq denote-prompts '(title keywords file-type))
   (setq denote-allow-multi-word-keywords t))
 
 (use-package restclient)
