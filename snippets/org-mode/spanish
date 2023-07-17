@@ -1,8 +1,0 @@
-# -*- mode: snippet -*-
-# name: spanish
-# key: spanish
-# --
-* spanish                                                             :drill:
-  $1
-** la respuesta
-   $2

@@ -70,12 +70,12 @@
 (use-package swiper
   :bind (("C-s" . swiper)))
 
-;; autocomplete for search buffers
+;; autocomplete for buffers
 (use-package ivy
    :diminish
    :config (ivy-mode 1))
 
-;; helps with auto complete
+;; add some functions you can add that uses ivy
 (use-package counsel :ensure t
    :bind (("M-x" . counsel-M-x)
           ("C-x b" . counsel-ibuffer)))
@@ -95,8 +95,8 @@
 ;; get latest org mode
 (use-package org
   :bind (("C-c a" . org-agenda)
-	 ("C-c c" . org-capture)
-	 ("C-c l" . org-agenda-list))
+         ("C-c c" . org-capture)
+         ("C-c l" . org-agenda-list))
   :config
   ;;(setq org-agenda-start-with-log-mode t)
   (setq org-log-done 'time)
@@ -120,9 +120,15 @@
     '((python . t)))
 
   (setq org-capture-templates
-	'(("t" "Todo" entry
-	   (file+headline "~/gtd/tasks.org" "Tasks")
-	   "* TODO %^{Please enter task}"))))
+        '(("t" "Todo" entry
+           (file+headline "~/gtd/tasks.org" "Tasks")
+           "* TODO %^{Please enter task}")
+          ("s" "Spanish" entry
+           (file "~/drill/spanish.org")
+           "* Spanish Word          :drill:\n %^{Enter spanish word} \n** la respuesta\n  %^{Enter the answer}")
+          ("b" "Bible" entry
+           (file "~/drill/bible.org")
+           "* Bible Verse          :drill:\n %^{Enter bible phrase} \n** answer\n  %^{Enter the bible verse}"))))
 
 (use-package org-contrib)
 
@@ -195,7 +201,7 @@
   :config
   (setq denote-directory (expand-file-name "~/denote"))
   (setq denote-infer-keywords t)
-  (setq denote-known-keywords '("tech" "math" "gtd" "literature" "permanent" "fleeting" "index"))
+  (setq denote-known-keywords '("tech" "math" "gtd" "lit" "perm" "tmp" "index"))
   (setq denote-sort-keywords t)
   ;;(setq denote-file-type 'markdown-yaml)
   (setq denote-prompts '(title keywords file-type))

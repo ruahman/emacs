@@ -87,12 +87,12 @@
 #+end_src
 ** ivy
 #+begin_src emacs-lisp
-  ;; autocomplete for search buffers
+  ;; autocomplete for buffers
   (use-package ivy
      :diminish
      :config (ivy-mode 1))
 
-  ;; helps with auto complete
+  ;; add some functions you can add that uses ivy
   (use-package counsel :ensure t
      :bind (("M-x" . counsel-M-x)
             ("C-x b" . counsel-ibuffer)))
@@ -113,37 +113,43 @@
 #+end_src
 ** org
 #+begin_src emacs-lisp
-	  ;; get latest org mode
-	  (use-package org
-	    :bind (("C-c a" . org-agenda)
-		   ("C-c c" . org-capture)
-		   ("C-c l" . org-agenda-list))
-	    :config
-	    ;;(setq org-agenda-start-with-log-mode t)
-	    (setq org-log-done 'time)
-	    (setq org-log-into-drawer t)
-	    ;;(setq org-hide-emphasis-markers t)
-	    (setq org-ellipsis "...")
-	    (setq org-clock-sound "~/.emacs.d/sounds/bell3.mp3")
-	    (setq org-agenda-files '("~/gtd/tasks.org"))
+                    ;; get latest org mode
+                    (use-package org
+                      :bind (("C-c a" . org-agenda)
+                             ("C-c c" . org-capture)
+                             ("C-c l" . org-agenda-list))
+                      :config
+                      ;;(setq org-agenda-start-with-log-mode t)
+                      (setq org-log-done 'time)
+                      (setq org-log-into-drawer t)
+                      ;;(setq org-hide-emphasis-markers t)
+                      (setq org-ellipsis "...")
+                      (setq org-clock-sound "~/.emacs.d/sounds/bell3.mp3")
+                      (setq org-agenda-files '("~/gtd/tasks.org"))
 
-	    (require 'org-habit)
-	    (add-to-list 'org-modules 'org-habit)
-	    (setq org-habit-graph-column 60)
+                      (require 'org-habit)
+                      (add-to-list 'org-modules 'org-habit)
+                      (setq org-habit-graph-column 60)
 
-	    (setq org-refile-targets
-	      '(("tasks.org" :maxlevel . 1)
-		;;("habits.org" :maxlevel . 1)
-		("someday-maybe.org" :maxlevel . 1)))
+                      (setq org-refile-targets
+                        '(("tasks.org" :maxlevel . 1)
+                          ;;("habits.org" :maxlevel . 1)
+                          ("someday-maybe.org" :maxlevel . 1)))
 
-	    (org-babel-do-load-languages
-	      'org-babel-load-languages
-	      '((python . t)))
+                      (org-babel-do-load-languages
+                        'org-babel-load-languages
+                        '((python . t)))
 
-	    (setq org-capture-templates
-		  '(("t" "Todo" entry
-		     (file+headline "~/gtd/tasks.org" "Tasks")
-		     "* TODO %^{Please enter task}"))))
+                      (setq org-capture-templates
+                            '(("t" "Todo" entry
+                               (file+headline "~/gtd/tasks.org" "Tasks")
+                               "* TODO %^{Please enter task}")
+                              ("s" "Spanish" entry
+                               (file "~/drill/spanish.org")
+                               "* Spanish Word          :drill:\n %^{Enter spanish word} \n** la respuesta\n  %^{Enter the answer}")
+                              ("b" "Bible" entry
+                               (file "~/drill/bible.org")
+                               "* Bible Verse           :drill:\n %^{Enter bible phrase} \n** answer\n  %^{Enter the bible verse}"))))
 
 
 #+end_src
@@ -242,7 +248,7 @@
     :config
     (setq denote-directory (expand-file-name "~/denote"))
     (setq denote-infer-keywords t)
-    (setq denote-known-keywords '("tech" "math" "gtd" "literature" "permanent" "fleeting" "index"))
+    (setq denote-known-keywords '("tech" "math" "gtd" "lit" "perm" "tmp" "index"))
     (setq denote-sort-keywords t)
     ;;(setq denote-file-type 'markdown-yaml)
     (setq denote-prompts '(title keywords file-type))

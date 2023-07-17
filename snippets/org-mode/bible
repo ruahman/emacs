@@ -1,8 +1,0 @@
-# -*- mode: snippet -*-
-# name: bible
-# key: bible
-# --
-* Bible Verse                                                         :drill:
-  $1
-** answer
-   $2
