@@ -101,19 +101,25 @@
   ;;(setq org-agenda-start-with-log-mode t)
   (setq org-log-done 'time)
   (setq org-log-into-drawer t)
+  (setq org-startup-indented t) ;; setup org-indent-mode
   ;;(setq org-hide-emphasis-markers t)
   (setq org-ellipsis "...")
   (setq org-clock-sound "~/.emacs.d/sounds/bell3.mp3")
   (setq org-agenda-files '("~/gtd/tasks.org"))
 
+
   (require 'org-habit)
   (add-to-list 'org-modules 'org-habit)
   (setq org-habit-graph-column 60)
 
+  ;; setup refile
   (setq org-refile-targets
     '(("tasks.org" :maxlevel . 1)
       ;;("habits.org" :maxlevel . 1)
       ("someday-maybe.org" :maxlevel . 1)))
+  (setq org-refile-use-outline-path 'file)
+  (setq org-outline-path-complete-in-steps nil)
+  (setq org-refile-allow-creating-parent-nodes 'confirm)
 
   (org-babel-do-load-languages
     'org-babel-load-languages
@@ -121,14 +127,14 @@
 
   (setq org-capture-templates
         '(("t" "Todo" entry
-           (file+headline "~/gtd/tasks.org" "Tasks")
+           (file "~/gtd/tasks.org")
            "* TODO %^{Please enter task}")
           ("s" "Spanish" entry
            (file "~/drill/spanish.org")
            "* Spanish Word          :drill:\n %^{Enter spanish word} \n** la respuesta\n  %^{Enter the answer}")
           ("b" "Bible" entry
            (file "~/drill/bible.org")
-           "* Bible Verse          :drill:\n %^{Enter bible phrase} \n** answer\n  %^{Enter the bible verse}"))))
+           "* Bible Verse           :drill:\n %^{Enter bible phrase} \n** answer\n  %^{Enter the bible verse}"))))
 
 (use-package org-contrib)
 
