@@ -61,7 +61,9 @@
 (use-package markdown-mode
   :ensure t
   :mode ("README\\.md\\'" . gfm-mode)
-  :init (setq markdown-command "multimarkdown"))
+  :init
+  (setq markdown-command "multimarkdown")
+  (setq markdown-fontify-code-blocks-natively t))
 
 ;; allow repeating keys
 ;; (use-package hydra)
@@ -99,6 +101,7 @@
          ("C-c l" . org-agenda-list))
   :config
   ;;(setq org-agenda-start-with-log-mode t)
+  (setq org-agenda-start-with-follow-mode t)
   (setq org-log-done 'time)
   (setq org-log-into-drawer t)
   (setq org-startup-indented t) ;; setup org-indent-mode
@@ -146,7 +149,7 @@
 
 (use-package org-drill
   :config
-  (setq org-drill-learn-fraction 0.3) 
+  (setq org-drill-learn-fraction 0.1) 
   (setq org-drill-cram-hours 0))
 
 (use-package yasnippet
