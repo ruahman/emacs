@@ -73,7 +73,7 @@
     :ensure t
     :mode ("README\\.md\\'" . gfm-mode)
     :init
-    (setq markdown-command "multimarkdown")
+    (setq markdown-command "c:/users/dego_/appdata/local/pandoc/pandoc.exe")
     (setq markdown-fontify-code-blocks-natively t))
 #+end_src
 ** hydra
