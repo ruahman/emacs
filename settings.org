@@ -281,7 +281,7 @@
 #+end_src
 ** csharp-mode
 #+begin_src emacs-lisp
-  (use-package csharp-mode)
+  ;(use-package csharp-mode)
 #+end_src
 ** dockerfile-mode
 #+begin_src emacs-lisp

@@ -224,7 +224,7 @@
 
 (use-package typescript-mode)
 
-(use-package csharp-mode)
+;(use-package csharp-mode)
 
 (use-package dockerfile-mode)
 
