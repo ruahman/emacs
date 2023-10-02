@@ -47,13 +47,29 @@
 ;; initial buffer to show when in emacsclient
 ;; (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
 
+;;(if (eq system-type 'windows-nt)
+;;    (progn
+;;        (setenv "LANG" "en_US.UTF-8")
+;;        (setq ispell-program-name "hunspell")
+;;        (setq ispell-dictionary "en_US")
+;;        (setq ispell-hunspell-dict-paths-alist
+;;          '(("en_US" "C:\\Hunspell\\en_US.aff")))
+;;        (setq pandoc "c:/users/dego_/appdata/local/pandoc/pandoc.exe")
+;;  (progn
+;;    (setq pandoc "/usr/bin/pandoc")
+;;    ))
+
 (if (eq system-type 'windows-nt)
     (progn
-        (setenv "LANG" "en_US.UTF-8")
-        (setq ispell-program-name "hunspell")
-        (setq ispell-dictionary "en_US")
-        (setq ispell-hunspell-dict-paths-alist
-          '(("en_US" "C:\\Hunspell\\en_US.aff")))))
+      (setenv "LANG" "en_US.UTF-8")
+      (setq ispell-program-name "hunspell")
+      (setq ispell-dictionary "en_US")
+      (setq ispell-hunspell-dict-paths-alist
+        '(("en_US" "C:\\Hunspell\\en_US.aff")))
+      (setq pandoc "c:/users/dego_/appdata/local/pandoc/pandoc.exe"))
+
+  (progn
+    (setq pandoc "/usr/bin/pandoc")))
 
 (straight-use-package 'use-package)
 (setq straight-use-package-by-default t)
@@ -65,7 +81,7 @@
   :ensure t
   :mode ("README\\.md\\'" . gfm-mode)
   :init
-  (setq markdown-command "c:/users/dego_/appdata/local/pandoc/pandoc.exe")
+  (setq markdown-command pandoc)
   (setq markdown-fontify-code-blocks-natively t))
 
 ;; allow repeating keys
@@ -227,7 +243,7 @@
 
 (use-package typescript-mode)
 
-(use-package csharp-mode)
+;(use-package csharp-mode)
 
 (use-package dockerfile-mode)
 
