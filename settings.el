@@ -1,5 +1,8 @@
 (setq user-full-name "Diego Vila")
 
+;; stop making backup files
+(setq make-backup-files nil)
+
 ;; take out startup screen
 (setq inhibit-startup-message t)
 
@@ -33,9 +36,9 @@
 ;; if emacs is running as a server
 (if (daemonp)
     (add-hook 'after-make-frame-functions
-	      (lambda (frame)
-		(with-selected-frame frame
-		  (set-font-faces))))
+              (lambda (frame)
+                (with-selected-frame frame
+                  (set-font-faces))))
     (set-font-faces))
 
 ;; so that magit does not freeze
@@ -46,11 +49,11 @@
 
 (if (eq system-type 'windows-nt)
     (progn
-	(setenv "LANG" "en_US.UTF-8")
-	(setq ispell-program-name "hunspell")
-	(setq ispell-dictionary "en_US")
-	(setq ispell-hunspell-dict-paths-alist
-	  '(("en_US" "C:\\Hunspell\\en_US.aff")))))
+        (setenv "LANG" "en_US.UTF-8")
+        (setq ispell-program-name "hunspell")
+        (setq ispell-dictionary "en_US")
+        (setq ispell-hunspell-dict-paths-alist
+          '(("en_US" "C:\\Hunspell\\en_US.aff")))))
 
 (straight-use-package 'use-package)
 (setq straight-use-package-by-default t)
