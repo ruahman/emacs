@@ -71,6 +71,8 @@
   (progn
     (setq pandoc "/usr/bin/pandoc")))
 
+(setq split-width-threshold 4000)
+
 (straight-use-package 'use-package)
 (setq straight-use-package-by-default t)
 
