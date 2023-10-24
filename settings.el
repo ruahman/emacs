@@ -71,6 +71,7 @@
   (progn
     (setq pandoc "/usr/bin/pandoc")))
 
+;; so that split is always horizontal
 (setq split-width-threshold 4000)
 
 (straight-use-package 'use-package)
