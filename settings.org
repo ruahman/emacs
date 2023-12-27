@@ -70,10 +70,15 @@
         (setq ispell-dictionary "en_US")
         (setq ispell-hunspell-dict-paths-alist
           '(("en_US" "C:\\Hunspell\\en_US.aff")))
-        (setq pandoc "c:/users/dego_/appdata/local/pandoc/pandoc.exe"))
+        (setq pandoc "c:/users/dego_/appdata/local/pandoc/pandoc.exe")))
 
-    (progn
-      (setq pandoc "/usr/bin/pandoc")))
+  (if (eq system-type "gnu/linux") 
+      (progn
+        (setq pandoc "/usr/bin/pandoc")))
+
+  (if (eq system-type 'darwin)
+      (progn
+        (setq pandoc "/opt/homebrew/bin/pandoc")))
 
   ;; so that split is always horizontal
   (setq split-width-threshold 4000)
