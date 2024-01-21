@@ -72,7 +72,7 @@
           '(("en_US" "C:\\Hunspell\\en_US.aff")))
         (setq pandoc "c:/users/dego_/appdata/local/pandoc/pandoc.exe")))
 
-  (if (eq system-type "gnu/linux") 
+  (if (eq system-type 'gnu/linux) 
       (progn
         (setq pandoc "/usr/bin/pandoc")))
 

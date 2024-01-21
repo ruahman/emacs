@@ -68,7 +68,7 @@
         '(("en_US" "C:\\Hunspell\\en_US.aff")))
       (setq pandoc "c:/users/dego_/appdata/local/pandoc/pandoc.exe")))
 
-(if (eq system-type "gnu/linux") 
+(if (eq system-type 'gnu/linux) 
     (progn
       (setq pandoc "/usr/bin/pandoc")))
 
@@ -169,10 +169,10 @@
 (use-package org-contrib)
 
 (use-package org-bullets
-	:hook
-	(org-mode . org-bullets-mode)
-	:custom
-	(org-bullets-bullet-list '("○" "◎" "◉" "●" "◆" "◈" "◇")))
+  :hook
+  (org-mode . org-bullets-mode)
+  :custom
+  (org-bullets-bullet-list '("○" "◎" "◉" "●" "◆" "◈" "◇")))
 
 (use-package org-drill
   :config
