@@ -159,9 +159,9 @@
         '(("t" "Todo" entry
            (file "~/gtd/tasks.org")
            "* TODO %^{Please enter task}")
-          ("s" "Spanish" entry
-           (file "~/drill/spanish.org")
-           "* Spanish Word          :drill:\n %^{Enter spanish word} \n** la respuesta\n  %^{Enter the answer}")
+          ;("s" "Spanish" entry
+           ;(file "~/drill/spanish.org")
+           ;"* Spanish Word          :drill:\n %^{Enter spanish word} \n** la respuesta\n  %^{Enter the answer}")
           ("b" "Bible" entry
            (file "~/drill/bible.org")
            "* Bible Verse           :drill:\n %^{Enter bible phrase} \n** answer\n  %^{Enter the bible verse}"))))
