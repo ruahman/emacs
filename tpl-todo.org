@@ -1,0 +1,8 @@
+* TODO %^{Please enter task}
+:PROPERTIES:
+:STORY:    %?
+:END:
+%^{Describe what done is}
+:LOGBOOK:
+- Added: %U
+:END:

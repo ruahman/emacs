@@ -158,7 +158,8 @@
   (setq org-capture-templates
         '(("t" "Todo" entry
            (file "~/gtd/tasks.org")
-           "* TODO %^{Please enter task}")
+	   (file "~/.emacs.d/tpl-todo.org"))
+           ;"* TODO %^{Please enter task}")
           ;("s" "Spanish" entry
            ;(file "~/drill/spanish.org")
            ;"* Spanish Word          :drill:\n %^{Enter spanish word} \n** la respuesta\n  %^{Enter the answer}")
@@ -169,10 +170,10 @@
 (use-package org-contrib)
 
 (use-package org-bullets
-  :hook
-  (org-mode . org-bullets-mode)
-  :custom
-  (org-bullets-bullet-list '("○" "◎" "◉" "●" "◆" "◈" "◇")))
+	:hook
+	(org-mode . org-bullets-mode)
+	:custom
+	(org-bullets-bullet-list '("○" "◎" "◉" "●" "◆" "◈" "◇")))
 
 (use-package org-drill
   :config

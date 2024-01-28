@@ -179,7 +179,8 @@
     (setq org-capture-templates
           '(("t" "Todo" entry
              (file "~/gtd/tasks.org")
-             "* TODO %^{Please enter task}")
+  	   (file "~/.emacs.d/tpl-todo.org"))
+             ;"* TODO %^{Please enter task}")
             ;("s" "Spanish" entry
              ;(file "~/drill/spanish.org")
              ;"* Spanish Word          :drill:\n %^{Enter spanish word} \n** la respuesta\n  %^{Enter the answer}")
