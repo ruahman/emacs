@@ -135,7 +135,7 @@
   ;;(setq org-hide-emphasis-markers t)
   (setq org-ellipsis "...")
   (setq org-clock-sound "~/.emacs.d/sounds/bell3.mp3")
-  (setq org-agenda-files (list "~/gtd/tasks.org" "~/gtd/repeat.org"))
+  (setq org-agenda-files (list "~/gtd/tasks.org" "~/gtd/repeat.org" "~/gtd/habits.org"))
 
 
   (require 'org-habit)
@@ -146,6 +146,7 @@
   (setq org-refile-targets
     '(("tasks.org" :maxlevel . 1)
       ("repeat.org" :maxlevel . 1)
+      ("habits.org" :maxlevel .1)
       ("someday-maybe.org" :maxlevel . 1)))
   (setq org-refile-use-outline-path 'file)
   (setq org-outline-path-complete-in-steps nil)
