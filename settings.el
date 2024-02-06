@@ -236,7 +236,7 @@
   :config
   (setq denote-directory (expand-file-name "~/denote"))
   (setq denote-infer-keywords t)
-  (setq denote-known-keywords '("tech" "math" "gtd" "lit" "perm" "tmp" "index"))
+  (setq denote-known-keywords '("tech" "math" "meta"))
   (setq denote-sort-keywords t)
   ;;(setq denote-file-type 'markdown-yaml)
   (setq denote-prompts '(title keywords file-type))
