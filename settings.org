@@ -182,6 +182,9 @@
           '(("t" "Todo" entry
              (file "~/gtd/tasks.org")
   	   (file "~/.emacs.d/tpl-todo.org"))
+  	  ("v" "Vocabulary" entry
+             (file "~/drill/vocabulary.org")
+  	   (file "~/.emacs.d/tpl-vocabulary.org"))
             ("b" "Bible" entry
              (file "~/drill/bible.org")
   	   (file "~/.emacs.d/tpl-bible.org")))))
