@@ -128,7 +128,7 @@
          ("C-c l" . org-agenda-list))
   :config
   ;;(setq org-agenda-start-with-log-mode t)
-  (setq org-agenda-start-with-follow-mode t)
+  ;;(setq org-agenda-start-with-follow-mode t)
   (setq org-log-done 'time)
   (setq org-log-into-drawer t)
   (setq org-startup-indented t) ;; setup org-indent-mode
