@@ -160,13 +160,20 @@
   (setq org-capture-templates
         '(("t" "Todo" entry
            (file "~/gtd/tasks.org")
-	   (file "~/.emacs.d/tpl-todo.org"))
-	  ("v" "Vocabulary" entry
+	    (file "~/.emacs.d/tpl-todo.org"))
+	   ("v" "Vocabulary" entry
            (file "~/drill/vocabulary.org")
-	   (file "~/.emacs.d/tpl-vocabulary.org"))
+	    (file "~/.emacs.d/tpl-vocabulary.org"))
           ("b" "Bible" entry
            (file "~/drill/bible.org")
-	   (file "~/.emacs.d/tpl-bible.org")))))
+	    (file "~/.emacs.d/tpl-bible.org"))
+	     ("n" "Denote" plain
+           (file denote-last-path)
+           #'denote-org-capture
+           :no-save t
+           :immediate-finish nil
+           :kill-buffer t
+           :jump-to-captured t))))
 
 (use-package org-contrib)
 
