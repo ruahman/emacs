@@ -128,7 +128,7 @@
          ("C-c l" . org-agenda-list))
   :config
   ;;(setq org-agenda-start-with-log-mode t)
-  ;;(setq org-agenda-start-with-follow-mode t)
+  (setq org-agenda-start-with-follow-mode t)
   (setq org-log-done 'time)
   (setq org-log-into-drawer t)
   (setq org-startup-indented t) ;; setup org-indent-mode
@@ -139,7 +139,7 @@
 
   (require 'org-habit)
   (add-to-list 'org-modules 'org-habit)
-  (setq org-habit-graph-column 60)
+  (setq org-habit-graph-column 80)
 
   ;; setup refile
   (setq org-refile-targets
@@ -167,7 +167,7 @@
           ("b" "Bible" entry
            (file "~/drill/bible.org")
 	    (file "~/.emacs.d/tpl-bible.org"))
-	     ("n" "Denote" plain
+	     ("d" "Denote" plain
            (file denote-last-path)
            #'denote-org-capture
            :no-save t
@@ -246,10 +246,10 @@
   :config
   (setq denote-directory (expand-file-name "~/denote"))
   (setq denote-infer-keywords t)
-  (setq denote-known-keywords '("tech" "math" "meta"))
+  (setq denote-known-keywords '("meta" "lit", "tmp"))
   (setq denote-sort-keywords t)
   ;;(setq denote-file-type 'markdown-yaml)
-  (setq denote-prompts '(title keywords file-type))
+  (setq denote-prompts '(title keywords file-type signature))
   (setq denote-allow-multi-word-keywords t))
 
 (use-package restclient)
