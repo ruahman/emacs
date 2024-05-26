@@ -1,6 +1,6 @@
 
 * Vocabulary                                                          :drill:
-%^{Enter new word}
+%^{Enter word}
 ** answer
 %^{Enter definition}
   

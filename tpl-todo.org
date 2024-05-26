@@ -3,7 +3,7 @@
 :PROPERTIES:
 :STORY:    %?
 :END:
-%^{Describe what done is}
+%^{Description}
 :LOGBOOK:
 - Added: %U
 :END:

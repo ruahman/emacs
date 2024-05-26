@@ -137,8 +137,6 @@
     '(("tasks.org" :maxlevel . 1)
       ("repeat.org" :maxlevel . 1)
       ("habits.org" :maxlevel . 1)
-      ("goals.org" :maxlevel . 1)
-      ("projects.org" :maxlevel . 1)
       ("someday-maybe.org" :maxlevel . 1)))
   (setq org-refile-use-outline-path 'file)
   (setq org-outline-path-complete-in-steps nil)
