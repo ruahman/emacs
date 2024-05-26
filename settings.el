@@ -47,18 +47,6 @@
 ;; initial buffer to show when in emacsclient
 ;; (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
 
-;;(if (eq system-type 'windows-nt)
-;;    (progn
-;;        (setenv "LANG" "en_US.UTF-8")
-;;        (setq ispell-program-name "hunspell")
-;;        (setq ispell-dictionary "en_US")
-;;        (setq ispell-hunspell-dict-paths-alist
-;;          '(("en_US" "C:\\Hunspell\\en_US.aff")))
-;;        (setq pandoc "c:/users/dego_/appdata/local/pandoc/pandoc.exe")
-;;  (progn
-;;    (setq pandoc "/usr/bin/pandoc")
-;;    ))
-
 (if (eq system-type 'windows-nt)
     (progn
       (setenv "LANG" "en_US.UTF-8")
@@ -78,6 +66,9 @@
 
 ;; so that split is always horizontal
 (setq split-width-threshold 4000)
+
+;; Set find-name-dired to use case-insensitive search
+(setq find-name-arg "-iname")
 
 (straight-use-package 'use-package)
 (setq straight-use-package-by-default t)
@@ -135,7 +126,7 @@
   ;;(setq org-hide-emphasis-markers t)
   (setq org-ellipsis "...")
   (setq org-clock-sound "~/.emacs.d/sounds/bell3.mp3")
-  ;;(setq org-agenda-files (list "~/gtd/tasks.org" "~/gtd/repeat.org" "~/gtd/habits.org" "~/gtd/goals.org" "~/gtd/projects.org"))
+  (setq org-agenda-files (list "~/gtd/tasks.org" "~/gtd/repeat.org" "~/gtd/habits.org"))
 
   (require 'org-habit)
   (add-to-list 'org-modules 'org-habit)
@@ -164,6 +155,12 @@
 	   ("v" "Vocabulary" entry
            (file "~/drill/vocabulary.org")
 	    (file "~/.emacs.d/tpl-vocabulary.org"))
+	   ("s" "Spelling" entry
+              (file "~/drill/spelling.org")
+   	    (file "~/.emacs.d/tpl-spelling.org"))
+	   ("S" "Spanish" entry
+              (file "~/drill/spanish.org")
+   	    (file "~/.emacs.d/tpl-spanish.org"))
           ("b" "Bible" entry
            (file "~/drill/bible.org")
 	    (file "~/.emacs.d/tpl-bible.org"))
@@ -220,11 +217,9 @@
 (use-package writeroom-mode)
 
 ;; git program
-;;(use-package magit
-   ;;:custom
-
-
-   ;;(magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+(use-package magit
+   :custom
+   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
 (use-package evil
    :init
@@ -246,11 +241,12 @@
   :config
   (setq denote-directory (expand-file-name "~/denote"))
   (setq denote-infer-keywords t)
-  (setq denote-known-keywords '("meta" "lit", "tmp"))
+  (setq denote-known-keywords '("meta" "idea", "tmp", "ref"))
   (setq denote-sort-keywords t)
   ;;(setq denote-file-type 'markdown-yaml)
   (setq denote-prompts '(title keywords file-type signature))
   (setq denote-allow-multi-word-keywords t))
+(require 'denote-org-extras)
 
 (use-package restclient)
 
@@ -316,22 +312,17 @@
 
 (add-hook 'dired-mode-hook #'denote-dired-mode)
 
-;;(general-define-key
-  ;; "C-c l" 'org-agenda-list)
-;;(general-define-key
-  ;; "C-c c" 'org-capture)
-;;(general-define-key
-     ;;"C-x w" 'writeroom-mode)
+(general-define-key
+     "C-c r" 'rgrep)
 
-;;(general-define-key
-;;     "C-x f" 'flyspell-mode)
+(general-define-key
+     "C-c f" 'find-name-dired)
 
-;;  (defhydra hydra-zoom (global-map "<f2>")
-  ;;      "zoom"
-  ;;      ("<up>" text-scale-increase "in")
-  ;;      ("<down>" text-scale-decrease "out"))
-  ;;
-  ;;  (defhydra hydra-buffer (global-map "<f1>")
-  ;;    "buffer"
-  ;;    ("<left>" previous-buffer "prev")
-  ;;    ("<right>" next-buffer "next"))
+  ;;(general-define-key
+    ;; "C-c l" 'org-agenda-list)
+
+  ;;(general-define-key
+       ;;"C-x w" 'writeroom-mode)
+
+  ;;(general-define-key
+  ;;     "C-x f" 'flyspell-mode)
