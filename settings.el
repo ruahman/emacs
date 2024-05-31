@@ -45,7 +45,7 @@
 (setq max-specpdl-size 13000)
 
 ;; initial buffer to show when in emacsclient
-;; (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
+(setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
 
 (if (eq system-type 'windows-nt)
     (progn
@@ -69,6 +69,8 @@
 
 ;; Set find-name-dired to use case-insensitive search
 (setq find-name-arg "-iname")
+
+(setq dictionary-server "dict.org")
 
 (straight-use-package 'use-package)
 (setq straight-use-package-by-default t)
@@ -159,6 +161,9 @@
 	   ("S" "Spanish" entry
               (file "~/drill/spanish.org")
    	    (file "~/.emacs.d/tpl-spanish.org"))
+	   ("p" "Portugues" entry
+              (file "~/drill/portugues.org")
+   	    (file "~/.emacs.d/tpl-portugues.org"))
           ("b" "Bible" entry
            (file "~/drill/bible.org")
 	    (file "~/.emacs.d/tpl-bible.org"))

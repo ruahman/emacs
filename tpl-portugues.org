@@ -1,0 +1,6 @@
+
+* Palavra                                                             :drill:
+%^{Digite a palavra}
+** tradução
+%^{Escriva a resposta}
+  
