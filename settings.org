@@ -179,9 +179,9 @@
   	   ("s" "Spelling" entry
                 (file "~/drill/spelling.org")
      	    (file "~/.emacs.d/tpl-spelling.org"))
-  	   ("S" "Spanish" entry
-                (file "~/drill/spanish.org")
-     	    (file "~/.emacs.d/tpl-spanish.org"))
+  	   ("e" "Español" entry
+                (file "~/drill/espanol.org")
+     	    (file "~/.emacs.d/tpl-espanol.org"))
   	   ("p" "Portugues" entry
                 (file "~/drill/portugues.org")
      	    (file "~/.emacs.d/tpl-portugues.org"))
