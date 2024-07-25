@@ -96,11 +96,6 @@
     (setq markdown-command pandoc)
     (setq markdown-fontify-code-blocks-natively t))
 #+end_src
-** hydra
-#+begin_src emacs-lisp
-  ;; allow repeating keys
-  ;; (use-package hydra)
-#+end_src
 ** swiper
 #+begin_src emacs-lisp
   ;; for serching text in buffer
@@ -204,11 +199,15 @@
 #+end_src
 ** org-bullets
 #+begin_src emacs-lisp
-      (use-package org-bullets
+  (use-package org-bullets
 	:hook
 	(org-mode . org-bullets-mode)
 	:custom
 	(org-bullets-bullet-list '("○" "◎" "◉" "●" "◆" "◈" "◇")))
+#+end_src
+** dired-preview
+#+begin_src emacs-lisp
+  (use-package dired-preview)
 #+end_src
 ** org-drill
 #+begin_src emacs-lisp
@@ -289,14 +288,16 @@
 #+begin_src emacs-lisp
   (use-package denote
     :config
+    (require 'denote-org-extras)
+    (require 'denote-journal-extras)
     (setq denote-directory (expand-file-name "~/denote"))
+    (setq denote-journal-extras-directory (expand-file-name "~/journal"))
     (setq denote-infer-keywords t)
     (setq denote-known-keywords '("meta" "idea", "tmp", "ref"))
     (setq denote-sort-keywords t)
-    ;;(setq denote-file-type 'markdown-yaml)
+    (setq denote-file-type 'markdown-yaml)
     (setq denote-prompts '(title keywords file-type signature))
     (setq denote-allow-multi-word-keywords t))
-  (require 'denote-org-extras)
 #+end_src
 ** restclient
 #+begin_src emacs-lisp

@@ -1,6 +1,6 @@
 
 * Palabra                                                             :drill:
-%^{Ingrese la palabra}
+%^{Ingrese la frase}
 ** traduccíon
-%^{Ingrese la respuesta}
+%^{Ingrese la traducción}
   

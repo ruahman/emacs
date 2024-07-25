@@ -85,9 +85,6 @@
   (setq markdown-command pandoc)
   (setq markdown-fontify-code-blocks-natively t))
 
-;; allow repeating keys
-;; (use-package hydra)
-
 ;; for serching text in buffer
 (use-package swiper
   :bind (("C-s" . swiper)))
@@ -183,6 +180,8 @@
 	:custom
 	(org-bullets-bullet-list '("○" "◎" "◉" "●" "◆" "◈" "◇")))
 
+(use-package dired-preview)
+
 (use-package org-drill
   :config
   (setq org-drill-learn-fraction 0.1) 
@@ -242,14 +241,16 @@
 
 (use-package denote
   :config
+  (require 'denote-org-extras)
+  (require 'denote-journal-extras)
   (setq denote-directory (expand-file-name "~/denote"))
+  (setq denote-journal-extras-directory (expand-file-name "~/journal"))
   (setq denote-infer-keywords t)
   (setq denote-known-keywords '("meta" "idea", "tmp", "ref"))
   (setq denote-sort-keywords t)
-  ;;(setq denote-file-type 'markdown-yaml)
+  (setq denote-file-type 'markdown-yaml)
   (setq denote-prompts '(title keywords file-type signature))
   (setq denote-allow-multi-word-keywords t))
-(require 'denote-org-extras)
 
 (use-package restclient)
 
