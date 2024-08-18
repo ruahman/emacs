@@ -122,74 +122,67 @@
 ** which-key
 #+begin_src emacs-lisp
   ;; list menu for showing which key to use for keybinding
-  ;;(use-package which-key
-    ;;:init (which-key-mode)
-    ;;:diminish which-key-mode
-    ;;:config
-    ;;(setq which-key-idle-delay 3))
+  (use-package which-key
+    :init (which-key-mode)
+    :diminish which-key-mode
+    :config
+    (setq which-key-idle-delay 5))
 #+end_src
 ** org
 #+begin_src emacs-lisp
-  ;; get latest org mode
-  (use-package org
-    :bind (("C-c a" . org-agenda)
-           ("C-c c" . org-capture)
-           ("C-c l" . org-agenda-list))
-    :config
-    ;;(setq org-agenda-start-with-log-mode t)
-    (setq org-agenda-start-with-follow-mode t)
-    (setq org-log-done 'time)
-    (setq org-log-into-drawer t)
-    (setq org-startup-indented t) ;; setup org-indent-mode
-    ;;(setq org-hide-emphasis-markers t)
-    (setq org-ellipsis "...")
-    (setq org-clock-sound "~/.emacs.d/sounds/bell3.mp3")
-    (setq org-agenda-files (list "~/gtd/tasks.org" "~/gtd/repeat.org" "~/gtd/habits.org"))
+      ;; get latest org mode
+      (use-package org
+        :bind (("C-c a" . org-agenda)
+               ("C-c c" . org-capture)
+               ("C-c l" . org-agenda-list))
+        :config
+        ;;(setq org-agenda-start-with-log-mode t)
+        (setq org-agenda-start-with-follow-mode t)
+        (setq org-log-done 'time)
+        (setq org-log-into-drawer t)
+        (setq org-startup-indented t) ;; setup org-indent-mode
+        ;;(setq org-hide-emphasis-markers t)
+        (setq org-ellipsis "...")
+        (setq org-clock-sound "~/.emacs.d/sounds/bell3.mp3")
+        (setq org-agenda-files (list "~/gtd/tasks.org" "~/gtd/repeat.org" "~/gtd/habits.org"))
 
-    (require 'org-habit)
-    (add-to-list 'org-modules 'org-habit)
-    (setq org-habit-graph-column 80)
+        (add-hook 'auto-save-hook 'org-save-all-org-buffers)
 
-    ;; setup refile
-    (setq org-refile-targets
-      '(("tasks.org" :maxlevel . 1)
-        ("repeat.org" :maxlevel . 1)
-        ("habits.org" :maxlevel . 1)
-        ("someday-maybe.org" :maxlevel . 1)))
-    (setq org-refile-use-outline-path 'file)
-    (setq org-outline-path-complete-in-steps nil)
-    (setq org-refile-allow-creating-parent-nodes 'confirm)
+        (require 'org-habit)
+        (add-to-list 'org-modules 'org-habit)
+        (setq org-habit-graph-column 70)
 
-    (org-babel-do-load-languages
-      'org-babel-load-languages
-      '((python . t)))
+        ;; setup refile
+        (setq org-refile-targets
+          '(("tasks.org" :maxlevel . 1)
+            ("repeat.org" :maxlevel . 1)
+            ("habits.org" :maxlevel . 1)
+            ("someday-maybe.org" :maxlevel . 1)))
+        (setq org-refile-use-outline-path 'file)
+        (setq org-outline-path-complete-in-steps nil)
+        (setq org-refile-allow-creating-parent-nodes 'confirm)
 
-    (setq org-capture-templates
-          '(("t" "Todo" entry
-             (file "~/gtd/tasks.org")
-  	    (file "~/.emacs.d/tpl-todo.org"))
-  	   ("v" "Vocabulary" entry
-             (file "~/drill/vocabulary.org")
-  	    (file "~/.emacs.d/tpl-vocabulary.org"))
-  	   ("s" "Spelling" entry
-                (file "~/drill/spelling.org")
-     	    (file "~/.emacs.d/tpl-spelling.org"))
-  	   ("e" "Español" entry
-                (file "~/drill/espanol.org")
-     	    (file "~/.emacs.d/tpl-espanol.org"))
-  	   ("p" "Portugues" entry
-                (file "~/drill/portugues.org")
-     	    (file "~/.emacs.d/tpl-portugues.org"))
-            ("b" "Bible" entry
-             (file "~/drill/bible.org")
-  	    (file "~/.emacs.d/tpl-bible.org"))
-  	     ("d" "Denote" plain
-             (file denote-last-path)
-             #'denote-org-capture
-             :no-save t
-             :immediate-finish nil
-             :kill-buffer t
-             :jump-to-captured t))))
+        (org-babel-do-load-languages
+          'org-babel-load-languages
+          '((python . t)))
+
+        (setq org-capture-templates
+              '(("t" "Todo" entry
+                 (file "~/gtd/tasks.org")
+      	    (file "~/.emacs.d/tpl-todo.org"))
+      	   ("e" "Español" entry
+                    (file "~/drill/espanol.org")
+         	    (file "~/.emacs.d/tpl-espanol.org"))
+                ("b" "Bible" entry
+                 (file "~/drill/bible.org")
+      	    (file "~/.emacs.d/tpl-bible.org"))
+      	     ("d" "Denote" plain
+                 (file denote-last-path)
+                 #'denote-org-capture
+                 :no-save t
+                 :immediate-finish nil
+                 :kill-buffer t
+                 :jump-to-captured t))))
 
 
 #+end_src
@@ -207,14 +200,19 @@
 #+end_src
 ** dired-preview
 #+begin_src emacs-lisp
-  (use-package dired-preview)
+      (use-package dired-preview
+        :config
+        (setq dired-preview-delay 0.2))
 #+end_src
 ** org-drill
 #+begin_src emacs-lisp
-  (use-package org-drill
-    :config
-    (setq org-drill-learn-fraction 0.1) 
-    (setq org-drill-cram-hours 0))
+    (use-package org-drill
+      :bind
+      (("C-c D" . org-drill)
+       ("C-c d" . org-drill-resume))
+      :config
+      (setq org-drill-learn-fraction 0.1) 
+      (setq org-drill-cram-hours 0))
 #+end_src
 ** yasnippet
 #+begin_src emacs-lisp
@@ -299,13 +297,13 @@
     (setq denote-prompts '(title keywords file-type signature))
     (setq denote-allow-multi-word-keywords t))
 #+end_src
-** restclient
-#+begin_src emacs-lisp
-  (use-package restclient)
-#+end_src
 ** rust-mode
 #+begin_src emacs-lisp
   (use-package rust-mode)
+#+end_src
+** ledger-mode
+#+begin_src emacs-lisp
+  (use-package ledger-mode)
 #+end_src
 ** go-mode
 #+begin_src emacs-lisp
@@ -314,10 +312,6 @@
 ** typescript-mode
 #+begin_src emacs-lisp
   (use-package typescript-mode)
-#+end_src
-** csharp-mode
-#+begin_src emacs-lisp
-  ;(use-package csharp-mode)
 #+end_src
 ** dockerfile-mode
 #+begin_src emacs-lisp
@@ -342,26 +336,6 @@
 ** ob-go
 #+begin_src emacs-lisp
   (use-package ob-go)
-#+end_src
-** ob-deno
-#+begin_src emacs-lisp
-  ;(use-package ob-deno)
-  ;(add-to-list 'org-babel-load-languages '(deno . t))
-  ;(org-babel-do-load-languages 'org-babel-load-languages org-babel-load-languages)
-
-  ;; optional (required the typescript.el)
-  ;(add-to-list 'org-src-lang-modes '("deno" . typescript))
-#+end_src
-** ob-csharp
-#+begin_src emacs-lisp
-  ;(straight-use-package
-     ; '(el-patch :type git :host github :repo "samwdp/ob-csharp"))
-
-  ;(org-babel-do-load-languages 'org-babel-load-languages '((csharp . t)))
-#+end_src
-** ob-javascript
-#+begin_src emacs-lisp
-  ;(use-package ob-javascript)  
 #+end_src
 ** ob-typescript
 #+begin_src emacs-lisp
@@ -404,19 +378,21 @@
 #+end_src
 * Keybindings
 #+BEGIN_SRC emacs-lisp
+    ;; for searching content in files
     (general-define-key
-       "C-c r" 'rgrep)
+           "C-c r" 'rgrep)
 
+  ;; for searching file names
   (general-define-key
-       "C-c f" 'find-name-dired)
+           "C-c f" 'find-name-dired)
 
-    ;;(general-define-key
-      ;; "C-c l" 'org-agenda-list)
+        ;;(general-define-key
+          ;; "C-c l" 'org-agenda-list)
 
-    ;;(general-define-key
-         ;;"C-x w" 'writeroom-mode)
+        ;;(general-define-key
+             ;;"C-x w" 'writeroom-mode)
 
-    ;;(general-define-key
-    ;;     "C-x f" 'flyspell-mode)
+        ;;(general-define-key
+        ;;     "C-x f" 'flyspell-mode)
 
 #+END_SRC

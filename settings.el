@@ -105,11 +105,11 @@
    (ivy-rich-mode 1))
 
 ;; list menu for showing which key to use for keybinding
-;;(use-package which-key
-  ;;:init (which-key-mode)
-  ;;:diminish which-key-mode
-  ;;:config
-  ;;(setq which-key-idle-delay 3))
+(use-package which-key
+  :init (which-key-mode)
+  :diminish which-key-mode
+  :config
+  (setq which-key-idle-delay 5))
 
 ;; get latest org mode
 (use-package org
@@ -127,9 +127,11 @@
   (setq org-clock-sound "~/.emacs.d/sounds/bell3.mp3")
   (setq org-agenda-files (list "~/gtd/tasks.org" "~/gtd/repeat.org" "~/gtd/habits.org"))
 
+  (add-hook 'auto-save-hook 'org-save-all-org-buffers)
+
   (require 'org-habit)
   (add-to-list 'org-modules 'org-habit)
-  (setq org-habit-graph-column 80)
+  (setq org-habit-graph-column 70)
 
   ;; setup refile
   (setq org-refile-targets
@@ -149,18 +151,9 @@
         '(("t" "Todo" entry
            (file "~/gtd/tasks.org")
 	    (file "~/.emacs.d/tpl-todo.org"))
-	   ("v" "Vocabulary" entry
-           (file "~/drill/vocabulary.org")
-	    (file "~/.emacs.d/tpl-vocabulary.org"))
-	   ("s" "Spelling" entry
-              (file "~/drill/spelling.org")
-   	    (file "~/.emacs.d/tpl-spelling.org"))
 	   ("e" "Español" entry
               (file "~/drill/espanol.org")
    	    (file "~/.emacs.d/tpl-espanol.org"))
-	   ("p" "Portugues" entry
-              (file "~/drill/portugues.org")
-   	    (file "~/.emacs.d/tpl-portugues.org"))
           ("b" "Bible" entry
            (file "~/drill/bible.org")
 	    (file "~/.emacs.d/tpl-bible.org"))
@@ -180,9 +173,14 @@
 	:custom
 	(org-bullets-bullet-list '("○" "◎" "◉" "●" "◆" "◈" "◇")))
 
-(use-package dired-preview)
+(use-package dired-preview
+  :config
+  (setq dired-preview-delay 0.2))
 
 (use-package org-drill
+  :bind
+  (("C-c D" . org-drill)
+   ("C-c d" . org-drill-resume))
   :config
   (setq org-drill-learn-fraction 0.1) 
   (setq org-drill-cram-hours 0))
@@ -252,15 +250,13 @@
   (setq denote-prompts '(title keywords file-type signature))
   (setq denote-allow-multi-word-keywords t))
 
-(use-package restclient)
-
 (use-package rust-mode)
+
+(use-package ledger-mode)
 
 (use-package go-mode)
 
 (use-package typescript-mode)
-
-;(use-package csharp-mode)
 
 (use-package dockerfile-mode)
 
@@ -273,20 +269,6 @@
 (use-package ob-rust)
 
 (use-package ob-go)
-
-;(use-package ob-deno)
-;(add-to-list 'org-babel-load-languages '(deno . t))
-;(org-babel-do-load-languages 'org-babel-load-languages org-babel-load-languages)
-
-;; optional (required the typescript.el)
-;(add-to-list 'org-src-lang-modes '("deno" . typescript))
-
-;(straight-use-package
-   ; '(el-patch :type git :host github :repo "samwdp/ob-csharp"))
-
-;(org-babel-do-load-languages 'org-babel-load-languages '((csharp . t)))
-
-;(use-package ob-javascript)
 
 (use-package ob-typescript)
 
@@ -316,17 +298,19 @@
 
 (add-hook 'dired-mode-hook #'denote-dired-mode)
 
+;; for searching content in files
+  (general-define-key
+         "C-c r" 'rgrep)
+
+;; for searching file names
 (general-define-key
-     "C-c r" 'rgrep)
+         "C-c f" 'find-name-dired)
 
-(general-define-key
-     "C-c f" 'find-name-dired)
+      ;;(general-define-key
+        ;; "C-c l" 'org-agenda-list)
 
-  ;;(general-define-key
-    ;; "C-c l" 'org-agenda-list)
+      ;;(general-define-key
+           ;;"C-x w" 'writeroom-mode)
 
-  ;;(general-define-key
-       ;;"C-x w" 'writeroom-mode)
-
-  ;;(general-define-key
-  ;;     "C-x f" 'flyspell-mode)
+      ;;(general-define-key
+      ;;     "C-x f" 'flyspell-mode)
