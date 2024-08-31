@@ -182,7 +182,12 @@
   (("C-c D" . org-drill)
    ("C-c d" . org-drill-resume))
   :config
-  (setq org-drill-learn-fraction 0.1) 
+  (setq org-drill-maximum-items-per-session 20)
+  (setq org-drill-maximum-duration 10)
+  (setq org-drill-learn-fraction 0.9)
+  (setq org-drill-overdue-interval-factor 1.0)
+  (setq org-drill-add-random-noise-to-intervals-p t)
+  (setq org-drill-skip-easy-drill-headings t)
   (setq org-drill-cram-hours 0))
 
 (use-package yasnippet
