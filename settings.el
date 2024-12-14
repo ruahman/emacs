@@ -29,9 +29,9 @@
 ;; set font for client
 (defun set-font-faces()
   (message "setting font")
-  (set-face-attribute 'variable-pitch nil :font "FiraCode Nerd Font" :height 150)
-  (set-face-attribute 'fixed-pitch nil :font "FiraCode Nerd Font" :height 150)
-  (set-face-attribute 'default nil :font "FiraCode Nerd Font" :height 150))
+  (set-face-attribute 'variable-pitch nil :font "Ubuntu Mono" :height 150)
+  (set-face-attribute 'fixed-pitch nil :font "Ubuntu Mono" :height 150)
+  (set-face-attribute 'default nil :font "Ubuntu Mono" :height 150))
 
 ;; if emacs is running as a server
 (if (daemonp)
@@ -105,11 +105,11 @@
    (ivy-rich-mode 1))
 
 ;; list menu for showing which key to use for keybinding
-(use-package which-key
-  :init (which-key-mode)
-  :diminish which-key-mode
-  :config
-  (setq which-key-idle-delay 5))
+;;(use-package which-key
+  ;;:init (which-key-mode)
+  ;;:diminish which-key-mode
+  ;;:config
+  ;;(setq which-key-idle-delay 20))
 
 ;; get latest org mode
 (use-package org
@@ -125,7 +125,7 @@
   ;;(setq org-hide-emphasis-markers t)
   (setq org-ellipsis "...")
   (setq org-clock-sound "~/.emacs.d/sounds/bell3.mp3")
-  (setq org-agenda-files (list "~/gtd/tasks.org" "~/gtd/repeat.org" "~/gtd/habits.org"))
+  ;;(setq org-agenda-files (list "~/gtd/tasks.org" "~/gtd/repeat.org" "~/gtd/habits.org"))
 
   (add-hook 'auto-save-hook 'org-save-all-org-buffers)
 
@@ -182,9 +182,9 @@
   (("C-c D" . org-drill)
    ("C-c d" . org-drill-resume))
   :config
-  (setq org-drill-maximum-items-per-session 20)
+  (setq org-drill-maximum-items-per-session 10)
   (setq org-drill-maximum-duration 10)
-  (setq org-drill-learn-fraction 0.9)
+  (setq org-drill-learn-fraction 0.1)
   (setq org-drill-overdue-interval-factor 1.0)
   (setq org-drill-add-random-noise-to-intervals-p t)
   (setq org-drill-skip-easy-drill-headings t)
@@ -222,9 +222,9 @@
 (use-package writeroom-mode)
 
 ;; git program
-(use-package magit
-   :custom
-   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+;;(use-package magit
+   ;;:custom
+   ;;(magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
 (use-package evil
    :init
@@ -255,35 +255,19 @@
   (setq denote-prompts '(title keywords file-type signature))
   (setq denote-allow-multi-word-keywords t))
 
-(use-package rust-mode)
-
 (use-package ledger-mode)
-
-(use-package go-mode)
-
-(use-package typescript-mode)
-
-(use-package dockerfile-mode)
 
 (use-package yaml-mode)
 
-(use-package zig-mode)
-
 (use-package json-mode)
 
-(use-package ob-rust)
-
-(use-package ob-go)
-
-(use-package ob-typescript)
-
-(org-babel-do-load-languages
-  'org-babel-load-languages
-  '((js . t)
-    (rust . t)
-    (go . t)
-    (python . t)
-    (typescript . t)))
+;;(org-babel-do-load-languages
+  ;;'org-babel-load-languages
+  ;;'((js . t)
+    ;;(rust . t)
+    ;;(go . t)
+    ;;(python . t)
+    ;;(typescript . t)))
 
 ;; Disable line numbers for some modes
 (dolist (mode '(org-mode-hook

@@ -33,9 +33,9 @@
   ;; set font for client
   (defun set-font-faces()
     (message "setting font")
-    (set-face-attribute 'variable-pitch nil :font "FiraCode Nerd Font" :height 150)
-    (set-face-attribute 'fixed-pitch nil :font "FiraCode Nerd Font" :height 150)
-    (set-face-attribute 'default nil :font "FiraCode Nerd Font" :height 150))
+    (set-face-attribute 'variable-pitch nil :font "Ubuntu Mono" :height 150)
+    (set-face-attribute 'fixed-pitch nil :font "Ubuntu Mono" :height 150)
+    (set-face-attribute 'default nil :font "Ubuntu Mono" :height 150))
 
   ;; if emacs is running as a server
   (if (daemonp)
@@ -122,11 +122,11 @@
 ** which-key
 #+begin_src emacs-lisp
   ;; list menu for showing which key to use for keybinding
-  (use-package which-key
-    :init (which-key-mode)
-    :diminish which-key-mode
-    :config
-    (setq which-key-idle-delay 5))
+  ;;(use-package which-key
+    ;;:init (which-key-mode)
+    ;;:diminish which-key-mode
+    ;;:config
+    ;;(setq which-key-idle-delay 20))
 #+end_src
 ** org
 #+begin_src emacs-lisp
@@ -144,7 +144,7 @@
         ;;(setq org-hide-emphasis-markers t)
         (setq org-ellipsis "...")
         (setq org-clock-sound "~/.emacs.d/sounds/bell3.mp3")
-        (setq org-agenda-files (list "~/gtd/tasks.org" "~/gtd/repeat.org" "~/gtd/habits.org"))
+        ;;(setq org-agenda-files (list "~/gtd/tasks.org" "~/gtd/repeat.org" "~/gtd/habits.org"))
 
         (add-hook 'auto-save-hook 'org-save-all-org-buffers)
 
@@ -263,9 +263,9 @@
 ** magit
 #+begin_src emacs-lisp
   ;; git program
-  (use-package magit
-     :custom
-     (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+  ;;(use-package magit
+     ;;:custom
+     ;;(magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 #+end_src
 ** evil
 #+begin_src emacs-lisp
@@ -302,59 +302,27 @@
     (setq denote-prompts '(title keywords file-type signature))
     (setq denote-allow-multi-word-keywords t))
 #+end_src
-** rust-mode
-#+begin_src emacs-lisp
-  (use-package rust-mode)
-#+end_src
 ** ledger-mode
 #+begin_src emacs-lisp
   (use-package ledger-mode)
-#+end_src
-** go-mode
-#+begin_src emacs-lisp
-  (use-package go-mode)
-#+end_src
-** typescript-mode
-#+begin_src emacs-lisp
-  (use-package typescript-mode)
-#+end_src
-** dockerfile-mode
-#+begin_src emacs-lisp
-  (use-package dockerfile-mode)
 #+end_src
 ** yaml-mode
 #+begin_src emacs-lisp
   (use-package yaml-mode)
 #+end_src
-** zig-mode
-#+begin_src emacs-lisp
-  (use-package zig-mode)
-#+end_src
 ** json-mode
 #+begin_src emacs-lisp
   (use-package json-mode)
 #+end_src
-** ob-rust
-#+begin_src emacs-lisp
-  (use-package ob-rust)
-#+end_src
-** ob-go
-#+begin_src emacs-lisp
-  (use-package ob-go)
-#+end_src
-** ob-typescript
-#+begin_src emacs-lisp
-  (use-package ob-typescript)
-#+end_src
 ** setup org-babel
 #+begin_src emacs-lisp
-  (org-babel-do-load-languages
-    'org-babel-load-languages
-    '((js . t)
-      (rust . t)
-      (go . t)
-      (python . t)
-      (typescript . t)))
+  ;;(org-babel-do-load-languages
+    ;;'org-babel-load-languages
+    ;;'((js . t)
+      ;;(rust . t)
+      ;;(go . t)
+      ;;(python . t)
+      ;;(typescript . t)))
 #+end_src
 * Hooks
 ** display-line-numbers-mode
