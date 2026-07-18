@@ -1,6 +1,0 @@
-
-* Bible Verse                                                         :drill:
-%^{Enter bible phrase}
-** answer
-%^{Enter the bible verse}
-  

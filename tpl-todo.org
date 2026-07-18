@@ -1,9 +1,0 @@
-
-* TODO %^{Please enter task}
-:PROPERTIES:
-:STORY:    %?
-:END:
-%^{Description}
-:LOGBOOK:
-- Added: %U
-:END:

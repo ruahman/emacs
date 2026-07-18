@@ -1,6 +1,0 @@
-
-* Spelling                                                            :drill:
-%^{Enter hint}
-** answer
-%^{Enter answer}
-  

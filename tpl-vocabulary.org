@@ -1,6 +1,0 @@
-
-* Vocabulary                                                          :drill:
-%^{Enter word}
-** answer
-%^{Enter definition}
-  

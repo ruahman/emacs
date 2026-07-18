@@ -1,6 +1,0 @@
-
-* Palabra                                                             :drill:
-%^{Ingrese la frase}
-** traduccíon
-%^{Ingrese la traducción}
-  
