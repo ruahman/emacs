@@ -57,5 +57,6 @@
 | C-x <arrows> | cycle                    | cycle through buffers                      |
 | C-h v        | describe variable        | give docs on variable                      |
 | C-h f        | describe function        | give doc on function                       |
+| C-r m        | bookmark buffer          |                                            |
 
 
