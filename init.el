@@ -5,6 +5,7 @@
 (setq package-archives
       '(("melpa" . "https://melpa.org/packages/")
         ("elpa"  . "https://elpa.gnu.org/packages/")
+	("org" . "https://orgmode.org/elpa/")
         ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
 
 (package-initialize)
@@ -84,6 +85,14 @@
 (unless (package-installed-p 'magit)
   (package-install 'magit))
 
+;; Install swiper
+;;(unless (package-installed-p 'swiper)
+;;  (package-install 'swiper))
+
+;;(global-set-key (kbd "C-s") 'swiper)
+;;(define-key minibuffer-local-map (kbd "C-n") 'next-line)
+;;(define-key minibuffer-local-map (kbd "C-p") 'previous-line)
+
 
 ;; setup username
 (setq user-full-name "Diego Vila")
@@ -125,6 +134,9 @@
 ;; Enable which-key (Built-in for Emacs 30+)
 (which-key-mode 1)
 
+;; dired
+(setq dired-listing-switches "-alh --group-directories-first")
+
 ;; Disable line numbers for some modes
 (dolist (mode '(org-mode-hook
 		markdown-mode-hook
@@ -147,7 +159,7 @@
 (add-hook 'markdown-mode-hook #'hl-line-mode)
 
 
-(defun zettle ()
+(defun zettle-create ()
   "Create a new Zettelkasten note in either Markdown or Org format.
 Prompts for note type, title, and comma-separated tags, then creates
 the file with proper front matter and includes tags in the filename."
@@ -193,7 +205,7 @@ the file with proper front matter and includes tags in the filename."
     (message "Zettel note created: %s" filename)))
 
 
-(defun zettle-update ()
+(defun zettle-update-front-matter-and-rename ()
   "Update current buffer's filename based on title and tags updated in front matter.
 Maintains the existing original 14-digit datetime prefix."
   (interactive)
@@ -267,7 +279,66 @@ Maintains the existing original 14-digit datetime prefix."
         (set-buffer-modified-p nil)
         (message "Renamed Zettel to: %s" new-name)))))
 
+(defun zettle-add-front-matter-and-rename ()
+  "Add Zettelkasten front matter to the current buffer and rename the file.
+Prompts for note type, title, and tags. Inserts front matter at the top
+of the file and renames it using YYYYMMDDHHMMSS__title__tags format."
+  (interactive)
+  (unless (buffer-file-name)
+    (user-error "Buffer is not visiting a file on disk"))
 
+  (let* ((type (completing-read "Note format: " '("org" "markdown") nil t))
+         (title (read-string "Title: "))
+         (tags-raw (read-string "Tags (comma separated): "))
+         (tags (mapcar #'string-trim (split-string tags-raw "," t)))
+
+         ;; Create safe slugs
+         (title-slug (string-trim (downcase (replace-regexp-in-string "[^A-Za-z0-9]+" "-" title)) "-" "-"))
+         (tags-slug (string-trim (downcase (replace-regexp-in-string "[^A-Za-z0-9]+" "-" (mapconcat #'identity tags "-"))) "-" "-"))
+
+         ;; Generate timing strings
+         (datetime (format-time-string "%Y%m%d%H%M%S"))
+         (display-date (format-time-string "%Y-%m-%d %H:%M"))
+
+         ;; Target extension and new file path
+         (ext (if (string= type "markdown") "md" "org"))
+         (dir (file-name-directory (buffer-file-name)))
+         (current-path (buffer-file-name))
+
+         (new-name (if (string-empty-p tags-slug)
+                       (format "%s__%s.%s" datetime title-slug ext)
+                     (format "%s__%s__%s.%s" datetime title-slug tags-slug ext)))
+         (new-path (expand-file-name new-name dir)))
+
+    ;; 1. Insert Front Matter at top of the buffer
+    (save-excursion
+      (goto-char (point-min))
+      (cond
+       ((string= type "markdown")
+        (insert "---\n")
+        (insert (format "title: \"%s\"\n" title))
+        (insert (format "date: %s\n" display-date))
+        (insert (format "tags: [%s]\n" (mapconcat (lambda (s) (format "\"%s\"" s)) tags ", ")))
+        (insert "---\n\n"))
+
+       ((string= type "org")
+        (insert (format "#+TITLE: %s\n" title))
+        (insert (format "#+DATE:  %s\n" display-date))
+        (insert (format "#+FILETAGS: %s\n" (mapconcat #'identity tags " ")))
+        (insert "\n"))))
+
+    ;; 2. Save buffer and rename the file
+    (save-buffer)
+    (rename-file current-path new-path 1)
+    (set-visited-file-name new-path)
+    (set-buffer-modified-p nil)
+
+    ;; 3. Switch buffer mode if needed to match new extension
+    (if (string= ext "md")
+        (when (fboundp 'markdown-mode) (markdown-mode))
+      (org-mode))
+
+    (message "Added front matter and renamed to: %s" new-name)))
 
 
 (custom-set-variables
