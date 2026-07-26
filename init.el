@@ -26,14 +26,68 @@
 
 (setq org-startup-indented t) ;; setup org-indent-mode
 
+;; setup ord directory
+(setq org-directory "~/org/")
+
+;; recursivly search org-directory for org files
+(setq org-agenda-files
+      (directory-files-recursively org-directory "\\.org$"))
+
+
+;; set todo sequence
+(setq org-todo-keywords
+      '((sequence "REPEAT(r)" "PROJECT(p)" "TODO(t)" "NEXT(n)" "WAITING(w!)" "|" "DONE(d!)" "CANCELLED(c!)")))
+
+;;(setq org-default-notes-file "~/org/2_tasks/tasks.org")
+
+(setq org-capture-templates
+      '(
+	("i" "Inbox" entry
+         (file+headline "~/org/1_inbox/inbox.org" "inbox")
+         "* %?\n  %i\n  %a")
+	("t" "Task" entry
+         (file+headline "~/org/2_tasks/tasks.org" "tasks")
+         "* TODO %?\n  %i\n  %a")
+	("p" "Project" entry
+         (file+headline "~/org/3_projects/projects.org" "tasks")
+         "* PROJECT %?\n  %i\n  %a")
+      ))
+
+;; org-capture command
+(global-set-key (kbd "C-c c") 'org-capture)
+
+;; default location for org-mode
+(setq org-directory "~/org/")
+
+;; refile targets
+(setq org-refile-targets
+  '(("~/org/1_inbox/inbox.org" :maxlevel . 1)
+    ("~/org/2_tasks/tasks.org" :maxlevel . 1)
+    ("~/org/3_projects/projects.org" :maxlevel . 1)))
+
+;; log in drawer
+(setq org-log-into-drawer t)
+
+;; add timestamp for done
+(setq org-log-done 'time)
+
+
+;; respect content of header when creating a new one
+(setq org-insert-heading-respect-content t)
+
 ;; use org mode table for markdown
 (add-hook 'markdown-mode-hook 'orgtbl-mode)
+
+;; keybinding for org-agenda
+(global-set-key (kbd "C-c a") #'org-agenda)
+(global-set-key (kbd "C-c l") #'org-agenda-list)
+
 
 ;; Install org-superstar
 (unless (package-installed-p 'org-superstar)
   (package-install 'org-superstar))
 
-(setq org-superstar-headline-bullets-list '("◉" "○" "✸" "✿" "♦"))
+(setq org-superstar-headline-bullets-list '("◉" "○" "✸" "☆" "♦"))
 (setq org-hide-leading-stars t)
 
 (add-hook 'org-mode-hook #'org-superstar-mode)
@@ -159,7 +213,7 @@
 (add-hook 'markdown-mode-hook #'hl-line-mode)
 
 
-(defun zettle-create ()
+(defun zettle/new ()
   "Create a new Zettelkasten note in either Markdown or Org format.
 Prompts for note type, title, and comma-separated tags, then creates
 the file with proper front matter and includes tags in the filename."
@@ -176,7 +230,7 @@ the file with proper front matter and includes tags in the filename."
          
          ;; Generate timing strings
          (datetime (format-time-string "%Y%m%d%H%M%S"))
-         (display-date (format-time-string "%Y-%m-%d %H:%M"))
+         (display-date (format-time-string "[%Y-%m-%d %a %H:%M]"))
          
          ;; Build filename: <datetime>_<title>_<tags>.<ext>
          (ext (if (string= type "markdown") "md" "org"))
@@ -205,81 +259,8 @@ the file with proper front matter and includes tags in the filename."
     (message "Zettel note created: %s" filename)))
 
 
-(defun zettle-update-front-matter-and-rename ()
-  "Update current buffer's filename based on title and tags updated in front matter.
-Maintains the existing original 14-digit datetime prefix."
-  (interactive)
-  (unless (buffer-file-name)
-    (user-error "Buffer is not visiting a file"))
-  
-  (let* ((current-path (buffer-file-name))
-         (current-name (file-name-nondirectory current-path))
-         (dir (file-name-directory current-path))
-         (ext (file-name-extension current-name))
-         
-         ;; Pull the original datetime prefix
-         (parts (split-string (file-name-base current-name) "__"))
-         (datetime (nth 0 parts))
-         parsed-title
-         tags)
-    
-    ;; Guard check for the 14-digit timestamp
-    (unless (and datetime (= (length datetime) 14))
-      (user-error "Filename doesn't start with a valid YYYYMMDDHHMMSS timestamp"))
-    
-    ;; 1. Parse BOTH title and tags out of the buffer front matter
-    (save-excursion
-      (goto-char (point-min))
-      (cond
-       ;; --- MARKDOWN PARSING ---
-       ((string= ext "md")
-        ;; Parse title
-        (if (re-search-forward "^title:\\s-*\"\\(.*\\)\"" nil t)
-            (setq parsed-title (match-string 1))
-          (if (re-search-forward "^title:\\s-*\\(.*\\)$" nil t)
-              (setq parsed-title (match-string 1))))
-        ;; Parse tags
-        (if (re-search-forward "^tags:\\s-*\\[\\(.*\\)\\]" nil t)
-            (let ((raw-tags (match-string 1)))
-              (setq tags (mapcar (lambda (s) (string-trim (replace-regexp-in-string "\"" "" s)))
-                                 (split-string raw-tags "," t))))))
-       
-       ;; --- ORG MODE PARSING ---
-       ((string= ext "org")
-        ;; Parse title
-        (if (re-search-forward "^#\\+TITLE:\\s-*\\(.*\\)$" nil t)
-            (setq parsed-title (match-string 1)))
-        ;; Parse tags
-        (if (re-search-forward "^#\\+FILETAGS:\\s-*\\(.*\\)$" nil t)
-            (setq tags (split-string (match-string 1) "\\s-+" t))))))
-    
-    ;; Fall back to existing name if no title found in front matter
-    (unless parsed-title
-      (user-error "Could not find a valid title line in the front matter"))
-    
-    ;; 2. Re-slugify both fields cleanly
-    (let* ((title-slug (string-trim (downcase (replace-regexp-in-string "[^A-Za-z0-9]+" "-" parsed-title)) "-" "-"))
-           (tags-slug (if tags
-                          (string-trim (downcase (replace-regexp-in-string "[^A-Za-z0-9]+" "-" (mapconcat #'identity tags "-"))) "-" "-")
-                        ""))
-           ;; Assemble the modern name using the double underscores
-           (new-name (if (string-empty-p tags-slug)
-                         (format "%s__%s.%s" datetime title-slug ext)
-                       (format "%s__%s__%s.%s" datetime title-slug tags-slug ext)))
-           (new-path (expand-file-name new-name dir)))
-      
-      ;; 3. Execute renaming sequence if something actually changed
-      (if (string= current-name new-name)
-          (message "Filename is already completely up to date.")
-        
-        (when (buffer-modified-p) (save-buffer))
-        
-        (rename-file current-path new-path 1)
-        (set-visited-file-name new-path)
-        (set-buffer-modified-p nil)
-        (message "Renamed Zettel to: %s" new-name)))))
 
-(defun zettle-add-front-matter-and-rename ()
+(defun zettle/front-matter ()
   "Add Zettelkasten front matter to the current buffer and rename the file.
 Prompts for note type, title, and tags. Inserts front matter at the top
 of the file and renames it using YYYYMMDDHHMMSS__title__tags format."
@@ -298,7 +279,7 @@ of the file and renames it using YYYYMMDDHHMMSS__title__tags format."
 
          ;; Generate timing strings
          (datetime (format-time-string "%Y%m%d%H%M%S"))
-         (display-date (format-time-string "%Y-%m-%d %H:%M"))
+         (display-date (format-time-string "[%Y-%m-%d %a %H:%M]"))
 
          ;; Target extension and new file path
          (ext (if (string= type "markdown") "md" "org"))
@@ -339,6 +320,89 @@ of the file and renames it using YYYYMMDDHHMMSS__title__tags format."
       (org-mode))
 
     (message "Added front matter and renamed to: %s" new-name)))
+
+
+(defun zettle/update ()
+  "Rename current file using front matter TITLE + TAGS (Org or Markdown)."
+  (interactive)
+  (unless (buffer-file-name)
+    (user-error "Buffer is not visiting a file"))
+
+  (let* ((current-path (buffer-file-name))
+         (current-name (file-name-nondirectory current-path))
+         (dir (file-name-directory current-path))
+         (ext (file-name-extension current-name))
+         title tags)
+
+    ;; --- PARSE FRONT MATTER ---
+    (save-excursion
+      (goto-char (point-min))
+
+      (cond
+       ;; ---------------- MARKDOWN ----------------
+       ((string= ext "md")
+        ;; title: "My Title"
+        (when (re-search-forward "^title:[[:space:]]*\"\\(.*?\\)\"" nil t)
+          (setq title (match-string 1)))
+
+        ;; tags: ["tag1", "tag2"]
+        (when (re-search-forward "^tags:[[:space:]]*\
+
+\[\\(.*?\\)\\]
+
+" nil t)
+          (setq tags
+                (mapcar (lambda (s)
+                          (string-trim (replace-regexp-in-string "\"" "" s)))
+                        (split-string (match-string 1) "," t)))))
+
+       ;; ---------------- ORG ----------------
+       ((string= ext "org")
+        ;; #+TITLE: My Title
+        (when (re-search-forward "^#\\+TITLE:[[:space:]]*\\(.*?\\)$" nil t)
+          (setq title (string-trim (match-string 1))))
+
+        ;; #+FILETAGS: tag1 tag2
+        (when (re-search-forward "^#\\+FILETAGS:[[:space:]]*\\(.*?\\)$" nil t)
+          (setq tags (split-string (match-string 1) "[[:space:]]+" t))))))
+
+    ;; --- VALIDATION ---
+    (unless title
+      (user-error "Missing TITLE in front matter"))
+
+    ;; --- SLUGIFY TITLE + TAGS ---
+    (let* ((title-slug
+            (string-trim
+             (downcase
+              (replace-regexp-in-string "[^A-Za-z0-9]+" "-" title))
+             "-" "-"))
+           (tags-slug
+            (if tags
+                (string-trim
+                 (downcase
+                  (replace-regexp-in-string
+                   "[^A-Za-z0-9]+"
+                   "-"
+                   (mapconcat #'identity tags "-"))))
+              ""))
+           (new-name
+            (if (string-empty-p tags-slug)
+                (format "%s.%s" title-slug ext)
+              (format "%s__%s.%s" title-slug tags-slug ext)))
+           (new-path (expand-file-name new-name dir)))
+
+      ;; --- RENAME IF NEEDED ---
+      (if (string= current-name new-name)
+          (message "Filename already up to date.")
+        (when (buffer-modified-p)
+          (save-buffer))
+        (rename-file current-path new-path t)
+        (set-visited-file-name new-path)
+        (set-buffer-modified-p nil)
+        (message "Renamed Zettel to: %s" new-name)))))
+
+
+
 
 
 (custom-set-variables
