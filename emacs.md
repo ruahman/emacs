@@ -3,8 +3,10 @@
 |--------------+--------------------------+--------------------------------------------|
 | C            | control key              |                                            |
 | M            | meta key                 |                                            |
-| C-x C-x      | close emacs              | close emacs:w                              |
-| C-g          | quit                     | quit a partialy entered command            |
+| C-x C-f      | open file                |                                            |
+| C-x C-c      | close emacs              | close emacs                                |
+| C-x C-s      | save                     | save buffer                                |
+| C-g          | quit command             | quit a partialy entered command            |
 | C-v          | forward one screen       | move forward one screen                    |
 | M-v          | back one screen          | move back one screen                       |
 | C-l          | clear screen             | move text where cursor is at to the center |
@@ -21,10 +23,11 @@
 | M->          | end of file              | move to the end of the file                |
 | M-<          | begining of file         | move to the begining of file               |
 | C-u          | add number               | add number to command                      |
-| C-u 8 C-f    | move forward             | move forward 8 characters                  |
+| C-u 8 C-f    | move forward  8          | move forward 8 characters                  |
 | C-x 3        | vertical split           | vertical split window                      |
 | C-x 2        | horizontal split         | horizontal spli                            |
 | C-x 1        | one window               | kill all other windows                     |
+| C-x o        | next window              | jump to next window                        |
 | <DEL>        | delete char              | delete the caracher just before cursor     |
 | C-d          | delete next after cursor | delete the char after cursor               |
 | M-<DEL>      | kill word                | kill word befor cursor                     |
@@ -32,7 +35,7 @@
 | C-k          | kill line                | kill till end of line                      |
 | M-k          | kill begining            | kill till begining                         |
 | C-w          | cut                      | cut region                                 |
-| M-w          | copy                     | take with                                  |
+| M-w          | copy selected            | copy selected region                       |
 | C-<SPC>      | mark set                 | start marking                              |
 | C-y          | yank                     | yank killed text                           |
 | C-/          | undo                     | undo changes                               |
@@ -43,7 +46,6 @@
 | C-x C-s      | save                     | save file                                  |
 | C-x C-+      | incress font             | incress font size                          |
 | C-x C--      | decress font             | decress font size                          |
-| C-x o        | next frame               | jump to next frame                         |
 | C-z 0        | close frame              | close current frame                        |
 | C-x b        | list buffers             | list buffers                               |
 | M-w          | copy                     | take with                                  |
