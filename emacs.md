@@ -5,8 +5,12 @@
 | M            | meta key             |                                            |
 | C-x C-f      | open file            |                                            |
 | C-x C-c      | close emacs          | close emacs                                |
+| C-x C-w      | write                | write buffer                               |
+| C-x s        | save all             | save all buffers                           |
 | C-x C-s      | save                 | save buffer                                |
 | C-x k        | kill buffer          | kill buffer                                |
+| C-x right    | next buffer          |                                            |
+| C-x left     | previous buffer      |                                            |
 | C-g          | quit command         | quit a partialy entered command            |
 | C-v          | forward one screen   | move forward one screen                    |
 | M-v          | back one screen      | move back one screen                       |
