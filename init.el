@@ -56,8 +56,11 @@
 ;; org-capture command
 (global-set-key (kbd "C-c c") 'org-capture)
 
+;; stop bookmarking capture
+(setq org-capture-bookmark nil)
+
 ;; default location for org-mode
-(setq org-directory "~/org/")
+;;(setq org-directory "~/org/")
 
 ;; refile targets
 (setq org-refile-targets
@@ -91,6 +94,46 @@
 (setq org-hide-leading-stars t)
 
 (add-hook 'org-mode-hook #'org-superstar-mode)
+
+;; Install org-roam
+(unless (package-installed-p 'org-roam)
+  (package-install 'org-roam))
+
+;; where roam looks for notes (file-truename handles symlinks)
+(setq org-roam-directory (file-truename "~/org/4_areas/kingdom/personal-study"))
+
+;; keep the SQLite database in sync automatically
+(org-roam-db-autosync-mode)
+
+;; keybindings (C-c n prefix, which-key will show these)
+(global-set-key (kbd "C-c r f") #'org-roam-node-find)
+(global-set-key (kbd "C-c r i") #'org-roam-node-insert)
+(global-set-key (kbd "C-c r t") #'org-roam-buffer-toggle) ; show backlinks
+(global-set-key (kbd "C-c r G") #'org-roam-graph) ; show graph of org-roam database
+;; (global-set-key (kbd "C-c n c") #'org-roam-capture)
+
+
+;; Install denote
+(unless (package-installed-p 'denote)
+  (package-install 'denote))
+
+;; where notes live (matches your existing org-directory)
+(setq denote-directory (expand-file-name "~/org/5_resources"))
+
+;; (setq denote-file-type 'markdown-yaml)'
+(setq denote-prompts '(title keywords file-type))
+
+(setq denote-known-keywords '("meta" "tmp" "draft"))
+
+(global-set-key (kbd "C-c d n") #'denote)                 ; new note
+(global-set-key (kbd "C-c d r") #'denote-rename-file)     ; rename to denote scheme
+(global-set-key (kbd "C-c d l") #'denote-link)            ; insert link to a note
+(global-set-key (kbd "C-c d b") #'denote-backlinks)       ; show backlinks
+(global-set-key (kbd "C-c d o") #'denote-open-or-create)  ; jump to / create note
+(global-set-key (kbd "C-c d k") #'denote-rename-file-keywords) ; edit keywords
+
+;; fontify the filename fields (date / title / keywords) in dired
+(add-hook 'dired-mode-hook #'denote-dired-mode)
 
 
 ;; Install doom-themes
@@ -213,193 +256,193 @@
 (add-hook 'markdown-mode-hook #'hl-line-mode)
 
 
-(defun zettle/new ()
-  "Create a new Zettelkasten note in either Markdown or Org format.
-Prompts for note type, title, and comma-separated tags, then creates
-the file with proper front matter and includes tags in the filename."
-  (interactive)
-  (let* ((type (completing-read "Note format: " '("org" "markdown") nil t))
-         (title (read-string "Title: "))
-         (tags-raw (read-string "Tags (comma separated): "))
-         ;; Clean up tags into a clean list of trimmed strings
-         (tags (mapcar #'string-trim (split-string tags-raw "," t)))
+;; (defun zettle/new ()
+;;   "Create a new Zettelkasten note in either Markdown or Org format.
+;; Prompts for note type, title, and comma-separated tags, then creates
+;; the file with proper front matter and includes tags in the filename."
+;;   (interactive)
+;;   (let* ((type (completing-read "Note format: " '("org" "markdown") nil t))
+;;          (title (read-string "Title: "))
+;;          (tags-raw (read-string "Tags (comma separated): "))
+;;          ;; Clean up tags into a clean list of trimmed strings
+;;          (tags (mapcar #'string-trim (split-string tags-raw "," t)))
          
-         ;; Create safe slugs for title and tags (lowercase, alphanumeric + hyphens)
-         (title-slug (string-trim (downcase (replace-regexp-in-string "[^A-Za-z0-9]+" "-" title)) "-" "-"))
-         (tags-slug (string-trim (downcase (replace-regexp-in-string "[^A-Za-z0-9]+" "-" (mapconcat #'identity tags "-"))) "-" "-"))
+;;          ;; Create safe slugs for title and tags (lowercase, alphanumeric + hyphens)
+;;          (title-slug (string-trim (downcase (replace-regexp-in-string "[^A-Za-z0-9]+" "-" title)) "-" "-"))
+;;          (tags-slug (string-trim (downcase (replace-regexp-in-string "[^A-Za-z0-9]+" "-" (mapconcat #'identity tags "-"))) "-" "-"))
          
-         ;; Generate timing strings
-         (datetime (format-time-string "%Y%m%d%H%M%S"))
-         (display-date (format-time-string "[%Y-%m-%d %a %H:%M]"))
+;;          ;; Generate timing strings
+;;          (datetime (format-time-string "%Y%m%d%H%M%S"))
+;;          (display-date (format-time-string "[%Y-%m-%d %a %H:%M]"))
          
-         ;; Build filename: <datetime>_<title>_<tags>.<ext>
-         (ext (if (string= type "markdown") "md" "org"))
-         (filename (if (string-empty-p tags-slug)
-                       (format "%s__%s.%s" datetime title-slug ext)
-                     (format "%s__%s__%s.%s" datetime title-slug tags-slug ext))))
+;;          ;; Build filename: <datetime>_<title>_<tags>.<ext>
+;;          (ext (if (string= type "markdown") "md" "org"))
+;;          (filename (if (string-empty-p tags-slug)
+;;                        (format "%s__%s.%s" datetime title-slug ext)
+;;                      (format "%s__%s__%s.%s" datetime title-slug tags-slug ext))))
     
-    ;; Open the new file buffer
-    (find-file filename)
+;;     ;; Open the new file buffer
+;;     (find-file filename)
     
-    ;; Insert the appropriate front matter based on chosen format
-    (cond
-     ((string= type "markdown")
-      (insert "---\n")
-      (insert (format "title: \"%s\"\n" title))
-      (insert (format "date: %s\n" display-date))
-      (insert (format "tags: [%s]\n" (mapconcat (lambda (s) (format "\"%s\"" s)) tags ", ")))
-      (insert "---\n\n"))
+;;     ;; Insert the appropriate front matter based on chosen format
+;;     (cond
+;;      ((string= type "markdown")
+;;       (insert "---\n")
+;;       (insert (format "title: \"%s\"\n" title))
+;;       (insert (format "date: %s\n" display-date))
+;;       (insert (format "tags: [%s]\n" (mapconcat (lambda (s) (format "\"%s\"" s)) tags ", ")))
+;;       (insert "---\n\n"))
      
-     ((string= type "org")
-      (insert (format "#+TITLE: %s\n" title))
-      (insert (format "#+DATE:  %s\n" display-date))
-      (insert (format "#+FILETAGS: %s\n" (mapconcat #'identity tags " ")))
-      (insert "\n")))
+;;      ((string= type "org")
+;;       (insert (format "#+TITLE: %s\n" title))
+;;       (insert (format "#+DATE:  %s\n" display-date))
+;;       (insert (format "#+FILETAGS: %s\n" (mapconcat #'identity tags " ")))
+;;       (insert "\n")))
     
-    (message "Zettel note created: %s" filename)))
+;;     (message "Zettel note created: %s" filename)))
 
 
 
-(defun zettle/front-matter ()
-  "Add Zettelkasten front matter to the current buffer and rename the file.
-Prompts for note type, title, and tags. Inserts front matter at the top
-of the file and renames it using YYYYMMDDHHMMSS__title__tags format."
-  (interactive)
-  (unless (buffer-file-name)
-    (user-error "Buffer is not visiting a file on disk"))
+;; (defun zettle/front-matter ()
+;;   "Add Zettelkasten front matter to the current buffer and rename the file.
+;; Prompts for note type, title, and tags. Inserts front matter at the top
+;; of the file and renames it using YYYYMMDDHHMMSS__title__tags format."
+;;   (interactive)
+;;   (unless (buffer-file-name)
+;;     (user-error "Buffer is not visiting a file on disk"))
 
-  (let* ((type (completing-read "Note format: " '("org" "markdown") nil t))
-         (title (read-string "Title: "))
-         (tags-raw (read-string "Tags (comma separated): "))
-         (tags (mapcar #'string-trim (split-string tags-raw "," t)))
+;;   (let* ((type (completing-read "Note format: " '("org" "markdown") nil t))
+;;          (title (read-string "Title: "))
+;;          (tags-raw (read-string "Tags (comma separated): "))
+;;          (tags (mapcar #'string-trim (split-string tags-raw "," t)))
 
-         ;; Create safe slugs
-         (title-slug (string-trim (downcase (replace-regexp-in-string "[^A-Za-z0-9]+" "-" title)) "-" "-"))
-         (tags-slug (string-trim (downcase (replace-regexp-in-string "[^A-Za-z0-9]+" "-" (mapconcat #'identity tags "-"))) "-" "-"))
+;;          ;; Create safe slugs
+;;          (title-slug (string-trim (downcase (replace-regexp-in-string "[^A-Za-z0-9]+" "-" title)) "-" "-"))
+;;          (tags-slug (string-trim (downcase (replace-regexp-in-string "[^A-Za-z0-9]+" "-" (mapconcat #'identity tags "-"))) "-" "-"))
 
-         ;; Generate timing strings
-         (datetime (format-time-string "%Y%m%d%H%M%S"))
-         (display-date (format-time-string "[%Y-%m-%d %a %H:%M]"))
+;;          ;; Generate timing strings
+;;          (datetime (format-time-string "%Y%m%d%H%M%S"))
+;;          (display-date (format-time-string "[%Y-%m-%d %a %H:%M]"))
 
-         ;; Target extension and new file path
-         (ext (if (string= type "markdown") "md" "org"))
-         (dir (file-name-directory (buffer-file-name)))
-         (current-path (buffer-file-name))
+;;          ;; Target extension and new file path
+;;          (ext (if (string= type "markdown") "md" "org"))
+;;          (dir (file-name-directory (buffer-file-name)))
+;;          (current-path (buffer-file-name))
 
-         (new-name (if (string-empty-p tags-slug)
-                       (format "%s__%s.%s" datetime title-slug ext)
-                     (format "%s__%s__%s.%s" datetime title-slug tags-slug ext)))
-         (new-path (expand-file-name new-name dir)))
+;;          (new-name (if (string-empty-p tags-slug)
+;;                        (format "%s__%s.%s" datetime title-slug ext)
+;;                      (format "%s__%s__%s.%s" datetime title-slug tags-slug ext)))
+;;          (new-path (expand-file-name new-name dir)))
 
-    ;; 1. Insert Front Matter at top of the buffer
-    (save-excursion
-      (goto-char (point-min))
-      (cond
-       ((string= type "markdown")
-        (insert "---\n")
-        (insert (format "title: \"%s\"\n" title))
-        (insert (format "date: %s\n" display-date))
-        (insert (format "tags: [%s]\n" (mapconcat (lambda (s) (format "\"%s\"" s)) tags ", ")))
-        (insert "---\n\n"))
+;;     ;; 1. Insert Front Matter at top of the buffer
+;;     (save-excursion
+;;       (goto-char (point-min))
+;;       (cond
+;;        ((string= type "markdown")
+;;         (insert "---\n")
+;;         (insert (format "title: \"%s\"\n" title))
+;;         (insert (format "date: %s\n" display-date))
+;;         (insert (format "tags: [%s]\n" (mapconcat (lambda (s) (format "\"%s\"" s)) tags ", ")))
+;;         (insert "---\n\n"))
 
-       ((string= type "org")
-        (insert (format "#+TITLE: %s\n" title))
-        (insert (format "#+DATE:  %s\n" display-date))
-        (insert (format "#+FILETAGS: %s\n" (mapconcat #'identity tags " ")))
-        (insert "\n"))))
+;;        ((string= type "org")
+;;         (insert (format "#+TITLE: %s\n" title))
+;;         (insert (format "#+DATE:  %s\n" display-date))
+;;         (insert (format "#+FILETAGS: %s\n" (mapconcat #'identity tags " ")))
+;;         (insert "\n"))))
 
-    ;; 2. Save buffer and rename the file
-    (save-buffer)
-    (rename-file current-path new-path 1)
-    (set-visited-file-name new-path)
-    (set-buffer-modified-p nil)
+;;     ;; 2. Save buffer and rename the file
+;;     (save-buffer)
+;;     (rename-file current-path new-path 1)
+;;     (set-visited-file-name new-path)
+;;     (set-buffer-modified-p nil)
 
-    ;; 3. Switch buffer mode if needed to match new extension
-    (if (string= ext "md")
-        (when (fboundp 'markdown-mode) (markdown-mode))
-      (org-mode))
+;;     ;; 3. Switch buffer mode if needed to match new extension
+;;     (if (string= ext "md")
+;;         (when (fboundp 'markdown-mode) (markdown-mode))
+;;       (org-mode))
 
-    (message "Added front matter and renamed to: %s" new-name)))
+;;     (message "Added front matter and renamed to: %s" new-name)))
 
 
-(defun zettle/update ()
-  "Rename current file using front matter TITLE + TAGS (Org or Markdown)."
-  (interactive)
-  (unless (buffer-file-name)
-    (user-error "Buffer is not visiting a file"))
+;; (defun zettle/update ()
+;;   "Rename current file using front matter TITLE + TAGS (Org or Markdown)."
+;;   (interactive)
+;;   (unless (buffer-file-name)
+;;     (user-error "Buffer is not visiting a file"))
 
-  (let* ((current-path (buffer-file-name))
-         (current-name (file-name-nondirectory current-path))
-         (dir (file-name-directory current-path))
-         (ext (file-name-extension current-name))
-         title tags)
+;;   (let* ((current-path (buffer-file-name))
+;;          (current-name (file-name-nondirectory current-path))
+;;          (dir (file-name-directory current-path))
+;;          (ext (file-name-extension current-name))
+;;          title tags)
 
-    ;; --- PARSE FRONT MATTER ---
-    (save-excursion
-      (goto-char (point-min))
+;;     ;; --- PARSE FRONT MATTER ---
+;;     (save-excursion
+;;       (goto-char (point-min))
 
-      (cond
-       ;; ---------------- MARKDOWN ----------------
-       ((string= ext "md")
-        ;; title: "My Title"
-        (when (re-search-forward "^title:[[:space:]]*\"\\(.*?\\)\"" nil t)
-          (setq title (match-string 1)))
+;;       (cond
+;;        ;; ---------------- MARKDOWN ----------------
+;;        ((string= ext "md")
+;;         ;; title: "My Title"
+;;         (when (re-search-forward "^title:[[:space:]]*\"\\(.*?\\)\"" nil t)
+;;           (setq title (match-string 1)))
 
-        ;; tags: ["tag1", "tag2"]
-        (when (re-search-forward "^tags:[[:space:]]*\
+;;         ;; tags: ["tag1", "tag2"]
+;;         (when (re-search-forward "^tags:[[:space:]]*\
 
-\[\\(.*?\\)\\]
+;; \[\\(.*?\\)\\]
 
-" nil t)
-          (setq tags
-                (mapcar (lambda (s)
-                          (string-trim (replace-regexp-in-string "\"" "" s)))
-                        (split-string (match-string 1) "," t)))))
+;; " nil t)
+;;           (setq tags
+;;                 (mapcar (lambda (s)
+;;                           (string-trim (replace-regexp-in-string "\"" "" s)))
+;;                         (split-string (match-string 1) "," t)))))
 
-       ;; ---------------- ORG ----------------
-       ((string= ext "org")
-        ;; #+TITLE: My Title
-        (when (re-search-forward "^#\\+TITLE:[[:space:]]*\\(.*?\\)$" nil t)
-          (setq title (string-trim (match-string 1))))
+;;        ;; ---------------- ORG ----------------
+;;        ((string= ext "org")
+;;         ;; #+TITLE: My Title
+;;         (when (re-search-forward "^#\\+TITLE:[[:space:]]*\\(.*?\\)$" nil t)
+;;           (setq title (string-trim (match-string 1))))
 
-        ;; #+FILETAGS: tag1 tag2
-        (when (re-search-forward "^#\\+FILETAGS:[[:space:]]*\\(.*?\\)$" nil t)
-          (setq tags (split-string (match-string 1) "[[:space:]]+" t))))))
+;;         ;; #+FILETAGS: tag1 tag2
+;;         (when (re-search-forward "^#\\+FILETAGS:[[:space:]]*\\(.*?\\)$" nil t)
+;;           (setq tags (split-string (match-string 1) "[[:space:]]+" t))))))
 
-    ;; --- VALIDATION ---
-    (unless title
-      (user-error "Missing TITLE in front matter"))
+;;     ;; --- VALIDATION ---
+;;     (unless title
+;;       (user-error "Missing TITLE in front matter"))
 
-    ;; --- SLUGIFY TITLE + TAGS ---
-    (let* ((title-slug
-            (string-trim
-             (downcase
-              (replace-regexp-in-string "[^A-Za-z0-9]+" "-" title))
-             "-" "-"))
-           (tags-slug
-            (if tags
-                (string-trim
-                 (downcase
-                  (replace-regexp-in-string
-                   "[^A-Za-z0-9]+"
-                   "-"
-                   (mapconcat #'identity tags "-"))))
-              ""))
-           (new-name
-            (if (string-empty-p tags-slug)
-                (format "%s.%s" title-slug ext)
-              (format "%s__%s.%s" title-slug tags-slug ext)))
-           (new-path (expand-file-name new-name dir)))
+;;     ;; --- SLUGIFY TITLE + TAGS ---
+;;     (let* ((title-slug
+;;             (string-trim
+;;              (downcase
+;;               (replace-regexp-in-string "[^A-Za-z0-9]+" "-" title))
+;;              "-" "-"))
+;;            (tags-slug
+;;             (if tags
+;;                 (string-trim
+;;                  (downcase
+;;                   (replace-regexp-in-string
+;;                    "[^A-Za-z0-9]+"
+;;                    "-"
+;;                    (mapconcat #'identity tags "-"))))
+;;               ""))
+;;            (new-name
+;;             (if (string-empty-p tags-slug)
+;;                 (format "%s.%s" title-slug ext)
+;;               (format "%s__%s.%s" title-slug tags-slug ext)))
+;;            (new-path (expand-file-name new-name dir)))
 
-      ;; --- RENAME IF NEEDED ---
-      (if (string= current-name new-name)
-          (message "Filename already up to date.")
-        (when (buffer-modified-p)
-          (save-buffer))
-        (rename-file current-path new-path t)
-        (set-visited-file-name new-path)
-        (set-buffer-modified-p nil)
-        (message "Renamed Zettel to: %s" new-name)))))
+;;       ;; --- RENAME IF NEEDED ---
+;;       (if (string= current-name new-name)
+;;           (message "Filename already up to date.")
+;;         (when (buffer-modified-p)
+;;           (save-buffer))
+;;         (rename-file current-path new-path t)
+;;         (set-visited-file-name new-path)
+;;         (set-buffer-modified-p nil)
+;;         (message "Renamed Zettel to: %s" new-name)))))
 
 
 
@@ -410,7 +453,13 @@ of the file and renames it using YYYYMMDDHHMMSS__title__tags format."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages nil))
+ '(package-selected-packages nil)
+ '(safe-local-variable-values
+   '((eval setq-local org-roam-db-location
+	   (expand-file-name "org-roam.db" org-roam-directory))
+     (eval setq-local org-roam-directory
+	   (expand-file-name
+	    (locate-dominating-file default-directory ".dir-locals.el"))))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
