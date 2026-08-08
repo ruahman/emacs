@@ -16,7 +16,7 @@
 ;; run M-x package-refresh-contents
 ;; to update the index
 
-;; Install markdown-mode
+;; Install markdo
 (unless (package-installed-p 'markdown-mode)
   (package-install 'markdown-mode))
 
@@ -111,8 +111,6 @@
 (global-set-key (kbd "C-c r t") #'org-roam-buffer-toggle) ; show backlinks
 (global-set-key (kbd "C-c r c") #'org-roam-capture) ; use caputere to take a note
 
-(setq org-roam-node-display-template
-      (concat "${title} " (propertize "${tags}" 'face 'org-tag)))
 
 ;; Install denote
 (unless (package-installed-p 'denote)
