@@ -106,10 +106,10 @@
 (org-roam-db-autosync-mode)
 
 ;; keybindings (C-c n prefix, which-key will show these)
-(global-set-key (kbd "C-c r f") #'org-roam-node-find)
-(global-set-key (kbd "C-c r i") #'org-roam-node-insert)
-(global-set-key (kbd "C-c r t") #'org-roam-buffer-toggle) ; show backlinks
-(global-set-key (kbd "C-c r c") #'org-roam-capture) ; use caputere to take a note
+;; (global-set-key (kbd "C-c r f") #'org-roam-node-find)
+;; (global-set-key (kbd "C-c r i") #'org-roam-node-insert)
+;; (global-set-key (kbd "C-c r t") #'org-roam-buffer-toggle) ; show backlinks
+;; (global-set-key (kbd "C-c r c") #'org-roam-capture) ; use caputere to take a note
 
 (setq org-roam-node-display-template
       (concat "${title} " (propertize "${tags}" 'face 'org-tag)))
@@ -121,17 +121,19 @@
 ;; where notes live (matches your existing org-directory)
 (setq denote-directory (expand-file-name "~/org/5_resources"))
 
+(setq denote-save-buffers 1)
+
 ;; (setq denote-file-type 'markdown-yaml)'
 (setq denote-prompts '(title keywords file-type))
 
 (setq denote-known-keywords '("meta" "tmp" "draft"))
 
-(global-set-key (kbd "C-c d n") #'denote)                 ; new note
-(global-set-key (kbd "C-c d r") #'denote-rename-file)     ; rename to denote scheme
-(global-set-key (kbd "C-c d l") #'denote-link)            ; insert link to a note
-(global-set-key (kbd "C-c d b") #'denote-backlinks)       ; show backlinks
-(global-set-key (kbd "C-c d o") #'denote-open-or-create)  ; jump to / create note
-(global-set-key (kbd "C-c d k") #'denote-rename-file-keywords) ; edit keywords
+;; (global-set-key (kbd "C-c d n") #'denote)                 ; new note
+;; (global-set-key (kbd "C-c d r") #'denote-rename-file)     ; rename to denote scheme
+;; (global-set-key (kbd "C-c d l") #'denote-link)            ; insert link to a note
+;; (global-set-key (kbd "C-c d b") #'denote-backlinks)       ; show backlinks
+;; (global-set-key (kbd "C-c d o") #'denote-open-or-create)  ; jump to / create note
+;; (global-set-key (kbd "C-c d k") #'denote-rename-file-keywords) ; edit keywords
 
 ;; fontify the filename fields (date / title / keywords) in dired
 (add-hook 'dired-mode-hook #'denote-dired-mode)
