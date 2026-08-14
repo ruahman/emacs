@@ -247,6 +247,12 @@
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
 
+(setq ispell-program-name "hunspell")
+
+(setq ispell-dictionary "en_US")
+(setenv "LANG" "en_US")
+
+
 
 ;; add icons to dired
 (require 'nerd-icons-dired)
@@ -257,6 +263,7 @@
 ;; Highlight the current line only when editing Emacs Lisp files
 (add-hook 'emacs-lisp-mode-hook #'hl-line-mode)(add-hook 'elisp-mode-hook #'hl-line-mode)
 (add-hook 'markdown-mode-hook #'hl-line-mode)
+(add-hook 'org-mode-hook #'flyspell-mode)
 
 
 ;; (defun zettle/new ()
