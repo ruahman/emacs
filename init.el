@@ -16,86 +16,80 @@
 ;; run M-x package-refresh-contents
 ;; to update the index
 
-;; Install markdown-mode
-(unless (package-installed-p 'markdown-mode)
-  (package-install 'markdown-mode))
+;; Install use-package
+(unless (package-installed-p 'use-package)
+  (package-install 'use-package))
 
-;; Install org-mode
-(unless (package-installed-p 'org)
-  (package-install 'org))
+;; load use-package
+(require 'use-package)
+;; install package if not found
+(setq use-package-always-ensure t) 
 
-(setq org-startup-indented t) ;; setup org-indent-mode
+;; Setup  markdown-mode
+(use-package markdown-mode)
 
-;; setup ord directory
-(setq org-directory "~/org/")
+;; Setup typescript-mode
+(use-package typescript-mode)
 
-;; recursivly search org-directory for org files
-(setq org-agenda-files
-      (directory-files-recursively org-directory "\\.org$"))
+;; Setup org-mode
+(use-package org
+  :init
+  (setq org-directory "~/org/")
+
+  :config
+  ;; nicer indent for org headlines
+  (setq org-startup-indented t)
+  (setq org-agenda-files
+        (directory-files-recursively org-directory "\\.org$"))
+  (setq org-todo-keywords
+        '((sequence "REPEAT(r)" "PROJECT(p)" "TODO(t)" "NEXT(n)" "WAITING(w!)" "|" "DONE(d!)" "CANCELLED(c!)")))
+  (setq org-capture-templates
+        '(
+	   ("i" "Inbox" entry
+	    (file+headline "~/org/1_inbox/inbox.org" "inbox")
+	    "* %?\n  %i\n  %a")
+	   ("t" "Task" entry
+	    (file+headline "~/org/2_tasks/tasks.org" "tasks")
+	    "* TODO %?\n  %i\n  %a")
+	   ("p" "Project" entry
+	    (file+headline "~/org/3_projects/projects.org" "projects")
+	    "* PROJECT %?\n  %i\n  %a")))
+  (setq org-capture-bookmark nil) ;; disable bookmark for capture
+  (setq org-refile-targets
+	'(("~/org/1_inbox/inbox.org" :maxlevel . 1)
+	  ("~/org/2_tasks/tasks.org" :maxlevel . 1)
+	  ("~/org/3_projects/projects.org" :maxlevel . 1)))
+  ;; put logs in drawer
+  (setq org-log-into-drawer t)
+
+  ;; add timestamp for done
+  (setq org-log-done 'time)
+
+  ;; respect content of header when creating a new one
+  (setq org-insert-heading-respect-content t)
+
+  ;; setup org source blocks
+  (setq org-src-fontify-natively t)
+  (setq org-src-tab-acts-natively t)
+  (add-to-list 'org-src-lang-modes '("typescript" . typescript))
+
+  :bind 
+  ("C-c a" . org-agenda)
+  ("C-c l" . org-agenda-list)
+  ("C-c c" . org-capture)
+
+  :hook (markdown-mode . orgtbl-mode))
+
+;; Setup org-superstar
+(use-package org-superstar
+  :config
+  (setq org-superstar-headline-bullets-list '("◉" "○" "✸" "☆" "♦"))
+  (setq org-hide-leading-stars t)
+  :hook
+  (org-mode . org-superstar-mode))
 
 
-;; set todo sequence
-(setq org-todo-keywords
-      '((sequence "REPEAT(r)" "PROJECT(p)" "TODO(t)" "NEXT(n)" "WAITING(w!)" "|" "DONE(d!)" "CANCELLED(c!)")))
-
-;;(setq org-default-notes-file "~/org/2_tasks/tasks.org")
-
-(setq org-capture-templates
-      '(
-	("i" "Inbox" entry
-         (file+headline "~/org/1_inbox/inbox.org" "inbox")
-         "* %?\n  %i\n  %a")
-	("t" "Task" entry
-         (file+headline "~/org/2_tasks/tasks.org" "tasks")
-         "* TODO %?\n  %i\n  %a")
-	("p" "Project" entry
-         (file+headline "~/org/3_projects/projects.org" "tasks")
-         "* PROJECT %?\n  %i\n  %a")
-      ))
-
-;; org-capture command
-(global-set-key (kbd "C-c c") 'org-capture)
-
-;; stop bookmarking capture
-(setq org-capture-bookmark nil)
-
-;; default location for org-mode
-;;(setq org-directory "~/org/")
-
-;; refile targets
-(setq org-refile-targets
-  '(("~/org/1_inbox/inbox.org" :maxlevel . 1)
-    ("~/org/2_tasks/tasks.org" :maxlevel . 1)
-    ("~/org/3_projects/projects.org" :maxlevel . 1)))
-
-;; log in drawer
-(setq org-log-into-drawer t)
-
-;; add timestamp for done
-(setq org-log-done 'time)
-
-
-;; respect content of header when creating a new one
-(setq org-insert-heading-respect-content t)
-
-;; use org mode table for markdown
-(add-hook 'markdown-mode-hook 'orgtbl-mode)
-
-;; keybinding for org-agenda
-(global-set-key (kbd "C-c a") #'org-agenda)
-(global-set-key (kbd "C-c l") #'org-agenda-list)
-
-
-;; Install org-superstar
-(unless (package-installed-p 'org-superstar)
-  (package-install 'org-superstar))
-
-(setq org-superstar-headline-bullets-list '("◉" "○" "✸" "☆" "♦"))
-(setq org-hide-leading-stars t)
-
-(add-hook 'org-mode-hook #'org-superstar-mode)
-
-;; Install org-roam
+;;;; Install org-roam
 (unless (package-installed-p 'org-roam)
   (package-install 'org-roam))
 
@@ -105,22 +99,24 @@
 ;; keep the SQLite database in sync automatically
 (org-roam-db-autosync-mode)
 
-;; keybindings (C-c n prefix, which-key will show these)
-;; (global-set-key (kbd "C-c r f") #'org-roam-node-find)
+;; keybindings (C-c r prefix, which-key will show these)
+(global-set-key (kbd "C-c r f") #'org-roam-node-find)
 ;; (global-set-key (kbd "C-c r i") #'org-roam-node-insert)
 ;; (global-set-key (kbd "C-c r t") #'org-roam-buffer-toggle) ; show backlinks
 ;; (global-set-key (kbd "C-c r c") #'org-roam-capture) ; use caputere to take a note
 
+;; how to show search results for org-roam-node-find
 (setq org-roam-node-display-template
       (concat "${title} " (propertize "${tags}" 'face 'org-tag)))
 
-;; Install denote
+;;;; Install denote
 (unless (package-installed-p 'denote)
   (package-install 'denote))
 
 ;; where notes live (matches your existing org-directory)
 (setq denote-directory (expand-file-name "~/org/5_resources"))
 
+;; save denote automatically
 (setq denote-save-buffers 1)
 
 ;; (setq denote-file-type 'markdown-yaml)'
@@ -139,24 +135,24 @@
 (add-hook 'dired-mode-hook #'denote-dired-mode)
 
 
-;; Install doom-themes
+;;;; Install doom-themes
 (unless (package-installed-p 'doom-themes)
   (package-install 'doom-themes))
 
 ;; load doom-one theme
 (load-theme 'doom-one t)
 
-;; Install emacs dashboard
+;;;; Install emacs dashboard
 (unless (package-installed-p 'dashboard)
   (package-install 'dashboard))
 
-;; Install nerd-icons
+;;;; Install nerd-icons
 (unless (package-installed-p 'nerd-icons)
   (package-install 'nerd-icons))
 
 ;; run M-x nerd-icons-install-fonts
 
-;; Install nerd-icons-dired
+;;;; Install nerd-icons-dired
 (unless (package-installed-p 'nerd-icons-dired)
   (package-install 'nerd-icons-dired))
 
@@ -177,11 +173,11 @@
 ;; Run once:
 ;; M-x all-the-icons-install-fonts
 
-;; Install evil
+;;;; Install evil
 (unless (package-installed-p 'evil)
   (package-install 'evil))
 
-;; Install magit
+;;;; Install magit
 (unless (package-installed-p 'magit)
   (package-install 'magit))
 
@@ -265,196 +261,7 @@
 (add-hook 'markdown-mode-hook #'hl-line-mode)
 (add-hook 'org-mode-hook #'flyspell-mode)
 
-
-;; (defun zettle/new ()
-;;   "Create a new Zettelkasten note in either Markdown or Org format.
-;; Prompts for note type, title, and comma-separated tags, then creates
-;; the file with proper front matter and includes tags in the filename."
-;;   (interactive)
-;;   (let* ((type (completing-read "Note format: " '("org" "markdown") nil t))
-;;          (title (read-string "Title: "))
-;;          (tags-raw (read-string "Tags (comma separated): "))
-;;          ;; Clean up tags into a clean list of trimmed strings
-;;          (tags (mapcar #'string-trim (split-string tags-raw "," t)))
-         
-;;          ;; Create safe slugs for title and tags (lowercase, alphanumeric + hyphens)
-;;          (title-slug (string-trim (downcase (replace-regexp-in-string "[^A-Za-z0-9]+" "-" title)) "-" "-"))
-;;          (tags-slug (string-trim (downcase (replace-regexp-in-string "[^A-Za-z0-9]+" "-" (mapconcat #'identity tags "-"))) "-" "-"))
-         
-;;          ;; Generate timing strings
-;;          (datetime (format-time-string "%Y%m%d%H%M%S"))
-;;          (display-date (format-time-string "[%Y-%m-%d %a %H:%M]"))
-         
-;;          ;; Build filename: <datetime>_<title>_<tags>.<ext>
-;;          (ext (if (string= type "markdown") "md" "org"))
-;;          (filename (if (string-empty-p tags-slug)
-;;                        (format "%s__%s.%s" datetime title-slug ext)
-;;                      (format "%s__%s__%s.%s" datetime title-slug tags-slug ext))))
-    
-;;     ;; Open the new file buffer
-;;     (find-file filename)
-    
-;;     ;; Insert the appropriate front matter based on chosen format
-;;     (cond
-;;      ((string= type "markdown")
-;;       (insert "---\n")
-;;       (insert (format "title: \"%s\"\n" title))
-;;       (insert (format "date: %s\n" display-date))
-;;       (insert (format "tags: [%s]\n" (mapconcat (lambda (s) (format "\"%s\"" s)) tags ", ")))
-;;       (insert "---\n\n"))
-     
-;;      ((string= type "org")
-;;       (insert (format "#+TITLE: %s\n" title))
-;;       (insert (format "#+DATE:  %s\n" display-date))
-;;       (insert (format "#+FILETAGS: %s\n" (mapconcat #'identity tags " ")))
-;;       (insert "\n")))
-    
-;;     (message "Zettel note created: %s" filename)))
-
-
-
-;; (defun zettle/front-matter ()
-;;   "Add Zettelkasten front matter to the current buffer and rename the file.
-;; Prompts for note type, title, and tags. Inserts front matter at the top
-;; of the file and renames it using YYYYMMDDHHMMSS__title__tags format."
-;;   (interactive)
-;;   (unless (buffer-file-name)
-;;     (user-error "Buffer is not visiting a file on disk"))
-
-;;   (let* ((type (completing-read "Note format: " '("org" "markdown") nil t))
-;;          (title (read-string "Title: "))
-;;          (tags-raw (read-string "Tags (comma separated): "))
-;;          (tags (mapcar #'string-trim (split-string tags-raw "," t)))
-
-;;          ;; Create safe slugs
-;;          (title-slug (string-trim (downcase (replace-regexp-in-string "[^A-Za-z0-9]+" "-" title)) "-" "-"))
-;;          (tags-slug (string-trim (downcase (replace-regexp-in-string "[^A-Za-z0-9]+" "-" (mapconcat #'identity tags "-"))) "-" "-"))
-
-;;          ;; Generate timing strings
-;;          (datetime (format-time-string "%Y%m%d%H%M%S"))
-;;          (display-date (format-time-string "[%Y-%m-%d %a %H:%M]"))
-
-;;          ;; Target extension and new file path
-;;          (ext (if (string= type "markdown") "md" "org"))
-;;          (dir (file-name-directory (buffer-file-name)))
-;;          (current-path (buffer-file-name))
-
-;;          (new-name (if (string-empty-p tags-slug)
-;;                        (format "%s__%s.%s" datetime title-slug ext)
-;;                      (format "%s__%s__%s.%s" datetime title-slug tags-slug ext)))
-;;          (new-path (expand-file-name new-name dir)))
-
-;;     ;; 1. Insert Front Matter at top of the buffer
-;;     (save-excursion
-;;       (goto-char (point-min))
-;;       (cond
-;;        ((string= type "markdown")
-;;         (insert "---\n")
-;;         (insert (format "title: \"%s\"\n" title))
-;;         (insert (format "date: %s\n" display-date))
-;;         (insert (format "tags: [%s]\n" (mapconcat (lambda (s) (format "\"%s\"" s)) tags ", ")))
-;;         (insert "---\n\n"))
-
-;;        ((string= type "org")
-;;         (insert (format "#+TITLE: %s\n" title))
-;;         (insert (format "#+DATE:  %s\n" display-date))
-;;         (insert (format "#+FILETAGS: %s\n" (mapconcat #'identity tags " ")))
-;;         (insert "\n"))))
-
-;;     ;; 2. Save buffer and rename the file
-;;     (save-buffer)
-;;     (rename-file current-path new-path 1)
-;;     (set-visited-file-name new-path)
-;;     (set-buffer-modified-p nil)
-
-;;     ;; 3. Switch buffer mode if needed to match new extension
-;;     (if (string= ext "md")
-;;         (when (fboundp 'markdown-mode) (markdown-mode))
-;;       (org-mode))
-
-;;     (message "Added front matter and renamed to: %s" new-name)))
-
-
-;; (defun zettle/update ()
-;;   "Rename current file using front matter TITLE + TAGS (Org or Markdown)."
-;;   (interactive)
-;;   (unless (buffer-file-name)
-;;     (user-error "Buffer is not visiting a file"))
-
-;;   (let* ((current-path (buffer-file-name))
-;;          (current-name (file-name-nondirectory current-path))
-;;          (dir (file-name-directory current-path))
-;;          (ext (file-name-extension current-name))
-;;          title tags)
-
-;;     ;; --- PARSE FRONT MATTER ---
-;;     (save-excursion
-;;       (goto-char (point-min))
-
-;;       (cond
-;;        ;; ---------------- MARKDOWN ----------------
-;;        ((string= ext "md")
-;;         ;; title: "My Title"
-;;         (when (re-search-forward "^title:[[:space:]]*\"\\(.*?\\)\"" nil t)
-;;           (setq title (match-string 1)))
-
-;;         ;; tags: ["tag1", "tag2"]
-;;         (when (re-search-forward "^tags:[[:space:]]*\
-
-;; \[\\(.*?\\)\\]
-
-;; " nil t)
-;;           (setq tags
-;;                 (mapcar (lambda (s)
-;;                           (string-trim (replace-regexp-in-string "\"" "" s)))
-;;                         (split-string (match-string 1) "," t)))))
-
-;;        ;; ---------------- ORG ----------------
-;;        ((string= ext "org")
-;;         ;; #+TITLE: My Title
-;;         (when (re-search-forward "^#\\+TITLE:[[:space:]]*\\(.*?\\)$" nil t)
-;;           (setq title (string-trim (match-string 1))))
-
-;;         ;; #+FILETAGS: tag1 tag2
-;;         (when (re-search-forward "^#\\+FILETAGS:[[:space:]]*\\(.*?\\)$" nil t)
-;;           (setq tags (split-string (match-string 1) "[[:space:]]+" t))))))
-
-;;     ;; --- VALIDATION ---
-;;     (unless title
-;;       (user-error "Missing TITLE in front matter"))
-
-;;     ;; --- SLUGIFY TITLE + TAGS ---
-;;     (let* ((title-slug
-;;             (string-trim
-;;              (downcase
-;;               (replace-regexp-in-string "[^A-Za-z0-9]+" "-" title))
-;;              "-" "-"))
-;;            (tags-slug
-;;             (if tags
-;;                 (string-trim
-;;                  (downcase
-;;                   (replace-regexp-in-string
-;;                    "[^A-Za-z0-9]+"
-;;                    "-"
-;;                    (mapconcat #'identity tags "-"))))
-;;               ""))
-;;            (new-name
-;;             (if (string-empty-p tags-slug)
-;;                 (format "%s.%s" title-slug ext)
-;;               (format "%s__%s.%s" title-slug tags-slug ext)))
-;;            (new-path (expand-file-name new-name dir)))
-
-;;       ;; --- RENAME IF NEEDED ---
-;;       (if (string= current-name new-name)
-;;           (message "Filename already up to date.")
-;;         (when (buffer-modified-p)
-;;           (save-buffer))
-;;         (rename-file current-path new-path t)
-;;         (set-visited-file-name new-path)
-;;         (set-buffer-modified-p nil)
-;;         (message "Renamed Zettel to: %s" new-name)))))
-
-
+(add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
 
 
 
