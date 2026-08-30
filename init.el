@@ -41,6 +41,25 @@
 ;; dired
 (setq dired-listing-switches "-alh --group-directories-first")
 
+(setq ispell-program-name "hunspell")
+
+(setq ispell-dictionary "en_US")
+(setenv "LANG" "en_US")
+
+;; setup highlight of line
+(add-hook 'emacs-lisp-mode-hook #'hl-line-mode)
+(add-hook 'elisp-mode-hook #'hl-line-mode)
+
+;; Disable line numbers for some modes
+(dolist (mode '(org-mode-hook
+		markdown-mode-hook
+                term-mode-hook
+                text-mode-hook
+                shell-mode-hook
+                eshell-mode-hook))
+  (add-hook mode (lambda () (display-line-numbers-mode 0))))
+
+
 ;; Setup package
 (require 'package)
 
@@ -69,7 +88,9 @@
 (setq use-package-always-ensure t) 
 
 ;; Setup  markdown-mode
-(use-package markdown-mode)
+(use-package markdown-mode
+  :hook
+  (markdown-mode . #'hl-line-mode))
 
 ;; Setup typescript-mode
 (use-package typescript-mode)
@@ -121,7 +142,9 @@
   ("C-c l" . org-agenda-list)
   ("C-c c" . org-capture)
 
-  :hook (markdown-mode . orgtbl-mode))
+  :hook
+  (markdown-mode . orgtbl-mode)
+  (org-mode . fly-spell-mode))
 
 ;; Setup org-superstar
 (use-package org-superstar
@@ -175,7 +198,9 @@
 (use-package nerd-icons)
 
 ;; Setup nerd-icons-dired
-(use-package nerd-icons-dired)
+(use-package nerd-icons-dired
+  :hook
+  (dired-mode . nerd-icons-dired-mode))
 
 (use-package all-the-icons)
 ;; Run once:
@@ -195,36 +220,6 @@
 
 ;; Setup magit
 (use-package magit)
-
-
-
-;; Disable line numbers for some modes
-(dolist (mode '(org-mode-hook
-		markdown-mode-hook
-                term-mode-hook
-                text-mode-hook
-                shell-mode-hook
-                eshell-mode-hook))
-  (add-hook mode (lambda () (display-line-numbers-mode 0))))
-
-
-(setq ispell-program-name "hunspell")
-
-(setq ispell-dictionary "en_US")
-(setenv "LANG" "en_US")
-
-
-
-(add-hook 'dired-mode-hook #'nerd-icons-dired-mode)
-
-;; Enable line highlighting only in programming and text modes
-;; Highlight the current line only when editing Emacs Lisp files
-(add-hook 'emacs-lisp-mode-hook #'hl-line-mode)
-(add-hook 'elisp-mode-hook #'hl-line-mode)
-(add-hook 'markdown-mode-hook #'hl-line-mode)
-(add-hook 'org-mode-hook #'flyspell-mode)
-
-(add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
 
 
 
