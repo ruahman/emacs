@@ -33,7 +33,7 @@
 (column-number-mode)
 
 ;; enable fido
-(fido-vertical-mode 1)
+;;(fido-vertical-mode 1)
 
 ;; Enable which-key (Built-in for Emacs 30+)
 (which-key-mode 1)
@@ -66,7 +66,7 @@
 (setq package-archives
       '(("melpa" . "https://melpa.org/packages/")
         ("elpa"  . "https://elpa.gnu.org/packages/")
-	("org" . "https://orgmode.org/elpa/")
+    	("org" . "https://orgmode.org/elpa/")
         ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
 
 (package-initialize)
@@ -90,7 +90,7 @@
 ;; Setup  markdown-mode
 (use-package markdown-mode
   :hook
-  (markdown-mode . #'hl-line-mode))
+  (markdown-mode . hl-line-mode))
 
 ;; Setup typescript-mode
 (use-package typescript-mode)
@@ -99,8 +99,6 @@
 (use-package org
   :init
   (setq org-directory "~/org/")
-
-  :config
   ;; nicer indent for org headlines
   (setq org-startup-indented t)
   (setq org-agenda-files
@@ -132,6 +130,7 @@
   ;; respect content of header when creating a new one
   (setq org-insert-heading-respect-content t)
 
+  :config
   ;; setup org source blocks
   (setq org-src-fontify-natively t)
   (setq org-src-tab-acts-natively t)
@@ -144,11 +143,13 @@
 
   :hook
   (markdown-mode . orgtbl-mode)
-  (org-mode . fly-spell-mode))
+  (org-mode . hl-line-mode)
+  (org-mode . flyspell-mode))
+
 
 ;; Setup org-superstar
 (use-package org-superstar
-  :config
+  :init
   (setq org-superstar-headline-bullets-list '("◉" "○" "✸" "☆" "♦"))
   (setq org-hide-leading-stars t)
   :hook
@@ -221,6 +222,35 @@
 ;; Setup magit
 (use-package magit)
 
+;; pretier mini buffer
+(use-package vertico
+  :ensure t
+  :init
+  (vertico-mode))
+
+;; add anotations to mini buffer results
+(use-package marginalia
+  :ensure t
+  :init
+  (marginalia-mode))
+
+
+;; how to match in min buffer
+(use-package orderless
+  :ensure t
+  :custom
+  (completion-styles '(orderless basic)))
+
+
+;; mini-buffer tools that provides preview
+(use-package consult
+  :ensure t
+  :bind
+  ("C-s"   . consult-line)
+  ("C-x b" . consult-buffer)
+  ("C-x g" . consult-ripgrep)
+  ("C-x C-f" . consult-find)
+  ("C-x r l" . consult-bookmark))
 
 
 (custom-set-variables
