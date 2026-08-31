@@ -32,9 +32,6 @@
 ;; show column number in mode line
 (column-number-mode)
 
-;; enable fido
-;;(fido-vertical-mode 1)
-
 ;; Enable which-key (Built-in for Emacs 30+)
 (which-key-mode 1)
 
@@ -235,7 +232,7 @@
   (marginalia-mode))
 
 
-;; how to match in min buffer
+;; matcher for min buffer
 (use-package orderless
   :ensure t
   :custom
