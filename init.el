@@ -39,9 +39,13 @@
 (setq dired-listing-switches "-alh --group-directories-first")
 
 (setq ispell-program-name "hunspell")
-
+(setenv "LANG" "en_US.UTF-8")
 (setq ispell-dictionary "en_US")
-(setenv "LANG" "en_US")
+(setq ispell-local-dictionary "en_US")
+(when (eq system-type 'windows-nt)
+  (setq ispell-hunspell-dict-paths-alist
+        '(("en_US" "C:/Hunspell/en_US.aff"))))
+
 
 ;; setup highlight of line
 (add-hook 'emacs-lisp-mode-hook #'hl-line-mode)
@@ -239,7 +243,7 @@
   (completion-styles '(orderless basic)))
 
 
-;; mini-buffer tools that provides preview
+;; mini-buffer tools
 (use-package consult
   :ensure t
   :bind
