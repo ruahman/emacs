@@ -190,6 +190,38 @@
   :hook
   (dired-mode . denote-dired-mode))
 
+;;; Tempel snippet setup -----------------------------------------------------
+
+(use-package tempel
+  :bind
+  ("M-+" . tempel-complete)
+  ("M-*" . tempel-insert)
+  :init
+  ;; Define templates inline instead of in a separate file
+  (setq tempel-template-sources
+        (list (lambda ()
+                '(fundamental-mode
+
+                  org-mode
+
+                  (src "#+begin_src " (p "emacs-lisp" language) n> r> n> "#+end_src")
+                  (typescript "#+begin_src typescript" n> r> n> "#+end_src")
+                  (python "#+begin_src python" n> r> n> "#+end_src")))))
+
+  ;; wires Tempel into Emacs's completion-at-point (capf) system for the current buffer
+  (defun tempel-setup-capf ()
+    (setq-local completion-at-point-functions
+                (cons #'tempel-expand
+                      completion-at-point-functions)))
+  
+  ;; hooks tempel to buffer
+  (add-hook 'org-mode-hook 'tempel-setup-capf)
+
+
+  :config
+  ;; Optional: bind next/previous field navigation while a template is active
+  (keymap-set tempel-map "M-n" #'tempel-next)
+  (keymap-set tempel-map "M-p" #'tempel-previous))
 
 ;; Setup doom-themes
 (use-package doom-themes
