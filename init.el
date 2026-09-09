@@ -253,7 +253,9 @@
 (use-package evil)
 
 ;; Setup magit
-(use-package magit)
+(use-package magit
+  :bind
+  ("C-c m" . magit))
 
 ;; pretier mini buffer
 (use-package vertico
