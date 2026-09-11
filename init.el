@@ -1,3 +1,4 @@
+
 ;; setup username
 (setq user-full-name "Diego Vila")
 
@@ -61,6 +62,8 @@
                 eshell-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
+;; .project in folder mark as project
+(setq project-vc-extra-root-markers '(".project"))
 
 ;; Setup package
 (require 'package)
@@ -286,7 +289,9 @@
 (use-package vertico
   :ensure t
   :init
-  (vertico-mode))
+  (vertico-mode)
+  :config
+  (setq vertico-preselect 'prompt))
 
 ;; add anotations to mini buffer results
 (use-package marginalia
