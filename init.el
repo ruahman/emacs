@@ -176,6 +176,7 @@
 
 ;; integrate consult with roam
 (use-package consult-org-roam
+  :after (consult org-roam)
   :init
   (require 'consult-org-roam)
   ;; Activate the minor mode
@@ -190,6 +191,7 @@
 
 ;; Set denote
 (use-package denote
+  :after (consult denot)
   :init
   ;; where notes live (matches your existing org-directory)
   (setq denote-directory (expand-file-name "~/org/5_resources"))
@@ -244,6 +246,7 @@
   ;; Optional: bind next/previous field navigation while a template is active
   (keymap-set tempel-map "M-n" #'tempel-next)
   (keymap-set tempel-map "M-p" #'tempel-previous))
+
 
 ;; Setup doom-themes
 (use-package doom-themes
