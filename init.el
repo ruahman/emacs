@@ -35,9 +35,10 @@
 ;; Enable which-key (Built-in for Emacs 30+)
 (which-key-mode 1)
 
-;; dired
+;; show directory first and show hidden for dired
 (setq dired-listing-switches "-alh --group-directories-first")
 
+;; setup ispell
 (setq ispell-program-name "hunspell")
 (setenv "LANG" "en_US.UTF-8")
 (setq ispell-dictionary "en_US")
@@ -169,10 +170,23 @@
   (setq org-roam-node-display-template
         (concat "${title} " (propertize "${tags}" 'face 'org-tag)))
   :bind
-  ("C-c n f" . org-roam-node-find)
+  ;;("C-c n f" . org-roam-node-find)
   ("C-c n c" . org-roam-capture)
-  ("C-c n t" . org-roam-buffer-toggle))
+  ("C-c n t" . org-roam-tag-add))
 
+;; integrate consult with roam
+(use-package consult-org-roam
+  :init
+  (require 'consult-org-roam)
+  ;; Activate the minor mode
+  (consult-org-roam-mode 1)
+  :custom
+  ;; Use `ripgrep' for searching with `consult-org-roam-search'
+  (consult-org-roam-grep-func #'consult-ripgrep)
+  :bind
+  ("C-c n f" . consult-org-roam-file-find)
+  ("C-c n b" . consult-org-roam-backlinks)
+  ("C-c n s" . consult-org-roam-search))
 
 ;; Set denote
 (use-package denote
@@ -186,9 +200,17 @@
   (setq denote-prompts '(title keywords file-type))
   (setq denote-known-keywords '("meta" "tmp" "draft"))
   :bind
-  ("C-c d" . denote)
+  ("C-c d n" . denote)
   :hook
   (dired-mode . denote-dired-mode))
+
+(use-package consult-denote
+  :config
+  (consult-denote-mode 1)
+  (setq consult-denote-grep-command #'consult-ripgrep)
+  :bind
+  ("C-c d f" . consult-denote-find)
+  ("C-c d s" . consult-denote-grep))
 
 ;;; Tempel snippet setup -----------------------------------------------------
 
