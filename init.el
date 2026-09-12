@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 
 ;; setup username
 (setq user-full-name "Diego Vila")
@@ -63,7 +64,10 @@
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
 ;; .project in folder mark as project
-(setq project-vc-extra-root-markers '(".project"))
+
+
+;; keybind for eshell
+(global-set-key (kbd "C-c e") #'eshell)
 
 ;; Setup package
 (require 'package)
@@ -107,25 +111,25 @@
   ;; nicer indent for org headlines
   (setq org-startup-indented t)
   (setq org-agenda-files
-        (directory-files-recursively org-directory "\\.org$"))
+        '("~/org/tasks.org"))
   (setq org-todo-keywords
-        '((sequence "REPEAT(r)" "PROJECT(p)" "TODO(t)" "NEXT(n)" "WAITING(w!)" "|" "DONE(d!)" "CANCELLED(c!)")))
+        '((sequence "REPEAT(r)" "PROJECT(p)" "TODO(t)" "NEXT(n)" "WAITING(w)" "BACKLOG(b)" "|" "DONE(d!)" "CANCELLED(c!)")))
   (setq org-capture-templates
         '(
 	   ("i" "Inbox" entry
-	    (file+headline "~/org/1_inbox/inbox.org" "inbox")
+	    (file+headline "~/org/inbox.org" "inbox")
 	    "* %?\n  %i\n  %a")
 	   ("t" "Task" entry
-	    (file+headline "~/org/2_tasks/tasks.org" "tasks")
+	    (file+headline "~/org/tasks.org" "tasks")
 	    "* TODO %?\n  %i\n  %a")
 	   ("p" "Project" entry
-	    (file+headline "~/org/3_projects/projects.org" "projects")
+	    (file+headline "~/org/1_projects/projects.org" "projects")
 	    "* PROJECT %?\n  %i\n  %a")))
   (setq org-capture-bookmark nil) ;; disable bookmark for capture
   (setq org-refile-targets
-	'(("~/org/1_inbox/inbox.org" :maxlevel . 1)
-	  ("~/org/2_tasks/tasks.org" :maxlevel . 1)
-	  ("~/org/3_projects/projects.org" :maxlevel . 1)))
+	'(("~/org/inbox.org" :maxlevel . 1)
+	  ("~/org/tasks.org" :maxlevel . 1)
+	  ("~/org/1_projects/projects.org" :maxlevel . 1)))
   ;; put logs in drawer
   (setq org-log-into-drawer t)
 
@@ -143,7 +147,6 @@
 
   :bind 
   ("C-c a" . org-agenda)
-  ("C-c l" . org-agenda-list)
   ("C-c c" . org-capture)
 
   :hook
@@ -160,12 +163,17 @@
   :hook
   (org-mode . org-superstar-mode))
 
+;; use kanban boards
+(use-package org-kanban)
+
+;; for space repetition 
+(use-package org-drill)
 
 ;; Setup org-roam
 (use-package org-roam
   :init
   ;; where roam looks for notes
-  (setq org-roam-directory (file-truename "~/org/4_areas/kingdom/personal-study"))
+  (setq org-roam-directory (file-truename "~/org/2_areas/kingdom/personal-study"))
   :config
   ;; keep the SQLite database in sync automatically
   (org-roam-db-autosync-mode)
@@ -178,26 +186,24 @@
   ("C-c n t" . org-roam-tag-add))
 
 ;; integrate consult with roam
-(use-package consult-org-roam
-  :after (consult org-roam)
-  :init
-  (require 'consult-org-roam)
-  ;; Activate the minor mode
-  (consult-org-roam-mode 1)
-  :custom
-  ;; Use `ripgrep' for searching with `consult-org-roam-search'
-  (consult-org-roam-grep-func #'consult-ripgrep)
-  :bind
-  ("C-c n f" . consult-org-roam-file-find)
-  ("C-c n b" . consult-org-roam-backlinks)
-  ("C-c n s" . consult-org-roam-search))
+;; (use-package consult-org-roam
+;;   :init
+;;   (require 'consult-org-roam)
+;;   ;; Activate the minor mode
+;;   (consult-org-roam-mode 1)
+;;   :custom
+;;   ;; Use `ripgrep' for searching with `consult-org-roam-search'
+;;   (consult-org-roam-grep-func #'consult-ripgrep)
+;;   :bind
+;;   ("C-c n f" . consult-org-roam-file-find)
+;;   ("C-c n b" . consult-org-roam-backlinks)
+;;   ("C-c n s" . consult-org-roam-search))
 
 ;; Set denote
 (use-package denote
-  :after (consult denot)
   :init
   ;; where notes live (matches your existing org-directory)
-  (setq denote-directory (expand-file-name "~/org/5_resources"))
+  (setq denote-directory (expand-file-name "~/org/3_resources"))
   :config
   ;; save denote automatically
   (setq denote-save-buffers 1)
@@ -209,13 +215,15 @@
   :hook
   (dired-mode . denote-dired-mode))
 
-(use-package consult-denote
-  :config
-  (consult-denote-mode 1)
-  (setq consult-denote-grep-command #'consult-ripgrep)
-  :bind
-  ("C-c d f" . consult-denote-find)
-  ("C-c d s" . consult-denote-grep))
+;; (use-package consult-denote
+;;   :config
+;;   (consult-denote-mode 1)
+;;   (setq consult-denote-grep-command #'consult-ripgrep)
+;;   :bind
+;;   ("C-c d f" . consult-denote-find)
+;;   ("C-c d s" . consult-denote-grep))
+
+
 
 ;;; Tempel snippet setup -----------------------------------------------------
 
@@ -234,21 +242,22 @@
                   (src "#+begin_src " (p "emacs-lisp" language) n> r> n> "#+end_src")
                   (typescript "#+begin_src typescript" n> r> n> "#+end_src")
                   (python "#+begin_src python" n> r> n> "#+end_src")))))
-
   ;; wires Tempel into Emacs's completion-at-point (capf) system for the current buffer
   (defun tempel-setup-capf ()
     (setq-local completion-at-point-functions
                 (cons #'tempel-expand
                       completion-at-point-functions)))
-  
   ;; hooks tempel to buffer
   (add-hook 'org-mode-hook 'tempel-setup-capf)
-
-
   :config
   ;; Optional: bind next/previous field navigation while a template is active
   (keymap-set tempel-map "M-n" #'tempel-next)
   (keymap-set tempel-map "M-p" #'tempel-previous))
+
+;; add project.el
+(use-package project
+  :config
+  (setq project-vc-extra-root-markers '(".project")))
 
 
 ;; Setup doom-themes
@@ -278,7 +287,9 @@
   (setq dashboard-set-file-icons t))
 
 ;; Setup evil
-(use-package evil)
+(use-package evil
+  :bind
+  ("C-c v" . evil))
 
 ;; Setup magit
 (use-package magit
@@ -290,8 +301,9 @@
   :ensure t
   :init
   (vertico-mode)
-  :config
-  (setq vertico-preselect 'prompt))
+  ;:config
+  ;(setq vertico-preselect 'prompt)
+  )
 
 ;; add anotations to mini buffer results
 (use-package marginalia
@@ -314,7 +326,7 @@
   ("C-s"   . consult-line)
   ("C-x b" . consult-buffer)
   ("C-x g" . consult-ripgrep)
-  ("C-x C-f" . consult-find)
+  ("C-x f" . consult-find)
   ("C-x r l" . consult-bookmark))
 
 
@@ -323,7 +335,12 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages nil)
+ '(package-selected-packages
+   '(all-the-icons consult-denote consult-org-roam dashboard doom-themes
+		   evil magit marginalia markdown-mode
+		   nerd-icons-dired orderless org-drill org-kanban
+		   org-superstar projectile swiper tempel
+		   typescript-mode vertico))
  '(safe-local-variable-values
    '((eval setq-local org-roam-db-location
 	   (expand-file-name "org-roam.db" org-roam-directory))
