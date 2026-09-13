@@ -112,19 +112,53 @@
   (setq org-startup-indented t)
   (setq org-agenda-files
         '("~/org/tasks.org"))
-  (setq org-todo-keywords
-        '((sequence "REPEAT(r)" "PROJECT(p)" "TODO(t)" "NEXT(n)" "WAITING(w)" "BACKLOG(b)" "|" "DONE(d!)" "CANCELLED(c!)")))
+  ;; (setq org-todo-keywords
+  ;;       '((sequence "REPEAT(r)" "PROJECT(p)" "TODO(t)" "NEXT(n)" "WAITING(w)" "BACKLOG(b)" "|" "DONE(d!)" "CANCELLED(c!)")))
   (setq org-capture-templates
         '(
 	   ("i" "Inbox" entry
-	    (file+headline "~/org/inbox.org" "inbox")
-	    "* %?\n  %i\n  %a")
-	   ("t" "Task" entry
-	    (file+headline "~/org/tasks.org" "tasks")
-	    "* TODO %?\n  %i\n  %a")
-	   ("p" "Project" entry
-	    (file+headline "~/org/1_projects/projects.org" "projects")
-	    "* PROJECT %?\n  %i\n  %a")))
+	    (file+headline "~/org/inbox.org" "Inbox")
+	    "* %?\n  %i\n  %a"
+	    :empty-lines 1)
+	   
+           ("s" "Spanish" entry
+            (file+headline "~/org/2_areas/spanish.org" "Spanish Vocabulary")
+            "* %^{Spanish word} :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** Spanish
+   %^{Spanish word}
+
+** English
+   %^{English translation}
+
+** Example
+   %^{Example sentence}
+
+** Notes
+   %?"
+            :empty-lines 1)
+           ("v" "Vocabulary" entry
+            (file+headline "~/org/2_areas/vocabulary.org" "Vocabulary")
+            "* %^{Word} :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** Word
+   %^{Word}
+
+** Back
+   %^{Definition}
+
+** Example
+   %^{Example sentence}
+
+** Notes
+   %?"
+            :empty-lines 1)))
   (setq org-capture-bookmark nil) ;; disable bookmark for capture
   (setq org-refile-targets
 	'(("~/org/inbox.org" :maxlevel . 1)
@@ -164,10 +198,15 @@
   (org-mode . org-superstar-mode))
 
 ;; use kanban boards
-(use-package org-kanban)
+(use-package org-kanban
+  :bind
+  ("C-c k" . org-kanban/shift))
 
 ;; for space repetition 
-(use-package org-drill)
+(use-package org-drill
+  :init
+  ;; fix timestamp issue
+  (setq org-time-stamp-formats '("<%Y-%m-%d %a>" . "<%Y-%m-%d %a %H:%M>")))
 
 ;; Setup org-roam
 (use-package org-roam
