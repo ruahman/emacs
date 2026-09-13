@@ -298,6 +298,21 @@
   :config
   (setq project-vc-extra-root-markers '(".project")))
 
+;; (use-package typst-ts-mode
+;;   :config
+;;   ;; Ensure the typst tree-sitter grammar is installed
+;;   (add-to-list 'treesit-language-source-alist
+;;                '(typst "https://github.com/uben0/tree-sitter-typst"))
+;;   (unless (treesit-language-available-p 'typst)
+;;     (treesit-install-language-grammar 'typst))
+;;   (with-eval-after-load 'eglot
+;;   (with-eval-after-load 'typst-ts-mode
+;;     (add-to-list 'eglot-server-programs
+;;                  `((typst-ts-mode) .
+;;                    ,(eglot-alternatives `(,typst-ts-lsp-download-path
+;;                                           "tinymist"
+;;                                           "typst-lsp"))))))
+;;   (keymap-set typst-ts-mode-map "C-c C-c" #'typst-ts-tmenu))
 
 ;; Setup doom-themes
 (use-package doom-themes
@@ -328,7 +343,14 @@
 ;; Setup evil
 (use-package evil
   :bind
-  ("C-c v" . evil))
+  ("C-c v" . evil-mode))
+
+;; (use-package spaceline
+;;   :ensure t
+;;   :config
+;;   (require 'spaceline-config)
+;;   (spaceline-spacemacs-theme) ;; includes the evil-state segment automatically
+;;   (spaceline-toggle-minor-modes-off))
 
 ;; Setup magit
 (use-package magit
@@ -375,11 +397,10 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(all-the-icons consult-denote consult-org-roam dashboard doom-themes
-		   evil magit marginalia markdown-mode
-		   nerd-icons-dired orderless org-drill org-kanban
-		   org-superstar projectile swiper tempel
-		   typescript-mode vertico))
+   '(all-the-icons dashboard doom-themes evil magit marginalia
+		   markdown-mode nerd-icons-dired orderless org-drill
+		   org-kanban org-superstar tempel typescript-mode
+		   vertico))
  '(safe-local-variable-values
    '((eval setq-local org-roam-db-location
 	   (expand-file-name "org-roam.db" org-roam-directory))
