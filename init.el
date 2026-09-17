@@ -220,7 +220,7 @@
   (setq org-roam-node-display-template
         (concat "${title} " (propertize "${tags}" 'face 'org-tag)))
   :bind
-  ;;("C-c n f" . org-roam-node-find)
+  ("C-c n f" . org-roam-node-find)
   ("C-c n c" . org-roam-capture)
   ("C-c n t" . org-roam-tag-add))
 
