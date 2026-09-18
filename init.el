@@ -219,24 +219,35 @@
   ;; how to show search results for org-roam-node-find
   (setq org-roam-node-display-template
         (concat "${title} " (propertize "${tags}" 'face 'org-tag)))
+  ;; Capture templates (default + bible)
+  (setq org-roam-capture-templates
+        '(("d" "default" plain
+           "%?"
+           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+                             "#+title: ${title}\n")
+           :unnarrowed t)
+          ("b" "bible" plain
+           "%?"
+           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+                             "#+title: ${title}\n#+filetags: :bible:\n")
+           :unnarrowed t)))
   :bind
-  ("C-c n f" . org-roam-node-find)
+  ;("C-c n f" . org-roam-node-find)
   ("C-c n c" . org-roam-capture)
   ("C-c n t" . org-roam-tag-add))
 
 ;; integrate consult with roam
-;; (use-package consult-org-roam
-;;   :init
-;;   (require 'consult-org-roam)
-;;   ;; Activate the minor mode
-;;   (consult-org-roam-mode 1)
-;;   :custom
-;;   ;; Use `ripgrep' for searching with `consult-org-roam-search'
-;;   (consult-org-roam-grep-func #'consult-ripgrep)
-;;   :bind
-;;   ("C-c n f" . consult-org-roam-file-find)
-;;   ("C-c n b" . consult-org-roam-backlinks)
-;;   ("C-c n s" . consult-org-roam-search))
+(use-package consult-org-roam
+  :custom
+  ;; Use `ripgrep' for searching with `consult-org-roam-search'
+  (consult-org-roam-grep-func #'consult-ripgrep)
+  :config
+  ;; Activate the minor mode
+  (consult-org-roam-mode 1)
+  :bind
+  ("C-c n f" . consult-org-roam-file-find)
+  ("C-c n b" . consult-org-roam-backlinks)
+  ("C-c n s" . consult-org-roam-search))
 
 ;; Set denote
 (use-package denote
@@ -254,13 +265,13 @@
   :hook
   (dired-mode . denote-dired-mode))
 
-;; (use-package consult-denote
-;;   :config
-;;   (consult-denote-mode 1)
-;;   (setq consult-denote-grep-command #'consult-ripgrep)
-;;   :bind
-;;   ("C-c d f" . consult-denote-find)
-;;   ("C-c d s" . consult-denote-grep))
+(use-package consult-denote
+  :config
+  (consult-denote-mode 1)
+  (setq consult-denote-grep-command #'consult-ripgrep)
+  :bind
+  ("C-c d f" . consult-denote-find)
+  ("C-c d s" . consult-denote-grep))
 
 
 
