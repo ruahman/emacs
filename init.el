@@ -218,7 +218,10 @@
   (org-roam-db-autosync-mode)
   ;; how to show search results for org-roam-node-find
   (setq org-roam-node-display-template
-        (concat "${title} " (propertize "${tags}" 'face 'org-tag)))
+        (concat "${title:50} "
+		(propertize "${tags:*}" 'face 'org-tag)))
+
+  
   ;; Capture templates (default + bible)
   (setq org-roam-capture-templates
         '(("d" "default" plain
@@ -233,6 +236,7 @@
            :unnarrowed t)))
   :bind
   ;("C-c n f" . org-roam-node-find)
+  ("C-c n i" . org-roam-node-insert)
   ("C-c n c" . org-roam-capture)
   ("C-c n t" . org-roam-tag-add))
 
