@@ -360,6 +360,17 @@
   :bind
   ("C-c v" . evil-mode))
 
+;; implementation of powerline
+;; (use-package telephone-line
+;;   :config
+;;   (defun my/sync-powerline-with-evil ()
+;;     (telephone-line-mode (if evil-mode 1 -1)))
+;;   (add-hook 'evil-mode-hook #'my/sync-powerline-with-evil))
+(use-package doom-modeline
+  :config
+  (defun my/sync-modeline-with-evil ()
+    (doom-modeline-mode (if evil-mode 1 -1)))
+  (add-hook 'evil-mode-hook #'my/sync-modeline-with-evil))
 ;; (use-package spaceline
 ;;   :ensure t
 ;;   :config
