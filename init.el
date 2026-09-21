@@ -382,8 +382,19 @@
 ;; Setup evil
 ;(use-package evil)
 (use-package evil
-  :bind ("C-c v" . evil-local-mode)
-  :hook (python-mode . evil-local-mode))
+  :bind
+  ("C-c v" . evil-local-mode)
+  ("C-c C-g" . evil-normal-state)
+  :hook
+  (python-mode . evil-local-mode))
+
+(use-package evil-surround
+  :config
+  (global-evil-surround-mode 1))
+
+(use-package evil-commentary
+  :config
+  (evil-commentary-mode 1))
 ;; doom-modeline
 ;; (use-package doom-modeline)
 ;; doom-modeline
