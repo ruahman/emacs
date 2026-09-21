@@ -116,14 +116,14 @@
   ;;       '((sequence "REPEAT(r)" "PROJECT(p)" "TODO(t)" "NEXT(n)" "WAITING(w)" "BACKLOG(b)" "|" "DONE(d!)" "CANCELLED(c!)")))
   (setq org-capture-templates
         '(
-	   ("i" "Inbox" entry
-	    (file+headline "~/org/inbox.org" "Inbox")
-	    "* %?\n  %i\n  %a"
-	    :empty-lines 1)
-	   
-           ("s" "Spanish" entry
-            (file+headline "~/org/2_areas/spanish.org" "Spanish Vocabulary")
-            "* %^{Spanish word} :drill:
+	  ("i" "Inbox" entry
+	   (file+headline "~/org/inbox.org" "Inbox")
+	   "* %?\n  %i\n  %a"
+	   :empty-lines 1)
+	  
+          ("s" "Spanish" entry
+           (file+headline "~/org/2_areas/spanish.org" "Spanish Vocabulary")
+           "* %^{Spanish word} :drill:
 :PROPERTIES:
 :DRILL_CARD_TYPE: twosided
 :END:
@@ -139,10 +139,10 @@
 
 ** Notes
    %?"
-            :empty-lines 1)
-           ("v" "Vocabulary" entry
-            (file+headline "~/org/2_areas/vocabulary.org" "Vocabulary")
-            "* %^{Word} :drill:
+           :empty-lines 1)
+          ("v" "Vocabulary" entry
+           (file+headline "~/org/2_areas/vocabulary.org" "Vocabulary")
+           "* %^{Word} :drill:
 :PROPERTIES:
 :DRILL_CARD_TYPE: twosided
 :END:
@@ -158,7 +158,7 @@
 
 ** Notes
    %?"
-            :empty-lines 1)))
+           :empty-lines 1)))
   (setq org-capture-bookmark nil) ;; disable bookmark for capture
   (setq org-refile-targets
 	'(("~/org/inbox.org" :maxlevel . 1)
@@ -213,6 +213,7 @@
   :init
   ;; where roam looks for notes
   (setq org-roam-directory (file-truename "~/org/2_areas/kingdom/personal-study"))
+  (setq org-roam-dailies-directory "~/org/2_areas/journal/")
   :config
   ;; keep the SQLite database in sync automatically
   (org-roam-db-autosync-mode)
@@ -227,18 +228,19 @@
         '(("d" "default" plain
            "%?"
            :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-                             "#+title: ${title}\n")
+                              "#+title: ${title}\n")
            :unnarrowed t)
           ("b" "bible" plain
            "%?"
            :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-                             "#+title: ${title}\n#+filetags: :bible:\n")
+                              "#+title: ${title}\n#+filetags: :bible:\n")
            :unnarrowed t)))
   :bind
-  ;("C-c n f" . org-roam-node-find)
   ("C-c n i" . org-roam-node-insert)
   ("C-c n c" . org-roam-capture)
-  ("C-c n t" . org-roam-tag-add))
+  ("C-c n t" . org-roam-tag-add)
+  ("C-c n d c" . org-roam-dailies-capture-today)
+  ("C-c n d f" . org-roam-dailies-goto-date))
 
 ;; integrate consult with roam
 (use-package consult-org-roam
@@ -266,6 +268,7 @@
   (setq denote-known-keywords '("meta" "tmp" "draft"))
   :bind
   ("C-c d n" . denote)
+  ("C-c d i" . denote-link)
   :hook
   (dired-mode . denote-dired-mode))
 
@@ -337,6 +340,11 @@
 (use-package eglot
   :hook (python-mode . eglot-ensure))
 
+;; formater ????
+(use-package apheleia
+  :config
+  (apheleia-global-mode +1))
+
 ;; (use-package typst-ts-mode
 ;;   :config
 ;;   ;; Ensure the typst tree-sitter grammar is installed
@@ -380,7 +388,7 @@
   (setq dashboard-set-file-icons t))
 
 ;; Setup evil
-;(use-package evil)
+					;(use-package evil)
 (use-package evil
   :bind
   ("C-c v" . evil-local-mode)
@@ -399,7 +407,6 @@
 ;; (use-package doom-modeline)
 ;; doom-modeline
 (use-package doom-modeline
-  :bind ("C-c d" . doom-modeline-mode)
   :hook (python-mode . doom-modeline-mode))
 
 ;; Setup magit
@@ -412,8 +419,8 @@
   :ensure t
   :init
   (vertico-mode)
-  ;:config
-  ;(setq vertico-preselect 'prompt)
+					;:config
+					;(setq vertico-preselect 'prompt)
   )
 
 ;; add anotations to mini buffer results
