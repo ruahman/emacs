@@ -313,6 +313,30 @@
   :config
   (setq project-vc-extra-root-markers '(".project")))
 
+(use-package company
+  :hook (eglot-managed-mode . company-mode)
+  :config
+  (setq company-minimum-prefix-length 1
+        company-idle-delay 0.1))
+;; (use-package company
+;;   :init
+;;   (defun my/company-org-setup ()
+;;     (setq-local company-minimum-prefix-length 3
+;;                 company-idle-delay 0.3
+;;                 company-backends
+;;                 '((company-capf company-dabbrev company-ispell)))
+;;     (company-mode 1))
+;;   :config
+;;   (setq company-minimum-prefix-length 1
+;;         company-idle-delay 0.1)
+;;   (add-to-list 'company-backends 'company-ispell t)
+;;   :hook
+;;   (eglot-managed-mode . company-mode)
+;;   (org-mode . my/company-org-setup))
+
+(use-package eglot
+  :hook (python-mode . eglot-ensure))
+
 ;; (use-package typst-ts-mode
 ;;   :config
 ;;   ;; Ensure the typst tree-sitter grammar is installed
@@ -356,27 +380,16 @@
   (setq dashboard-set-file-icons t))
 
 ;; Setup evil
+;(use-package evil)
 (use-package evil
-  :bind
-  ("C-c v" . evil-mode))
-
-;; implementation of powerline
-;; (use-package telephone-line
-;;   :config
-;;   (defun my/sync-powerline-with-evil ()
-;;     (telephone-line-mode (if evil-mode 1 -1)))
-;;   (add-hook 'evil-mode-hook #'my/sync-powerline-with-evil))
+  :bind ("C-c v" . evil-local-mode)
+  :hook (python-mode . evil-local-mode))
+;; doom-modeline
+;; (use-package doom-modeline)
+;; doom-modeline
 (use-package doom-modeline
-  :config
-  (defun my/sync-modeline-with-evil ()
-    (doom-modeline-mode (if evil-mode 1 -1)))
-  (add-hook 'evil-mode-hook #'my/sync-modeline-with-evil))
-;; (use-package spaceline
-;;   :ensure t
-;;   :config
-;;   (require 'spaceline-config)
-;;   (spaceline-spacemacs-theme) ;; includes the evil-state segment automatically
-;;   (spaceline-toggle-minor-modes-off))
+  :bind ("C-c d" . doom-modeline-mode)
+  :hook (python-mode . doom-modeline-mode))
 
 ;; Setup magit
 (use-package magit

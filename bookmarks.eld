@@ -2,12 +2,18 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("personal-study"
-  (filename . "~/org/2_areas/kingdom/personal-study/")
-  (front-context-string . "20260808211957-t")
-  (rear-context-string . "91 sep 14 21:19 ")
-  (position . 292)
-  (last-modified 27304 40382 1916 455000))
+(("source"
+  (filename . "~/source/")
+  (front-context-string)
+  (rear-context-string . "0K sep 16 17:39 ")
+  (position . 174)
+  (last-modified 27312 25196 544350 975000))
+("personal-study"
+ (filename . "~/org/2_areas/kingdom/personal-study/")
+ (front-context-string . "20260808211957-t")
+ (rear-context-string . "91 sep 14 21:19 ")
+ (position . 292)
+ (last-modified 27304 40382 1916 455000))
 ("resources"
  (filename . "~/org/3_resources/")
  (front-context-string . "ltximg\n  -rw-r--")
