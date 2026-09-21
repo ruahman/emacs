@@ -337,6 +337,17 @@
 (use-package eglot
   :hook (python-mode . eglot-ensure))
 
+;; Format python with ruff on save
+(use-package apheleia
+  :config
+  (setf (alist-get 'ruff-isort apheleia-formatters)
+        '("ruff" "check" "--fix" "--select" "I" "--stdin-filename" filepath "-"))
+  (setf (alist-get 'ruff apheleia-formatters)
+        '("ruff" "format" "--stdin-filename" filepath "-"))
+  (setf (alist-get 'python-mode apheleia-mode-alist)
+        '(ruff-isort ruff))
+  :hook (python-mode . apheleia-mode))
+
 ;; (use-package typst-ts-mode
 ;;   :config
 ;;   ;; Ensure the typst tree-sitter grammar is installed
@@ -447,7 +458,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(all-the-icons dashboard doom-themes evil magit marginalia
+   '(all-the-icons apheleia dashboard doom-themes evil magit marginalia
 		   markdown-mode nerd-icons-dired orderless org-drill
 		   org-kanban org-superstar tempel typescript-mode
 		   vertico))
