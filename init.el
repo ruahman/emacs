@@ -408,10 +408,10 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(all-the-icons dashboard doom-themes evil magit marginalia
-		   markdown-mode nerd-icons-dired orderless org-drill
-		   org-kanban org-superstar tempel typescript-mode
-		   vertico))
+   '(all-the-icons consult-denote dashboard doom-themes evil magit
+		   marginalia markdown-mode nerd-icons-dired orderless
+		   org-drill org-kanban org-superstar tempel
+		   typescript-mode vertico))
  '(safe-local-variable-values
    '((eval setq-local org-roam-db-location
 	   (expand-file-name "org-roam.db" org-roam-directory))
