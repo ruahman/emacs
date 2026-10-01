@@ -6,7 +6,7 @@
 ;; set font
 (set-face-attribute 'default nil
                     :font "iMWritingQuat Nerd Font"
-                    :height 140)
+                    :height 180)
 
 ;; stop making backup files
 (setq make-backup-files nil)
@@ -385,7 +385,9 @@
   ;; set heading icons
   (setq dashboard-set-heading-icons t)
   ;; set file icons
-  (setq dashboard-set-file-icons t))
+  (setq dashboard-set-file-icons t)
+  ;; Make emacsclient frames open on the dashboard
+  (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*"))))
 
 ;; Setup evil
 					;(use-package evil)
