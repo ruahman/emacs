@@ -409,7 +409,8 @@
 ;; (use-package doom-modeline)
 ;; doom-modeline
 (use-package doom-modeline
-  :hook (python-mode . doom-modeline-mode))
+  :config
+  (doom-modeline-mode))
 
 ;; Setup magit
 (use-package magit
