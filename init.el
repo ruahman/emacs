@@ -5,7 +5,7 @@
 
 ;; set font
 (set-face-attribute 'default nil
-                    :font "iMWritingQuat Nerd Font"
+		    :font "iMWriting Nerd Font"
                     :height 180)
 
 ;; stop making backup files
@@ -234,6 +234,16 @@
            "%?"
            :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
                               "#+title: ${title}\n#+filetags: :bible:\n")
+           :unnarrowed t)
+          ("c" "comment" plain
+           "%?"
+           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+                              "#+title: ${title}\n#+filetags: :comment:\n")
+           :unnarrowed t)
+	  ("n" "consideration" plain
+           "%?"
+           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+                              "#+title: ${title}\n#+filetags: :consideration:\n")
            :unnarrowed t)))
   :bind
   ("C-c n i" . org-roam-node-insert)
@@ -303,7 +313,7 @@
   (defun tempel-setup-capf ()
     (setq-local completion-at-point-functions
                 (cons #'tempel-expand
-                      completion-at-point-functions)))
+		      completion-at-point-functions)))
   ;; hooks tempel to buffer
   (add-hook 'org-mode-hook 'tempel-setup-capf)
   :config
@@ -374,9 +384,12 @@
   :hook
   (dired-mode . nerd-icons-dired-mode))
 
-(use-package all-the-icons)
+;;(use-package all-the-icons)
 ;; Run once:
 ;; M-x all-the-icons-install-fonts
+;; (use-package all-the-icons-dired
+;;   :ensure t
+;;   :hook (dired-mode . all-the-icons-dired-mode))
 
 ;; Setup dashboard
 (use-package dashboard
@@ -451,6 +464,7 @@
   ("C-x r l" . consult-bookmark))
 
 
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -459,7 +473,7 @@
  '(package-selected-packages
    '(all-the-icons consult-denote dashboard doom-themes evil magit
 		   marginalia markdown-mode nerd-icons-dired orderless
-		   org-drill org-kanban org-superstar tempel
+		   org org-drill org-kanban org-superstar tempel
 		   typescript-mode vertico))
  '(safe-local-variable-values
    '((eval setq-local org-roam-db-location
@@ -467,6 +481,7 @@
      (eval setq-local org-roam-directory
 	   (expand-file-name
 	    (locate-dominating-file default-directory ".dir-locals.el"))))))
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
