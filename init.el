@@ -5,8 +5,8 @@
 
 ;; set font
 (set-face-attribute 'default nil
-					;:font "iMWriting Nerd Font"
-		    :font "CodeNewRoman Nerd Font"
+		    :font "iMWriting Nerd Font"
+		    ;;:font "CodeNewRoman Nerd Font"
                     :height 180)
 
 ;; stop making backup files
