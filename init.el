@@ -5,7 +5,8 @@
 
 ;; set font
 (set-face-attribute 'default nil
-		    :font "iMWriting Nerd Font"
+					;:font "iMWriting Nerd Font"
+		    :font "CodeNewRoman Nerd Font"
                     :height 180)
 
 ;; stop making backup files
@@ -380,16 +381,16 @@
 (use-package nerd-icons)
 
 ;; Setup nerd-icons-dired
-(use-package nerd-icons-dired
-  :hook
-  (dired-mode . nerd-icons-dired-mode))
+;; (use-package nerd-icons-dired
+;;   :hook
+;;   (dired-mode . nerd-icons-dired-mode))
 
 ;;(use-package all-the-icons)
 ;; Run once:
 ;; M-x all-the-icons-install-fonts
-;; (use-package all-the-icons-dired
-;;   :ensure t
-;;   :hook (dired-mode . all-the-icons-dired-mode))
+(use-package all-the-icons-dired
+  :ensure t
+  :hook (dired-mode . all-the-icons-dired-mode))
 
 ;; Setup dashboard
 (use-package dashboard
@@ -418,12 +419,11 @@
 (use-package evil-commentary
   :config
   (evil-commentary-mode 1))
+
 ;; doom-modeline
-;; (use-package doom-modeline)
-;; doom-modeline
-(use-package doom-modeline
-  :config
-  (doom-modeline-mode))
+;; (use-package doom-modeline
+;;   :config
+;;   (doom-modeline-mode))
 
 ;; Setup magit
 (use-package magit
