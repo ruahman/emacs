@@ -5,7 +5,7 @@
 
 ;; set font
 (set-face-attribute 'default nil
-		    :font "iMWriting Nerd Font"
+		    :font "iMWritingQuat Nerd Font"
 		    ;;:font "CodeNewRoman Nerd Font"
                     :height 180)
 
@@ -63,8 +63,6 @@
                 shell-mode-hook
                 eshell-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
-
-;; .project in folder mark as project
 
 
 ;; keybind for eshell
@@ -151,11 +149,11 @@
 ** Word
    %^{Word}
 
-** Back
+** Definition
    %^{Definition}
 
 ** Example
-   %^{Example sentence}
+   %^{Example}
 
 ** Notes
    %?"
@@ -165,6 +163,7 @@
 	'(("~/org/inbox.org" :maxlevel . 1)
 	  ("~/org/tasks.org" :maxlevel . 1)
 	  ("~/org/1_projects/projects.org" :maxlevel . 1)))
+
   ;; put logs in drawer
   (setq org-log-into-drawer t)
 
@@ -241,7 +240,7 @@
            :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
                               "#+title: ${title}\n#+filetags: :comment:\n")
            :unnarrowed t)
-	  ("n" "consideration" plain
+	  ("s" "consideration" plain
            "%?"
            :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
                               "#+title: ${title}\n#+filetags: :consideration:\n")
@@ -378,14 +377,14 @@
   (load-theme 'doom-one t))
 
 ;; Setup nerd-icons
-(use-package nerd-icons)
+;;(use-package nerd-icons)
 
 ;; Setup nerd-icons-dired
 ;; (use-package nerd-icons-dired
 ;;   :hook
 ;;   (dired-mode . nerd-icons-dired-mode))
 
-;;(use-package all-the-icons)
+(use-package all-the-icons)
 ;; Run once:
 ;; M-x all-the-icons-install-fonts
 (use-package all-the-icons-dired
@@ -434,10 +433,8 @@
 (use-package vertico
   :ensure t
   :init
-  (vertico-mode)
-					;:config
-					;(setq vertico-preselect 'prompt)
-  )
+  (vertico-mode))
+
 
 ;; add anotations to mini buffer results
 (use-package marginalia
