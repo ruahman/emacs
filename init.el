@@ -5,7 +5,7 @@
 
 ;; set font
 (set-face-attribute 'default nil
-		    :font "iMWritingQuat Nerd Font"
+		    :font "iMWritingDuo Nerd Font"
 		    ;;:font "CodeNewRoman Nerd Font"
                     :height 180)
 
