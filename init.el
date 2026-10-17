@@ -15,6 +15,9 @@
 ;; take out startup screen
 (setq inhibit-startup-message t)
 
+;; silent native comp warnings
+(setq native-comp-async-report-warnings-errors 'silent)
+
 ;; cause scroll bar, tool bar, and menu to disapear
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
