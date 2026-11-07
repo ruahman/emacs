@@ -88,6 +88,14 @@
   ;; Make emacsclient frames open on the dashboard
   (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*"))))
 
+;;;; Setup nerd-icons
+(use-package nerd-icons)
+
+;;;; Setup nerd-icons-dired
+(use-package nerd-icons-dired
+  :hook
+  (dired-mode . nerd-icons-dired-mode))
+
 ;;;; pretier mini buffer
 (use-package vertico
   :ensure t
@@ -163,13 +171,11 @@
 (use-package eglot
   :hook (python-mode . eglot-ensure))
 
-;;;; Setup nerd-icons
-(use-package nerd-icons)
+;; formater
+(use-package apheleia
+  :config
+  (apheleia-global-mode +1))
 
-;;;; Setup nerd-icons-dired
-(use-package nerd-icons-dired
-  :hook
-  (dired-mode . nerd-icons-dired-mode))
 
 ;;; Setup magit
 (use-package magit
@@ -374,10 +380,6 @@
 ;
 ;
 ;
-; ;; formater ????
-; (use-package apheleia
-;   :config
-;   (apheleia-global-mode +1))
 ;
 ; ;; (use-package typst-ts-mode
 ; ;;   :config

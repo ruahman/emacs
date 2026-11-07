@@ -21,8 +21,8 @@
 
         # ui
         doom-themes
-        all-the-icons
-        all-the-icons-dired
+        nerd-icons
+        nerd-icons-dired
         dashboard
 
         # org / notes
@@ -38,7 +38,6 @@
         magit
         apheleia
         markdown-mode
-        typescript-mode
 
         # tree-sitter grammars (optional)
         treesit-grammars.with-all-grammars
