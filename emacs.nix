@@ -3,7 +3,7 @@
   programs.emacs = {
     enable = true;
     package = pkgs.emacs;
-    extraConfig = builtins.readFile ./emacs/init.el;
+    extraConfig = builtins.readFile ./init.el;
     extraPackages =
       epkgs: with epkgs; [
         # completion
