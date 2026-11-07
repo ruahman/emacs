@@ -92,8 +92,8 @@
 ; (unless (package-installed-p 'use-package)
 ;   (package-install 'use-package))
 ;
-; ;; load use-package
-; (require 'use-package)
+;; load use-package
+(require 'use-package)
 ;
 ; ;; install package if not found
 ; (setq use-package-always-ensure t) 
