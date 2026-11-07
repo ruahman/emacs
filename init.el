@@ -374,10 +374,10 @@
 ; ;;                                           "typst-lsp"))))))
 ; ;;   (keymap-set typst-ts-mode-map "C-c C-c" #'typst-ts-tmenu))
 ;
-; ;; Setup doom-themes
-; (use-package doom-themes
-;   :config
-;   (load-theme 'doom-one t))
+;; Setup doom-themes
+(use-package doom-themes
+  :config
+  (load-theme 'doom-one t))
 ;
 ; ;; Setup nerd-icons
 ; ;;(use-package nerd-icons)
