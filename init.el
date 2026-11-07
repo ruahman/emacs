@@ -6,7 +6,6 @@
 ;; set font
 (set-face-attribute 'default nil
 		    :font "iMWritingDuo Nerd Font"
-		    ;;:font "CodeNewRoman Nerd Font"
                     :height 180)
 
 ;; stop making backup files
@@ -73,12 +72,12 @@
 ;; load use-package
 (require 'use-package)
 
-;; Setup doom-themes
+;;;; doom-themes
 (use-package doom-themes
   :config
   (load-theme 'doom-one t))
 
-;; Setup dashboard
+;;;; dashboard
 (use-package dashboard
   :config
   (dashboard-setup-startup-hook)  
@@ -89,28 +88,28 @@
   ;; Make emacsclient frames open on the dashboard
   (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*"))))
 
-;; pretier mini buffer
+;;;; pretier mini buffer
 (use-package vertico
   :ensure t
   :init
   (vertico-mode))
 
 
-;; add anotations to mini buffer results
+;;;; add anotations to mini buffer results
 (use-package marginalia
   :ensure t
   :init
   (marginalia-mode))
 
 
-;; matcher for min buffer
+;;;; matcher for min buffer
 (use-package orderless
   :ensure t
   :custom
   (completion-styles '(orderless basic)))
 
 
-;; mini-buffer tools
+;;;; mini-buffer tools
 (use-package consult
   :ensure t
   :bind
@@ -119,15 +118,69 @@
   ("C-x g" . consult-ripgrep)
   ("C-x f" . consult-find)
   ("C-x r l" . consult-bookmark))
-;
-; ;; Setup  markdown-mode
-; (use-package markdown-mode
-;   :hook
-;   (markdown-mode . hl-line-mode))
-;
-; ;; Setup typescript-mode
-; (use-package typescript-mode)
-;
+
+;;;; snippets
+(use-package tempel
+  :bind
+  ("M-+" . tempel-complete)
+  ("M-*" . tempel-insert)
+  :init
+  ;; Define templates inline instead of in a separate file
+  (setq tempel-template-sources
+        (list (lambda ()
+                '(fundamental-mode
+
+                  org-mode
+
+                  (src "#+begin_src " (p "emacs-lisp" language) n> r> n> "#+end_src")
+                  (typescript "#+begin_src typescript" n> r> n> "#+end_src")
+                  (python "#+begin_src python" n> r> n> "#+end_src")))))
+  ;; wires Tempel into Emacs's completion-at-point (capf) system for the current buffer
+  (defun tempel-setup-capf ()
+    (setq-local completion-at-point-functions
+                (cons #'tempel-expand
+		      completion-at-point-functions)))
+  ;; hooks tempel to buffer
+  (add-hook 'org-mode-hook 'tempel-setup-capf)
+  :config
+  ;; Optional: bind next/previous field navigation while a template is active
+  (keymap-set tempel-map "M-n" #'tempel-next)
+  (keymap-set tempel-map "M-p" #'tempel-previous))
+
+;; add project.el
+(use-package project
+  :config
+  (setq project-vc-extra-root-markers '(".project")))
+
+;;; compliter
+(use-package company
+  :hook (eglot-managed-mode . company-mode)
+  :config
+  (setq company-minimum-prefix-length 1
+        company-idle-delay 0.1))
+
+;;;; emacs polygot (LSP)
+(use-package eglot
+  :hook (python-mode . eglot-ensure))
+
+;;;; Setup nerd-icons
+(use-package nerd-icons)
+
+;;;; Setup nerd-icons-dired
+(use-package nerd-icons-dired
+  :hook
+  (dired-mode . nerd-icons-dired-mode))
+
+;;; Setup magit
+(use-package magit
+  :bind
+  ("C-c m" . magit))
+
+;;;; Setup  markdown-mode
+(use-package markdown-mode
+  :hook
+  (markdown-mode . hl-line-mode))
+
 ; ;; Setup org-mode
 ; (use-package org
 ;   :init
@@ -319,61 +372,7 @@
 ;
 ; ;;; Tempel snippet setup -----------------------------------------------------
 ;
-; (use-package tempel
-;   :bind
-;   ("M-+" . tempel-complete)
-;   ("M-*" . tempel-insert)
-;   :init
-;   ;; Define templates inline instead of in a separate file
-;   (setq tempel-template-sources
-;         (list (lambda ()
-;                 '(fundamental-mode
 ;
-;                   org-mode
-;
-;                   (src "#+begin_src " (p "emacs-lisp" language) n> r> n> "#+end_src")
-;                   (typescript "#+begin_src typescript" n> r> n> "#+end_src")
-;                   (python "#+begin_src python" n> r> n> "#+end_src")))))
-;   ;; wires Tempel into Emacs's completion-at-point (capf) system for the current buffer
-;   (defun tempel-setup-capf ()
-;     (setq-local completion-at-point-functions
-;                 (cons #'tempel-expand
-; 		      completion-at-point-functions)))
-;   ;; hooks tempel to buffer
-;   (add-hook 'org-mode-hook 'tempel-setup-capf)
-;   :config
-;   ;; Optional: bind next/previous field navigation while a template is active
-;   (keymap-set tempel-map "M-n" #'tempel-next)
-;   (keymap-set tempel-map "M-p" #'tempel-previous))
-;
-; ;; add project.el
-; (use-package project
-;   :config
-;   (setq project-vc-extra-root-markers '(".project")))
-;
-; (use-package company
-;   :hook (eglot-managed-mode . company-mode)
-;   :config
-;   (setq company-minimum-prefix-length 1
-;         company-idle-delay 0.1))
-; ;; (use-package company
-; ;;   :init
-; ;;   (defun my/company-org-setup ()
-; ;;     (setq-local company-minimum-prefix-length 3
-; ;;                 company-idle-delay 0.3
-; ;;                 company-backends
-; ;;                 '((company-capf company-dabbrev company-ispell)))
-; ;;     (company-mode 1))
-; ;;   :config
-; ;;   (setq company-minimum-prefix-length 1
-; ;;         company-idle-delay 0.1)
-; ;;   (add-to-list 'company-backends 'company-ispell t)
-; ;;   :hook
-; ;;   (eglot-managed-mode . company-mode)
-; ;;   (org-mode . my/company-org-setup))
-;
-; (use-package eglot
-;   :hook (python-mode . eglot-ensure))
 ;
 ; ;; formater ????
 ; (use-package apheleia
@@ -397,13 +396,6 @@
 ; ;;   (keymap-set typst-ts-mode-map "C-c C-c" #'typst-ts-tmenu))
 ;
 ;
-; ;; Setup nerd-icons
-; ;;(use-package nerd-icons)
-;
-; ;; Setup nerd-icons-dired
-; ;; (use-package nerd-icons-dired
-; ;;   :hook
-; ;;   (dired-mode . nerd-icons-dired-mode))
 ;
 ; (use-package all-the-icons)
 ; ;; Run once:
@@ -429,40 +421,3 @@
 ; (use-package evil-commentary
 ;   :config
 ;   (evil-commentary-mode 1))
-;
-; ;; doom-modeline
-; ;; (use-package doom-modeline
-; ;;   :config
-; ;;   (doom-modeline-mode))
-;
-; ;; Setup magit
-; (use-package magit
-;   :bind
-;   ("C-c m" . magit))
-;
-;
-;
-;
-; (custom-set-variables
-;  ;; custom-set-variables was added by Custom.
-;  ;; If you edit it by hand, you could mess it up, so be careful.
-;  ;; Your init file should contain only one such instance.
-;  ;; If there is more than one, they won't work right.
-;  '(package-selected-packages
-;    '(all-the-icons consult-denote dashboard doom-themes evil magit
-; 		   marginalia markdown-mode nerd-icons-dired orderless
-; 		   org org-drill org-kanban org-superstar tempel
-; 		   typescript-mode vertico))
-;  '(safe-local-variable-values
-;    '((eval setq-local org-roam-db-location
-; 	   (expand-file-name "org-roam.db" org-roam-directory))
-;      (eval setq-local org-roam-directory
-; 	   (expand-file-name
-; 	    (locate-dominating-file default-directory ".dir-locals.el"))))))
-;
-; (custom-set-faces
-;  ;; custom-set-faces was added by Custom.
-;  ;; If you edit it by hand, you could mess it up, so be careful.
-;  ;; Your init file should contain only one such instance.
-;  ;; If there is more than one, they won't work right.
-;  )
