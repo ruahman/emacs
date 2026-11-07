@@ -88,6 +88,37 @@
   (setq dashboard-set-file-icons t)
   ;; Make emacsclient frames open on the dashboard
   (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*"))))
+
+;; pretier mini buffer
+(use-package vertico
+  :ensure t
+  :init
+  (vertico-mode))
+
+
+;; add anotations to mini buffer results
+(use-package marginalia
+  :ensure t
+  :init
+  (marginalia-mode))
+
+
+;; matcher for min buffer
+(use-package orderless
+  :ensure t
+  :custom
+  (completion-styles '(orderless basic)))
+
+
+;; mini-buffer tools
+(use-package consult
+  :ensure t
+  :bind
+  ("C-s"   . consult-line)
+  ("C-x b" . consult-buffer)
+  ("C-x g" . consult-ripgrep)
+  ("C-x f" . consult-find)
+  ("C-x r l" . consult-bookmark))
 ;
 ; ;; Setup  markdown-mode
 ; (use-package markdown-mode
@@ -409,36 +440,6 @@
 ;   :bind
 ;   ("C-c m" . magit))
 ;
-; ;; pretier mini buffer
-; (use-package vertico
-;   :ensure t
-;   :init
-;   (vertico-mode))
-;
-;
-; ;; add anotations to mini buffer results
-; (use-package marginalia
-;   :ensure t
-;   :init
-;   (marginalia-mode))
-;
-;
-; ;; matcher for min buffer
-; (use-package orderless
-;   :ensure t
-;   :custom
-;   (completion-styles '(orderless basic)))
-;
-;
-; ;; mini-buffer tools
-; (use-package consult
-;   :ensure t
-;   :bind
-;   ("C-s"   . consult-line)
-;   ("C-x b" . consult-buffer)
-;   ("C-x g" . consult-ripgrep)
-;   ("C-x f" . consult-find)
-;   ("C-x r l" . consult-bookmark))
 ;
 ;
 ;
