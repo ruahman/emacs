@@ -43,17 +43,17 @@
 
 ;; show directory first and show hidden for dired
 (setq dired-listing-switches "-alh --group-directories-first")
-;
-; ;; setup ispell
-; (setq ispell-program-name "hunspell")
-; (setenv "LANG" "en_US.UTF-8")
-; (setq ispell-dictionary "en_US")
-; (setq ispell-local-dictionary "en_US")
-; (when (eq system-type 'windows-nt)
-;   (setq ispell-hunspell-dict-paths-alist
-;         '(("en_US" "C:/Hunspell/en_US.aff"))))
-;
-;
+
+;; setup ispell
+(setq ispell-program-name "hunspell")
+(setenv "LANG" "en_US.UTF-8")
+(setq ispell-dictionary "en_US")
+(setq ispell-local-dictionary "en_US")
+(when (eq system-type 'windows-nt)
+  (setq ispell-hunspell-dict-paths-alist
+        '(("en_US" "C:/Hunspell/en_US.aff"))))
+
+
 ;; setup highlight of line
 (add-hook 'emacs-lisp-mode-hook #'hl-line-mode)
 (add-hook 'elisp-mode-hook #'hl-line-mode)
@@ -66,37 +66,28 @@
                 shell-mode-hook
                 eshell-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
-;
-;
-; ;; keybind for eshell
-; (global-set-key (kbd "C-c e") #'eshell)
-;
-;; Setup package
-; (require 'package)
-;
-; (setq package-archives
-;       '(("melpa" . "https://melpa.org/packages/")
-;         ("elpa"  . "https://elpa.gnu.org/packages/")
-;     	("org" . "https://orgmode.org/elpa/")
-;         ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
-;
-; (package-initialize)
-;
-; (unless package-archive-contents
-;   (package-refresh-contents))
-;
-; ;; run M-x package-refresh-contents
-; ;; to update the index
-;
-; ;; Install use-package
-; (unless (package-installed-p 'use-package)
-;   (package-install 'use-package))
-;
+
+;; keybind for eshell
+(global-set-key (kbd "C-c e") #'eshell)
+
 ;; load use-package
 (require 'use-package)
-;
-; ;; install package if not found
-; (setq use-package-always-ensure t) 
+
+;; Setup doom-themes
+(use-package doom-themes
+  :config
+  (load-theme 'doom-one t))
+
+;; Setup dashboard
+(use-package dashboard
+  :config
+  (dashboard-setup-startup-hook)  
+  ;; set heading icons
+  (setq dashboard-set-heading-icons t)
+  ;; set file icons
+  (setq dashboard-set-file-icons t)
+  ;; Make emacsclient frames open on the dashboard
+  (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*"))))
 ;
 ; ;; Setup  markdown-mode
 ; (use-package markdown-mode
@@ -374,10 +365,6 @@
 ; ;;                                           "typst-lsp"))))))
 ; ;;   (keymap-set typst-ts-mode-map "C-c C-c" #'typst-ts-tmenu))
 ;
-;; Setup doom-themes
-(use-package doom-themes
-  :config
-  (load-theme 'doom-one t))
 ;
 ; ;; Setup nerd-icons
 ; ;;(use-package nerd-icons)
@@ -394,16 +381,6 @@
 ;   :ensure t
 ;   :hook (dired-mode . all-the-icons-dired-mode))
 ;
-; ;; Setup dashboard
-; (use-package dashboard
-;   :config
-;   (dashboard-setup-startup-hook)  
-;   ;; set heading icons
-;   (setq dashboard-set-heading-icons t)
-;   ;; set file icons
-;   (setq dashboard-set-file-icons t)
-;   ;; Make emacsclient frames open on the dashboard
-;   (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*"))))
 ;
 ; ;; Setup evil
 ; 					;(use-package evil)
