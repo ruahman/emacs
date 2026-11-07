@@ -40,9 +40,9 @@
 
 ;; Enable which-key (Built-in for Emacs 30+)
 (which-key-mode 1)
-;
-; ;; show directory first and show hidden for dired
-; (setq dired-listing-switches "-alh --group-directories-first")
+
+;; show directory first and show hidden for dired
+(setq dired-listing-switches "-alh --group-directories-first")
 ;
 ; ;; setup ispell
 ; (setq ispell-program-name "hunspell")
@@ -54,24 +54,24 @@
 ;         '(("en_US" "C:/Hunspell/en_US.aff"))))
 ;
 ;
-; ;; setup highlight of line
-; (add-hook 'emacs-lisp-mode-hook #'hl-line-mode)
-; (add-hook 'elisp-mode-hook #'hl-line-mode)
-;
-; ;; Disable line numbers for some modes
-; (dolist (mode '(org-mode-hook
-; 		markdown-mode-hook
-;                 term-mode-hook
-;                 text-mode-hook
-;                 shell-mode-hook
-;                 eshell-mode-hook))
-;   (add-hook mode (lambda () (display-line-numbers-mode 0))))
+;; setup highlight of line
+(add-hook 'emacs-lisp-mode-hook #'hl-line-mode)
+(add-hook 'elisp-mode-hook #'hl-line-mode)
+
+;; Disable line numbers for some modes
+(dolist (mode '(org-mode-hook
+		markdown-mode-hook
+                term-mode-hook
+                text-mode-hook
+                shell-mode-hook
+                eshell-mode-hook))
+  (add-hook mode (lambda () (display-line-numbers-mode 0))))
 ;
 ;
 ; ;; keybind for eshell
 ; (global-set-key (kbd "C-c e") #'eshell)
 ;
-; ;; Setup package
+;; Setup package
 ; (require 'package)
 ;
 ; (setq package-archives
