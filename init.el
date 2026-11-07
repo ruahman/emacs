@@ -2,44 +2,44 @@
 
 ;; setup username
 (setq user-full-name "Diego Vila")
-;
-; ;; set font
-; (set-face-attribute 'default nil
-; 		    :font "iMWritingDuo Nerd Font"
-; 		    ;;:font "CodeNewRoman Nerd Font"
-;                     :height 180)
-;
-; ;; stop making backup files
-; (setq make-backup-files nil)
-;
-; ;; take out startup screen
-; (setq inhibit-startup-message t)
-;
-; ;; silent native comp warnings
-; (setq native-comp-async-report-warnings-errors 'silent)
-;
-; ;; cause scroll bar, tool bar, and menu to disapear
-; (scroll-bar-mode -1)
-; (tool-bar-mode -1)
-; (menu-bar-mode -1)
-;
-; ;; get ride of word wrapping
-; (setq-default truncate-lines 1)
-;
-; ;; get ride of the fringes from side of window
-; (set-fringe-mode 10)      
-;
-; ;; Set up the visible bell, flashes
-; (setq visible-bell t)
-;
-; ;; show line numbers
-; (global-display-line-numbers-mode t)
-;
-; ;; show column number in mode line
-; (column-number-mode)
-;
-; ;; Enable which-key (Built-in for Emacs 30+)
-; (which-key-mode 1)
+
+;; set font
+(set-face-attribute 'default nil
+		    :font "iMWritingDuo Nerd Font"
+		    ;;:font "CodeNewRoman Nerd Font"
+                    :height 180)
+
+;; stop making backup files
+(setq make-backup-files nil)
+
+;; take out startup screen
+(setq inhibit-startup-message t)
+
+;; silent native comp warnings
+(setq native-comp-async-report-warnings-errors 'silent)
+
+;; cause scroll bar, tool bar, and menu to disapear
+(scroll-bar-mode -1)
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+
+;; get ride of word wrapping
+(setq-default truncate-lines 1)
+
+;; get ride of the fringes from side of window
+(set-fringe-mode 10)      
+
+;; Set up the visible bell, flashes
+(setq visible-bell t)
+
+;; show line numbers
+(global-display-line-numbers-mode t)
+
+;; show column number in mode line
+(column-number-mode)
+
+;; Enable which-key (Built-in for Emacs 30+)
+(which-key-mode 1)
 ;
 ; ;; show directory first and show hidden for dired
 ; (setq dired-listing-switches "-alh --group-directories-first")
