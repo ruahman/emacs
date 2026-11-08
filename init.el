@@ -187,239 +187,205 @@
   :hook
   (markdown-mode . hl-line-mode))
 
-; ;; Setup org-mode
-; (use-package org
-;   :init
-;   (setq org-directory "~/org/")
-;   ;; nicer indent for org headlines
-;   (setq org-startup-indented t)
-;   (setq org-agenda-files
-;         '("~/org/tasks.org"))
-;   ;; (setq org-todo-keywords
-;   ;;       '((sequence "REPEAT(r)" "PROJECT(p)" "TODO(t)" "NEXT(n)" "WAITING(w)" "BACKLOG(b)" "|" "DONE(d!)" "CANCELLED(c!)")))
-;   (setq org-capture-templates
-;         '(
-; 	  ("i" "Inbox" entry
-; 	   (file+headline "~/org/inbox.org" "Inbox")
-; 	   "* %?\n  %i\n  %a"
-; 	   :empty-lines 1)
-;
-;           ("s" "Spanish" entry
-;            (file+headline "~/org/2_areas/spanish.org" "Spanish Vocabulary")
-;            "* %^{Spanish word} :drill:
-; :PROPERTIES:
-; :DRILL_CARD_TYPE: twosided
-; :END:
-;
-; ** Spanish
-;    %^{Spanish word}
-;
-; ** English
-;    %^{English translation}
-;
-; ** Example
-;    %^{Example sentence}
-;
-; ** Notes
-;    %?"
-;            :empty-lines 1)
-;           ("v" "Vocabulary" entry
-;            (file+headline "~/org/2_areas/vocabulary.org" "Vocabulary")
-;            "* %^{Word} :drill:
-; :PROPERTIES:
-; :DRILL_CARD_TYPE: twosided
-; :END:
-;
-; ** Word
-;    %^{Word}
-;
-; ** Definition
-;    %^{Definition}
-;
-; ** Example
-;    %^{Example}
-;
-; ** Notes
-;    %?"
-;            :empty-lines 1)))
-;   (setq org-capture-bookmark nil) ;; disable bookmark for capture
-;   (setq org-refile-targets
-; 	'(("~/org/inbox.org" :maxlevel . 1)
-; 	  ("~/org/tasks.org" :maxlevel . 1)
-; 	  ("~/org/1_projects/projects.org" :maxlevel . 1)))
-;
-;   ;; put logs in drawer
-;   (setq org-log-into-drawer t)
-;
-;   ;; add timestamp for done
-;   (setq org-log-done 'time)
-;
-;   ;; respect content of header when creating a new one
-;   (setq org-insert-heading-respect-content t)
-;
-;   :config
-;   ;; setup org source blocks
-;   (setq org-src-fontify-natively t)
-;   (setq org-src-tab-acts-natively t)
-;   (add-to-list 'org-src-lang-modes '("typescript" . typescript))
-;
-;   :bind 
-;   ("C-c a" . org-agenda)
-;   ("C-c c" . org-capture)
-;
-;   :hook
-;   (markdown-mode . orgtbl-mode)
-;   (org-mode . hl-line-mode)
-;   (org-mode . flyspell-mode))
-;
-;
-; ;; Setup org-superstar
-; (use-package org-superstar
-;   :init
-;   (setq org-superstar-headline-bullets-list '("◉" "○" "✸" "☆" "♦"))
-;   (setq org-hide-leading-stars t)
-;   :hook
-;   (org-mode . org-superstar-mode))
-;
-; ;; use kanban boards
-; (use-package org-kanban
-;   :bind
-;   ("C-c k" . org-kanban/shift))
-;
-; ;; for space repetition 
-; (use-package org-drill
-;   :init
-;   ;; fix timestamp issue
-;   (setq org-time-stamp-formats '("<%Y-%m-%d %a>" . "<%Y-%m-%d %a %H:%M>")))
-;
-; ;; Setup org-roam
-; (use-package org-roam
-;   :init
-;   ;; where roam looks for notes
-;   (setq org-roam-directory (file-truename "~/org/2_areas/kingdom/personal-study"))
-;   (setq org-roam-dailies-directory "~/org/2_areas/journal/")
-;   :config
-;   ;; keep the SQLite database in sync automatically
-;   (org-roam-db-autosync-mode)
-;   ;; how to show search results for org-roam-node-find
-;   (setq org-roam-node-display-template
-;         (concat "${title:50} "
-; 		(propertize "${tags:*}" 'face 'org-tag)))
-;
-;
-;   ;; Capture templates (default + bible)
-;   (setq org-roam-capture-templates
-;         '(("d" "default" plain
-;            "%?"
-;            :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-;                               "#+title: ${title}\n")
-;            :unnarrowed t)
-;           ("b" "bible" plain
-;            "%?"
-;            :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-;                               "#+title: ${title}\n#+filetags: :bible:\n")
-;            :unnarrowed t)
-;           ("c" "comment" plain
-;            "%?"
-;            :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-;                               "#+title: ${title}\n#+filetags: :comment:\n")
-;            :unnarrowed t)
-; 	  ("s" "consideration" plain
-;            "%?"
-;            :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-;                               "#+title: ${title}\n#+filetags: :consideration:\n")
-;            :unnarrowed t)))
-;   :bind
-;   ("C-c n i" . org-roam-node-insert)
-;   ("C-c n c" . org-roam-capture)
-;   ("C-c n t" . org-roam-tag-add)
-;   ("C-c n d c" . org-roam-dailies-capture-today)
-;   ("C-c n d f" . org-roam-dailies-goto-date))
-;
-; ;; integrate consult with roam
-; (use-package consult-org-roam
-;   :custom
-;   ;; Use `ripgrep' for searching with `consult-org-roam-search'
-;   (consult-org-roam-grep-func #'consult-ripgrep)
-;   :config
-;   ;; Activate the minor mode
-;   (consult-org-roam-mode 1)
-;   :bind
-;   ("C-c n f" . consult-org-roam-file-find)
-;   ("C-c n b" . consult-org-roam-backlinks)
-;   ("C-c n s" . consult-org-roam-search))
-;
-; ;; Set denote
-; (use-package denote
-;   :init
-;   ;; where notes live (matches your existing org-directory)
-;   (setq denote-directory (expand-file-name "~/org/3_resources"))
-;   :config
-;   ;; save denote automatically
-;   (setq denote-save-buffers 1)
-;   ;; (setq denote-file-type 'markdown-yaml)'
-;   (setq denote-prompts '(title keywords file-type))
-;   (setq denote-known-keywords '("meta" "tmp" "draft"))
-;   :bind
-;   ("C-c d n" . denote)
-;   ("C-c d i" . denote-link)
-;   :hook
-;   (dired-mode . denote-dired-mode))
-;
-; (use-package consult-denote
-;   :config
-;   (consult-denote-mode 1)
-;   (setq consult-denote-grep-command #'consult-ripgrep)
-;   :bind
-;   ("C-c d f" . consult-denote-find)
-;   ("C-c d s" . consult-denote-grep))
-;
-;
-;
-; ;;; Tempel snippet setup -----------------------------------------------------
-;
-;
-;
-;
-; ;; (use-package typst-ts-mode
-; ;;   :config
-; ;;   ;; Ensure the typst tree-sitter grammar is installed
-; ;;   (add-to-list 'treesit-language-source-alist
-; ;;                '(typst "https://github.com/uben0/tree-sitter-typst"))
-; ;;   (unless (treesit-language-available-p 'typst)
-; ;;     (treesit-install-language-grammar 'typst))
-; ;;   (with-eval-after-load 'eglot
-; ;;   (with-eval-after-load 'typst-ts-mode
-; ;;     (add-to-list 'eglot-server-programs
-; ;;                  `((typst-ts-mode) .
-; ;;                    ,(eglot-alternatives `(,typst-ts-lsp-download-path
-; ;;                                           "tinymist"
-; ;;                                           "typst-lsp"))))))
-; ;;   (keymap-set typst-ts-mode-map "C-c C-c" #'typst-ts-tmenu))
-;
-;
-;
-; (use-package all-the-icons)
-; ;; Run once:
-; ;; M-x all-the-icons-install-fonts
-; (use-package all-the-icons-dired
-;   :ensure t
-;   :hook (dired-mode . all-the-icons-dired-mode))
-;
-;
-; ;; Setup evil
-; 					;(use-package evil)
-; (use-package evil
-;   :bind
-;   ("C-c v" . evil-local-mode)
-;   ("C-c C-g" . evil-normal-state)
-;   :hook
-;   (python-mode . evil-local-mode))
-;
-; (use-package evil-surround
-;   :config
-;   (global-evil-surround-mode 1))
-;
-; (use-package evil-commentary
-;   :config
-;   (evil-commentary-mode 1))
+;;;; Setup org-mode
+(use-package org
+  :init
+  (setq org-directory "~/org/")
+  ;; nicer indent for org headlines
+  (setq org-startup-indented t)
+  (setq org-agenda-files
+        '("~/org/tasks.org"))
+  (setq org-capture-templates
+        '(
+	  ("i" "Inbox" entry
+	   (file+headline "~/org/inbox.org" "Inbox")
+	   "* %?\n  %i\n  %a"
+	   :empty-lines 1)
+
+          ("s" "Spanish" entry
+           (file+headline "~/org/2_areas/spanish.org" "Spanish Vocabulary")
+           "* %^{Spanish word} :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** Spanish
+   %^{Spanish word}
+
+** English
+   %^{English translation}
+
+** Example
+   %^{Example sentence}
+
+** Notes
+   %?"
+           :empty-lines 1)
+          ("v" "Vocabulary" entry
+           (file+headline "~/org/2_areas/vocabulary.org" "Vocabulary")
+           "* %^{Word} :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+** Word
+   %^{Word}
+
+** Definition
+   %^{Definition}
+
+** Example
+   %^{Example}
+
+** Notes
+   %?"
+           :empty-lines 1)))
+  (setq org-capture-bookmark nil) ;; disable bookmark for capture
+  (setq org-refile-targets
+	'(("~/org/inbox.org" :maxlevel . 1)
+	  ("~/org/tasks.org" :maxlevel . 1)
+	  ("~/org/1_projects/projects.org" :maxlevel . 1)))
+
+  ;; put logs in drawer
+  (setq org-log-into-drawer t)
+
+  ;; add timestamp for done
+  (setq org-log-done 'time)
+
+  ;; respect content of header when creating a new one
+  (setq org-insert-heading-respect-content t)
+
+  :config
+  ;; setup org source blocks
+  (setq org-src-fontify-natively t)
+  (setq org-src-tab-acts-natively t)
+  (add-to-list 'org-src-lang-modes '("typescript" . typescript))
+
+  :bind 
+  ("C-c a" . org-agenda)
+  ("C-c c" . org-capture)
+
+  :hook
+  (markdown-mode . orgtbl-mode)
+  (org-mode . hl-line-mode)
+  (org-mode . flyspell-mode))
+
+
+;;;; Setup org-superstar
+(use-package org-superstar
+  :init
+  (setq org-superstar-headline-bullets-list '("◉" "○" "✸" "☆" "♦"))
+  (setq org-hide-leading-stars t)
+  :hook
+  (org-mode . org-superstar-mode))
+
+;;;; use kanban boards
+(use-package org-kanban
+  :bind
+  ("C-c k" . org-kanban/shift))
+
+;;;; for space repetition 
+(use-package org-drill
+  :init
+  ;; fix timestamp issue
+  (setq org-time-stamp-formats '("<%Y-%m-%d %a>" . "<%Y-%m-%d %a %H:%M>")))
+
+;;;; Setup org-roam
+(use-package org-roam
+  :init
+  ;; where roam looks for notes
+  (setq org-roam-directory (file-truename "~/org/2_areas/kingdom/personal-study"))
+  (setq org-roam-dailies-directory "~/org/2_areas/journal/")
+  :config
+  ;; keep the SQLite database in sync automatically
+  (org-roam-db-autosync-mode)
+  ;; how to show search results for org-roam-node-find
+  (setq org-roam-node-display-template
+        (concat "${title:50} "
+		(propertize "${tags:*}" 'face 'org-tag)))
+
+
+  ;; Capture templates (default + bible)
+  (setq org-roam-capture-templates
+        '(("d" "default" plain
+           "%?"
+           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+                              "#+title: ${title}\n")
+           :unnarrowed t)
+          ("b" "bible" plain
+           "%?"
+           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+                              "#+title: ${title}\n#+filetags: :bible:\n")
+           :unnarrowed t)
+          ("c" "comment" plain
+           "%?"
+           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+                              "#+title: ${title}\n#+filetags: :comment:\n")
+           :unnarrowed t)
+	  ("s" "consideration" plain
+           "%?"
+           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+                              "#+title: ${title}\n#+filetags: :consideration:\n")
+           :unnarrowed t)))
+  :bind
+  ("C-c n i" . org-roam-node-insert)
+  ("C-c n c" . org-roam-capture)
+  ("C-c n t" . org-roam-tag-add)
+  ("C-c n d c" . org-roam-dailies-capture-today)
+  ("C-c n d f" . org-roam-dailies-goto-date))
+
+;;;; integrate consult with roam
+(use-package consult-org-roam
+  :custom
+  ;; Use `ripgrep' for searching with `consult-org-roam-search'
+  (consult-org-roam-grep-func #'consult-ripgrep)
+  :config
+  ;; Activate the minor mode
+  (consult-org-roam-mode 1)
+  :bind
+  ("C-c n f" . consult-org-roam-file-find)
+  ("C-c n b" . consult-org-roam-backlinks)
+  ("C-c n s" . consult-org-roam-search))
+
+;;;; Set denote
+(use-package denote
+  :init
+  ;; where notes live (matches your existing org-directory)
+  (setq denote-directory (expand-file-name "~/org/3_resources"))
+  :config
+  ;; save denote automatically
+  (setq denote-save-buffers 1)
+  ;; (setq denote-file-type 'markdown-yaml)'
+  (setq denote-prompts '(title keywords file-type))
+  (setq denote-known-keywords '("meta" "tmp" "draft"))
+  :bind
+  ("C-c d n" . denote)
+  ("C-c d i" . denote-link)
+  :hook
+  (dired-mode . denote-dired-mode))
+
+(use-package consult-denote
+  :config
+  (consult-denote-mode 1)
+  (setq consult-denote-grep-command #'consult-ripgrep)
+  :bind
+  ("C-c d f" . consult-denote-find)
+  ("C-c d s" . consult-denote-grep))
+
+;;;; Setup evil
+(use-package evil
+  :bind
+  ("C-c v" . evil-local-mode)
+  ("C-c C-g" . evil-normal-state)
+  :hook
+  (python-mode . evil-local-mode))
+
+;;;; evil surround
+(use-package evil-surround
+  :config
+  (global-evil-surround-mode 1))
+
+;;;; evil-comentary
+(use-package evil-commentary
+  :config
+  (evil-commentary-mode 1))
