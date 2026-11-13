@@ -37,7 +37,7 @@
         toml-mode
         yaml-mode
         typescript-mode
-        js-mode
+        js2-mode
         python-mode
 
         # tree-sitter grammars
