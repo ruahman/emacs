@@ -294,7 +294,7 @@
 (use-package org-roam
   :init
   ;; where roam looks for notes
-  (setq org-roam-directory (file-truename "~/org/2_areas/kingdom/personal-study"))
+  (setq org-roam-directory (file-truename "~/org/2_areas/personal-study"))
   (setq org-roam-dailies-directory "~/org/2_areas/journal/")
   :config
   ;; keep the SQLite database in sync automatically
@@ -322,7 +322,7 @@
            :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
                               "#+title: ${title}\n#+filetags: :comment:\n")
            :unnarrowed t)
-	  ("s" "consideration" plain
+	        ("s" "consideration" plain
            "%?"
            :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
                               "#+title: ${title}\n#+filetags: :consideration:\n")
@@ -372,20 +372,3 @@
   ("C-c d f" . consult-denote-find)
   ("C-c d s" . consult-denote-grep))
 
-;;;; Setup evil
-(use-package evil
-  :bind
-  ("C-c v" . evil-local-mode)
-  ("C-c C-g" . evil-normal-state)
-  :hook
-  (python-mode . evil-local-mode))
-
-;;;; evil surround
-(use-package evil-surround
-  :config
-  (global-evil-surround-mode 1))
-
-;;;; evil-comentary
-(use-package evil-commentary
-  :config
-  (evil-commentary-mode 1))
