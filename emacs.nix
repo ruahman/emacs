@@ -36,7 +36,7 @@
         nix-mode
         toml-mode
         yaml-mode
-        typescript-ts-mode
+        typescript-mode
         js-mode
         python-mode
 
