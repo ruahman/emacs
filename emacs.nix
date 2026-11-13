@@ -14,11 +14,6 @@
         company
         tempel
 
-        # evil
-        evil
-        evil-surround
-        evil-commentary
-
         # ui
         doom-themes
         nerd-icons
@@ -39,8 +34,9 @@
         apheleia
         markdown-mode
 
-        # tree-sitter grammars (optional)
+        # tree-sitter grammars
         treesit-grammars.with-all-grammars
+        treesit-auto
       ];
   };
 
