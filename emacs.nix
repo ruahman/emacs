@@ -33,6 +33,10 @@
         magit
         apheleia
         markdown-mode
+        nix-mode
+        toml-mode
+        typscript-mode
+        python-mode
 
         # tree-sitter grammars
         treesit-grammars.with-all-grammars
