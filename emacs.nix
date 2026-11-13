@@ -35,7 +35,7 @@
         markdown-mode
         nix-mode
         toml-mode
-        typscript-mode
+        ts-mode
         python-mode
 
         # tree-sitter grammars
